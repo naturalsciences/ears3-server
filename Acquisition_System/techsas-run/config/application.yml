@@ -7,9 +7,9 @@
 ## TECHSAS-NG specific properties
 ## ===================================================================
 ##Profile to activate eurofleets jpa repository
-spring:
-  profiles:
-    active: "eurofleets"
+#spring:
+#  profiles:
+#    active: "eurofleets"
 
 ## ===================================================================
 ## Standard Spring Boot properties.
@@ -24,7 +24,7 @@ spring:
 ##                       -> change jdbc-url of embedded H2 db (application-h2postgres)
 spring:
   profiles:
-    active: acquisition, h2postgres
+    active: acquisition, h2postgres, eurofleets
   main:
     banner-mode : "off"       # Mode used to display the banner when the application runs. (default=console)
   mvc:
