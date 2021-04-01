@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans              http://www.springframework.org/schema/beans/spring-beans.xsd              http://www.springframework.org/schema/context              http://www.springframework.org/schema/context/spring-context.xsd              http://www.springframework.org/schema/mvc              http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!-- Components -->
+    
+    <context:property-placeholder location="classpath:application.properties"/>
+    <context:annotation-config/>
+    <context:component-scan base-package="fr.ifremer.driver"/>
+    <context:component-scan base-package="fr.ifremer.driver.holder"/>
+    <context:component-scan base-package="fr.ifremer.driver.channel"/>
+    
+    <!-- ActiveMQ Broker -->
+    <bean class="org.apache.activemq.broker.BrokerService" id="broker">
+		<property name="brokerName" value="broker"/>
+		<property name="persistent" value="false"/>
+		<property name="useJmx" value="true"/>
+		<property name="transportConnectorURIs">
+			<list>
+				<value>tcp://0.0.0.0:61616</value>
+				<value>ws://0.0.0.0:61614</value>
+				<value>mqtt://0.0.0.0:61222</value>
+			</list>
+		</property>
+	</bean>
+    <!-- Configuration service: publishes the list of active sensors -->
+    <bean class="fr.ifremer.acquisition.configuration.ConfigurationService" id="configService">
+	</bean>
+    <!-- Archive service -->
+    <!-- depends-on="broker" makes sense only when the broker url is vm://.... -->
+    <bean class="fr.ifremer.acquisition.archiving.ArchiveService" depends-on="broker" id="archiveService">
+		<property name="subServices">
+			<list>
+				<bean class="fr.ifremer.acquisition.archiving.raw.RawArchiveSubService"/>
+				<bean class="fr.ifremer.acquisition.archiving.netcdf.NetCDFArchiveSubService"/>
+				<bean class="fr.ifremer.acquisition.archiving.db.DBArchiveSubService"/>
+			</list>
+		</property>
+	</bean>
+    <!--  meta component gateway with TECHSAS and common format -->
+<!--         <bean id="metaCommonFormatDriver" class="fr.ifremer.acquisition.configuration.techsas.MetaCommonFormatDriverService">
+     		<property name="deviceIds">
+     			<list>
+     				<value>TL_MARPORT</value>
+     				<value>EU_CINNA</value>
+     			</list>
+     		</property>
+     	</bean>-->
+    <!--  component to activate navigation logging in EARS (Eurofleets) -->
+	<bean class="fr.ifremer.acquisition.eurofleets.EurofleetsServiceNavigation">
+		<property name="deviceId" value="PSDGPOS01"/>
+		<property name="frameName" value="psdgpos"/>
+		<property name="latitudeId" value="lat"/>
+		<property name="longitudeId" value="long"/>
+		<property name="sogId" value="sog"/>
+		<property name="cogId" value="cog"/>
+		<property name="depthId" value="depth"/>
+		<property name="headingId" value="head"/>
+	</bean>
+
+	<bean class="fr.ifremer.acquisition.eurofleets.EurofleetsServiceWeather">
+		<property name="deviceId" value="PSDGMET01"/>
+		<property name="frameName" value="psdgmet"/>
+		<property name="measureTSId" value="measureTS"/>
+		<property name="velocityId" value="velocity"/>
+		<property name="gustId" value="gust"/>
+		<property name="directionId" value="direction"/>
+		<property name="airTemperatureId" value="airtemp"/>
+		<property name="humidityId" value="humidity"/>
+		<property name="solarRadiationId" value="radiation"/>
+		<property name="airPressureId" value="pressure"/>
+		<property name="surfaceWaterTemperatureId" value="watertemp"/>
+	</bean>
+
+	<bean class="fr.ifremer.acquisition.eurofleets.EurofleetsServiceThermo">
+		<property name="deviceId" value="PSDGTSS01"/>
+		<property name="frameName" value="psdgtss"/>
+		<property name="salinityId" value="salinity"/>
+		<property name="watertempId" value="watertemp"/>
+		<property name="fluoId" value="fluo"/>
+		<property name="conductId" value="conduct"/>
+		<property name="sigmatId" value="sigmat"/>
+	</bean>
+
+
+</beans>

@@ -1,0 +1,104 @@
+## ===================================================================
+## Spring Boot configuration.
+##
+## ===================================================================
+
+## ===================================================================
+## TECHSAS-NG specific properties
+## ===================================================================
+##Profile to activate eurofleets jpa repository
+spring:
+  profiles:
+    active: "eurofleets"
+
+## ===================================================================
+## Standard Spring Boot properties.
+## Full reference is available at:
+## http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+## ===================================================================
+##Profil to activate the old frontend
+## To launch acquisition: profiles.active: acquisition, h2postgres
+## To launch database: profiles.active: database, h2postgres
+##                     to launch on same IP than "acquisition":
+##                       -> change port / think about "databaseIP" in parameter.json
+##                       -> change jdbc-url of embedded H2 db (application-h2postgres)
+spring:
+  profiles:
+    active: acquisition, h2postgres
+  main:
+    banner-mode : "off"       # Mode used to display the banner when the application runs. (default=console)
+  mvc:
+    favicon:
+      enabled: false          # Whether to enable resolution of favicon.ico. (default=true)
+  h2:
+    console:
+      enabled: true           # Whether to enable the console. (default=false)
+  jpa:
+    properties:
+      hibernate:
+        show-sql: true
+        dialect:
+          storage_engine: innodb
+        use-new-id-generator-mappings: false
+management:
+  health:
+    ldap:
+      enabled: false          # Whether to enable LDAP health check. (default=true)
+  endpoints:
+    shutdown:
+      enabled: true           # Whether to enable the shutdown endpoint.
+    health:
+      show-details: ALWAYS    # When to show full health details. (default=never)
+    web:
+      exposure:
+        include: info,health,shutdown     # Endpoint IDs that should be included or '*' for all.
+server:
+  error:
+    whitelabel:
+      enabled: false          # Whether to enable the default error page displayed in browsers in case of a server error.
+## change port (to 8282) to launch "database" profile on same IP than "acquisition"
+  port: ${ACQUISITION_PORT}                  # Server HTTP port. (default = 8080)
+
+## ===================================================================
+## TECHSAS-NG specific properties
+## ===================================================================
+## Enabled web components
+#acquisition:
+#  sdiv:
+#    parameter:
+#      file: "parameter666.json"
+
+##authentication
+authentication:
+  ##authentication user list (@ConfigurationProperties)
+  users:
+    -   login: "admin"
+        password: "secret"
+        name: "Admin"
+        roles :
+          - "ROLE_ADMIN"
+          - "ROLE_USER"
+    -   login: "techsas"
+        password: "Techsas2020"
+        name: "Techsas"
+        roles : "ROLE_ADMIN"
+    -   login: "eurofleets"
+        password: "Eurofleets20!"
+        name: "Eurofleets"
+        roles : "ROLE_USER"
+
+# eurofleets db
+eurofleets:
+  db:
+    datasource:
+      url: jdbc:mysql://${ACQUISITION_DB_SERVER}:${ACQUISITION_DB_PORT}/casino
+      username: ${ACQUISITION_DB_USER}
+      password: ${ACQUISITION_DB_PASS}
+      driverClassName: "com.mysql.jdbc.Driver"
+  jpa:
+    properties:
+      hibernate:
+        show-sql: true
+        dialect:
+          storage_engine: innodb
+        use-new-id-generator-mappings: false

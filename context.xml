@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiResourceLocking="false" privileged="true">
+  <!--<Valve className="org.apache.catalina.valves.RemoteAddrValve"
+       allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />-->
+  <Resource name="jdbc/EARS" auth="Container" type="javax.sql.DataSource" maxTotal="100" maxIdle="30" maxWaitMillis="10000" username="${EARS_DB_USER}" password="${EARS_DB_PASS}" driverClassName="${EARS_DB_CLASS}" url="${EARS_JDBC_URL}" />
+  <Resource name="jdbc/ACQUISITION" auth="Container" type="javax.sql.DataSource" maxTotal="100" maxIdle="30" maxWaitMillis="10000" username="${ACQUISITION_DB_USER}" password="${ACQUISITION_DB_PASS}" driverClassName="${ACQUISITION_DB_CLASS}" url="${ACQUISITION_JDBC_URL}" />
+</Context>

@@ -1,0 +1,93 @@
+# This setup creates a Tomcat container for the EARS webservices, a Tomcat containber for the acquisition module, plus MySQL and Postgres containers. If this is the first run it populates the databases with the needed tables. 
+# The computer they are run from is called the host.
+# The tomcat container depends on the mysql one (see the depends_on keyword). 
+# The tomcat main command (catalina.sh) is not run before the databases is populated; this is done via the wait_for_mysql.sh script. 
+# The SQL data is persisted outside of the containers in volume directories (ears_mysql_data and ears_postgres_data)
+# The 'restart: always' keywords ensure that both services are restarted always after each crash or system reboot, as long as the docker daemon is running. sudo docker stop <id> will actually stop the application, and it will not be restarted automatically.
+# The container names are stored as ears-server_tomcat, ears-server_mysql and ears-server_acquisition. These can be used in your docker host to see the logs or get info: eg. sudo docker logs ears-server_acquisition or sudo docker inspect ears-server_mysql
+# The EARS webservices are reachable on http://localhost:8181 and the acquisition server on http://localhost:8080
+version: '3.5'
+services:
+  tomcat:
+    build: .
+    container_name: ears-server_tomcat
+    extra_hosts:
+      - host.docker.internal:172.17.0.1
+    environment:
+#      - EARS_JDBC_URL=jdbc:postgresql://postgres:5432/ears3
+#      - EARS_DB_CLASS=com.mysql.cj.jdbc.Driver
+#      - EARS_DB_USER=ears
+#      - EARS_DB_PASS=ears
+      - ACQUISITION_JDBC_URL=jdbc:mysql://mysql:3306/casino
+      - ACQUISITION_DB_CLASS=com.mysql.cj.jdbc.Driver
+      - ACQUISITION_DB_USER=${ACQUISITION_DB_USER}
+      - ACQUISITION_DB_PASS=${ACQUISITION_DB_PASS}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/ears3
+      - SPRING_DATASOURCE_USERNAME=ears
+      - SPRING_DATASOURCE_PASSWORD=ears
+      - EARS_PLATFORM=${EARS_PLATFORM}
+      - EARS_VESSEL_ADDRESS=${EARS_VESSEL_ADDRESS}
+      - EARS_NAVIGATION_SERVER=http://host.docker.internal:${EARS_PORT} 
+      - EARS_CSR_LICENSE=${EARS_CSR_LICENSE}
+      - EARS_ONTOLOGY_USERNAME=${EARS_ONTOLOGY_USERNAME}
+      - EARS_ONTOLOGY_PASSWORD=${EARS_ONTOLOGY_PASSWORD}
+    ports:
+      - ${EARS_PORT}:8080
+    depends_on:
+      - mysql
+      - postgres
+    command: ["./wait-for-mysql.sh", mysql, "3306", "root", "wzka684l7i", "casino", "catalina.sh", "run"]
+    restart: always
+    volumes:
+     - ./setenv.sh:/usr/local/tomcat/bin/setenv.sh
+     - ./ontologies:/var/www/ears2
+     - ./context.xml:/usr/local/tomcat/conf/context.xml
+     - ./ears3.war:/usr/local/tomcat/webapps/ears3.war
+     - ./ears3Nav.war:/usr/local/tomcat/webapps/ears3Nav.war
+  postgres:
+    image: postgres:12.5-alpine
+    container_name: ears-server_postgres
+    ports:
+      - 6543:5432
+    environment:
+      - POSTGRES_DB=ears3
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    volumes:
+      - ./ears_base_ddl.sql:/docker-entrypoint-initdb.d/ears_base_ddl.sql
+      - ./ears_postgres_data:/var/lib/postgresql
+    restart: always
+  mysql:
+    image: mariadb:10.4.7-bionic
+    container_name: ears-server_mysql
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_DATABASE=casino
+      - MYSQL_ROOT_PASSWORD=wzka684l7i
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_PASSWORD=casino
+      - MYSQL_USER=casino
+    volumes:
+      - ./ears_acquisition_ddl.sql:/docker-entrypoint-initdb.d/ears_acquisition_ddl.sql
+      - ./ears_mysql_data:/var/lib/mysql
+#      - ./mariadb.cnf: /etc/mysql/mariadb.cnf
+    restart: always
+  acquisition:
+    build: ./Acquisition_System/techsas-run
+    container_name: ears-server_acquisition
+    network_mode: "host" 
+    #integrate with host to receive udp
+    environment:
+      - ACQUISITION_DB_SERVER=127.0.0.1
+      - ACQUISITION_DB_PORT=3307
+      - ACQUISITION_DB_USER=${ACQUISITION_DB_USER}
+      - ACQUISITION_DB_PASS=${ACQUISITION_DB_PASS}
+      - ACQUISITION_PORT=${ACQUISITION_PORT}
+      - NTP_HOST=${NTP_HOST}
+    volumes:
+      - ./netcdf:/acquisition/log/test/netcdf
+    depends_on:
+      - mysql
+    command: ./startup.sh
+    restart: always

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration" xmlns:int-ip="http://www.springframework.org/schema/integration/ip"
+	xmlns:int-file="http://www.springframework.org/schema/integration/file" xmlns:int-groovy="http://www.springframework.org/schema/integration/groovy" xmlns:int-stream="http://www.springframework.org/schema/integration/stream"
+	xmlns:int-ws="http://www.springframework.org/schema/integration/ws" xmlns:int-xml="http://www.springframework.org/schema/integration/xml" xmlns:task="http://www.springframework.org/schema/task"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/stream http://www.springframework.org/schema/integration/stream/spring-integration-stream.xsd
+		http://www.springframework.org/schema/integration/ip http://www.springframework.org/schema/integration/ip/spring-integration-ip.xsd
+		http://www.springframework.org/schema/integration/xml http://www.springframework.org/schema/integration/xml/spring-integration-xml.xsd
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd
+		http://www.springframework.org/schema/integration/groovy http://www.springframework.org/schema/integration/groovy/spring-integration-groovy.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/integration/ws http://www.springframework.org/schema/integration/ws/spring-integration-ws.xsd">
+
+	<!-- Raw data files -->
+	<int-file:inbound-channel-adapter prevent-duplicates="false" id="filesIn" directory="file:input" channel="inputFiles">
+		<int:poller default="true" fixed-rate="10000" />
+	</int-file:inbound-channel-adapter>
+
+
+	<!-- TODO: Scripts (groovy, python) -->
+
+
+
+	<!-- Chain expression: 1) Add extension to header 2) Split the file into lines 3) Route the line to different channel depending on the extension containing in the header -->
+	<int:header-enricher input-channel="inputFiles" output-channel="toSplitter">
+		<int:header name="extension" expression="payload.getName().substring(payload.getName().lastIndexOf('.'))" />
+	</int:header-enricher>
+	<int:splitter input-channel="toSplitter" output-channel="toBridge" expression="T(org.apache.commons.io.FileUtils).lineIterator(payload)" />
+
+	<!-- Define UDP outbound channel -->
+	<int:channel id="toBridge">
+		<int:queue />
+	</int:channel>
+
+	<int:bridge input-channel="toBridge" output-channel="toRouter">
+		<int:poller fixed-delay="1000" max-messages-per-poll="1" />
+	</int:bridge>
+
+	<int:router input-channel="toRouter" expression="headers.extension">
+		<int:mapping value=".gps" channel="udpChannel_11111" />
+		<int:mapping value=".ths" channel="udpChannel_11112" />
+	</int:router>
+
+	<int:channel id="udpChannel_11111"/>
+	<int:channel id="udpChannel_11112"/>
+	<int-ip:udp-outbound-channel-adapter channel="udpChannel_11111" host="134.246.151.198" port="11111" />
+	<int-ip:udp-outbound-channel-adapter channel="udpChannel_11112" host="134.246.151.198" port="11112" />
+
+</beans>

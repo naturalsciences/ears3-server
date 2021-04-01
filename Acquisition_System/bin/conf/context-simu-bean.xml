@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration" xmlns:int-ip="http://www.springframework.org/schema/integration/ip"
+	xmlns:int-file="http://www.springframework.org/schema/integration/file" xmlns:int-groovy="http://www.springframework.org/schema/integration/groovy" xmlns:int-script="http://www.springframework.org/schema/integration/scripting"
+	xmlns:int-stream="http://www.springframework.org/schema/integration/stream" xmlns:int-ws="http://www.springframework.org/schema/integration/ws" xmlns:int-xml="http://www.springframework.org/schema/integration/xml"
+	xmlns:task="http://www.springframework.org/schema/task"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/stream http://www.springframework.org/schema/integration/stream/spring-integration-stream.xsd
+		http://www.springframework.org/schema/integration/scripting http://www.springframework.org/schema/integration/scripting/spring-integration-scripting.xsd
+		http://www.springframework.org/schema/integration/ip http://www.springframework.org/schema/integration/ip/spring-integration-ip.xsd
+		http://www.springframework.org/schema/integration/xml http://www.springframework.org/schema/integration/xml/spring-integration-xml.xsd
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd
+		http://www.springframework.org/schema/integration/groovy http://www.springframework.org/schema/integration/groovy/spring-integration-groovy.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/integration/ws http://www.springframework.org/schema/integration/ws/spring-integration-ws.xsd">
+
+	<!-- Raw data files -->
+	<bean id="weatherDriver" class="fr.ifremer.simu.driver.WeatherDriver" />
+	<int:inbound-channel-adapter ref="weatherDriver" method="message" channel="udpChannel_20200">
+		<int:poller fixed-rate="100" />
+	</int:inbound-channel-adapter>
+
+	<!-- Another Java Class -->
+	<bean id="gyroDriver" class="fr.ifremer.simu.driver.GyroDriver" />
+	<int:inbound-channel-adapter ref="gyroDriver" method="message" channel="udpChannel_20202">
+		<int:poller fixed-rate="500" />
+	</int:inbound-channel-adapter>
+
+	<bean id="hydroDriver" class="fr.ifremer.simu.driver.HydrologyDriver" />
+	<int:inbound-channel-adapter ref="hydroDriver" method="message" channel="udpChannel_20203">
+		<int:poller fixed-rate="1000" />
+	</int:inbound-channel-adapter>
+
+	<bean id="sdgPosDriver" class="fr.ifremer.simu.driver.PSDGPOSDriver" />
+	<int:inbound-channel-adapter ref="sdgPosDriver" method="message" channel="udpChannel_3101">
+		<int:poller fixed-rate="1000" />
+	</int:inbound-channel-adapter>
+
+	<!-- Another Java Class -->
+	<bean id="sdgMetDriver" class="fr.ifremer.simu.driver.PSDGMETDriver" />
+	<int:inbound-channel-adapter ref="sdgMetDriver" method="message" channel="udpChannel_3102">
+		<int:poller fixed-rate="1000" />
+	</int:inbound-channel-adapter>
+
+	<bean id="sdgTssDriver" class="fr.ifremer.simu.driver.PSDGTSSDriver" />
+	<int:inbound-channel-adapter ref="sdgTssDriver" method="message" channel="udpChannel_3103">
+		<int:poller fixed-rate="1000" />
+	</int:inbound-channel-adapter>
+
+	<bean id="sbe21Driver" class="fr.ifremer.simu.driver.SBE21Driver" />
+	<int:inbound-channel-adapter ref="sbe21Driver" method="message" channel="udpChannel_20204">
+		<int:poller fixed-rate="1000" />
+	</int:inbound-channel-adapter>
+	
+	<bean id="dptDriver" class="fr.ifremer.simu.driver.DPTDriver" />
+	<int:inbound-channel-adapter ref="dptDriver" method="message" channel="udpChannel_20205">
+		<int:poller fixed-rate="1000" />
+	</int:inbound-channel-adapter>
+
+	<!-- Define UDP outbound channel -->
+	<int:channel id="udpChannel_20200" />
+	<int:channel id="udpChannel_20202" />
+	<int:channel id="udpChannel_20203" />
+	<int:channel id="udpChannel_20204" />
+	<int:channel id="udpChannel_20205" />
+	<int:channel id="udpChannel_3101" />
+	<int:channel id="udpChannel_3102" />
+	<int:channel id="udpChannel_3103" />
+	
+	<int-ip:udp-outbound-channel-adapter channel="udpChannel_20200" host="127.0.0.1" port="20200" />
+	<int-ip:udp-outbound-channel-adapter channel="udpChannel_20202" host="127.0.0.1" port="20202" />
+	<int-ip:udp-outbound-channel-adapter channel="udpChannel_20203" host="127.0.0.1" port="20203" />
+	<int-ip:udp-outbound-channel-adapter channel="udpChannel_20204" host="127.0.0.1" port="20204" />
+	<int-ip:udp-outbound-channel-adapter channel="udpChannel_20205" host="127.0.0.1" port="20205" />
+	<int-ip:udp-outbound-channel-adapter channel="udpChannel_3101" host="127.0.0.1" port="3101" />
+	<int-ip:udp-outbound-channel-adapter channel="udpChannel_3102" host="127.0.0.1" port="3102" />
+	<int-ip:udp-outbound-channel-adapter channel="udpChannel_3103" host="127.0.0.1" port="3103" />
+
+</beans>

@@ -1,0 +1,161 @@
+{
+  "shipId": "PP",
+  "qgisMissionName": "",
+  "viewList": [
+    {"type": "Anemometer", "frameName": "weather", "navId": "PP_SHIPNAV", "devicePattern": "PP_ANEMOMETER"},
+    {"type": "Casino", "config": {"connectionParams": { "url": "192.168.22.23:3306", "login": "root", "password": "casino" }, "limit": 25, "eventsDisplayColumns": ["Date", "Latitude", "Longitude", "Type", "Observation", "DeviceFullName", "ActionFullName"]}},
+    {"type": "Casino - Add event", "config": {"connectionParams": { "url": "192.168.22.23:3306", "login": "root", "password": "casino" }, "deviceId": "views.casino.add-event.subtitle"}},
+    {"type": "Debug", "role": "ROLE_ADMIN"},
+    {"type": "Devices"},
+    {"type": "Empty"},
+    {"type": "Ephemeride", "frameName": "shipnav" },
+    {"type": "Graphics"},
+    {"type": "ADCP", "frameName": "watercurrentvelocity"},
+    {"type": "Attitude", "frameName": "shipattitude"},
+    {"type": "Depth", "frameName": "shipnav", "devicePattern": "PP_SHIPNAV"},
+    {"type": "Depth", "frameName": "sb_depth"},
+    {"type": "Funes winch", "frameName": "funeswinch"},
+    {"type": "GPS", "frameName": "position"},
+    {"type": "Gravimeter", "frameName": "gravity"},
+    {"type": "Kss31", "frameName": "kss31"},
+    {"type": "Kley state", "frameName": "kley_state"},
+    {"type": "Haul composition", "frameName": "blcar"},
+    {"type": "Hull sound speed", "frameName": "hullsoundspeed"},
+    {"type": "Magnetometer", "frameName": "scalar_mag"},
+    {
+      "type": "Map", "frameName": "shipnav", "devicePattern": "PP_SHIPNAV",
+      "weatherId": "PP_WEATHER", "multibeamId": "PP_EM2040", "mobileDeviceId":"PP_AIS", "frameMobileId":"ais",
+      "config": {"ship": {"length": 107.6, "beam": 20, "xOffset": 10, "yOffset": 50, "lengthVector": 15}}
+    },
+    {"type": "Menu"},
+    {"type": "Message"},
+    {"type": "Navigation", "frameName": "shipnav", "devicePattern": "PP_SHIPNAV"},
+    {"type": "Numerical"},
+    {"type": "SMF", "frameName": "bathymetry"},
+    {"type": "Species", "frameName": "blcar"},
+    {
+      "type": "Station", "frameName": "shipnav", "devicePattern": "PP_SHIPNAV", "weatherId": "PP_WEATHER",
+      "config": {"ship": {"length": 107.6, "beam": 20, "xOffset": 10, "yOffset": 50, "lengthVector": 15}}
+    },
+    {"type": "Thermometer", "frameName": "intake"},
+    {"type": "Thermosal", "frameName": "hydrology", "config": {"flowDeviceId": "PP_DEBITTHERMO"}},
+    {"type": "Trawl", "frameName": "trawl"},
+    {"type": "Video Call", "role": "ROLE_VIDEOCALL"},
+    {"type": "Weather", "frameName": "weather", "navId": "PP_SHIPNAV"},
+    {"type": "Winch Alarm Pp", "frameName": "info"},
+    {"type": "Winch", "frameName": "winch", "config": {"sounder": {"deviceSoundingId": "PP_SHIPNAV", "frameSounding": "shipnav", "sounding": "depth"}}},
+    {"type": "Winch Info", "frameName": "winch", "navId": "PP_SHIPNAV"},
+    {"type": "Propulsion Pp", "frameName": "PpEngine"}
+  ],
+  "video": {
+    "baseUrl": "/janus/",  
+    "list": [
+      {"title": "video.pp-assembly-area",                       "url": "na", "janusStreamIndex": "501", "mosaic": "mosaic5.jpg", "mosaicIndex":  0},
+      {"title": "video.pp-port-gangway",                        "url": "na", "janusStreamIndex": "502", "mosaic": "mosaic5.jpg", "mosaicIndex":  1},
+      {"title": "video.pp-hydro-winch-starboard-gangway",       "url": "na", "janusStreamIndex": "503", "mosaic": "mosaic5.jpg", "mosaicIndex":  2},
+      {"title": "video.pp-ctd-winch",                           "url": "na", "janusStreamIndex": "504", "mosaic": "mosaic5.jpg", "mosaicIndex":  3},
+
+      {"title": "video.pp-foredeck",                            "url": "na", "janusStreamIndex": "505", "mosaic": "mosaic5.jpg", "mosaicIndex":  4},
+      {"title": "video.pp-emergency-unit-room",                 "url": "na", "janusStreamIndex": "506", "mosaic": "mosaic5.jpg", "mosaicIndex":  5},
+      {"title": "video.pp-central-hangar",                      "url": "na", "janusStreamIndex": "507", "mosaic": "mosaic5.jpg", "mosaicIndex":  6},
+      {"title": "video.pp-port-hangar",                         "url": "na", "janusStreamIndex": "508", "mosaic": "mosaic5.jpg", "mosaicIndex":  7},
+
+      {"title": "video.pp-general-quarterdeck",                 "url": "na", "janusStreamIndex": "509", "mosaic": "mosaic5.jpg", "mosaicIndex":  8},
+      {"title": "video.pp-port-quarterdeck",                    "url": "na", "janusStreamIndex": "510", "mosaic": "mosaic5.jpg", "mosaicIndex":  9},
+      {"title": "video.pp-starboard-quarterdeck",               "url": "na", "janusStreamIndex": "511", "mosaic": "mosaic5.jpg", "mosaicIndex": 10},
+      {"title": "video.pp-port-swing-beam",                     "url": "na", "janusStreamIndex": "512", "mosaic": "mosaic5.jpg", "mosaicIndex": 11},
+
+      {"title": "video.pp-starboard-swing-beam",                "url": "na", "janusStreamIndex": "513", "mosaic": "mosaic5.jpg", "mosaicIndex": 12},
+      {"title": "video.pp-bow-thrusters-room",                  "url": "na", "janusStreamIndex": "514", "mosaic": "mosaic5.jpg", "mosaicIndex": 13},
+      {"title": "video.pp-after-hydro-room",                    "url": "na", "janusStreamIndex": "515", "mosaic": "mosaic5.jpg", "mosaicIndex": 14},
+      {"title": "video.pp-port-eg-room",                        "url": "na", "janusStreamIndex": "516", "mosaic": "mosaic5.jpg", "mosaicIndex": 15},
+
+      {"title": "video.pp-starboard-eg-room",                   "url": "na", "janusStreamIndex": "601", "mosaic": "mosaic6.jpg", "mosaicIndex":  0},
+      {"title": "video.pp-boiler-eg-room",                      "url": "na", "janusStreamIndex": "602", "mosaic": "mosaic6.jpg", "mosaicIndex":  1},
+      {"title": "video.pp-schiller-compressor-room",            "url": "na", "janusStreamIndex": "603", "mosaic": "mosaic6.jpg", "mosaicIndex":  2},
+      {"title": "video.pp-port-engine-room",                    "url": "na", "janusStreamIndex": "604", "mosaic": "mosaic6.jpg", "mosaicIndex":  3},
+
+      {"title": "video.pp-starboard-engine-room",               "url": "na", "janusStreamIndex": "605", "mosaic": "mosaic6.jpg", "mosaicIndex":  4},
+      {"title": "video.pp-after-engine-room",                   "url": "na", "janusStreamIndex": "606", "mosaic": "mosaic6.jpg", "mosaicIndex":  5},
+      {"title": "video.pp-after-water-level-room",              "url": "na", "janusStreamIndex": "607", "mosaic": "mosaic6.jpg", "mosaicIndex":  6},
+      {"title": "video.pp-starboard-water-level-room",          "url": "na", "janusStreamIndex": "608", "mosaic": "mosaic6.jpg", "mosaicIndex":  7},
+
+      {"title": "video.pp-CTD-passageway",                      "url": "na", "janusStreamIndex": "609", "mosaic": "mosaic6.jpg", "mosaicIndex":  8},
+      {"title": "video.pp-sensor-room",                         "url": "na", "janusStreamIndex": "610", "mosaic": "mosaic6.jpg", "mosaicIndex":  9},
+      {"title": "video.pp-mission-cargo-hold",                  "url": "na", "janusStreamIndex": "611", "mosaic": "mosaic6.jpg", "mosaicIndex": 10},
+      {"title": "video.pp-port-deep-sea-winch-capstan",         "url": "na", "janusStreamIndex": "612", "mosaic": "mosaic6.jpg", "mosaicIndex": 11},
+
+      {"title": "video.pp-starboard-deep-sea-winch-capstan",    "url": "na", "janusStreamIndex": "613", "mosaic": "mosaic6.jpg", "mosaicIndex": 12},
+      {"title": "video.pp-winch-room",                          "url": "na", "janusStreamIndex": "614", "mosaic": "mosaic6.jpg", "mosaicIndex": 13},
+      {"title": "video.pp-synthetic-deep-sea-cable",            "url": "na", "janusStreamIndex": "615", "mosaic": "mosaic6.jpg", "mosaicIndex": 14},
+      {"title": "video.pp-deep-sea-rov-cable",                  "url": "na", "janusStreamIndex": "616", "mosaic": "mosaic6.jpg", "mosaicIndex": 15},
+
+      {"title": "video.pp-starboard-after-gantry",              "url": "na", "janusStreamIndex": "701", "mosaic": "mosaic7.jpg", "mosaicIndex":  0},
+      {"title": "video.pp-machine-multi",                       "url": "na", "janusStreamIndex": "702", "mosaic": "mosaic7.jpg", "mosaicIndex":  1},
+      {"title": "video.pp-conference-room-1",                   "url": "na", "janusStreamIndex": "703", "mosaic": "mosaic7.jpg", "mosaicIndex":  2},
+      {"title": "video.pp-confÃ©rence-room-2",                   "url": "na", "janusStreamIndex": "704", "mosaic": "mosaic7.jpg", "mosaicIndex":  3},
+
+      {"title": "video.pp-rov-1",                               "url": "na", "janusStreamIndex": "705", "mosaic": "mosaic7.jpg", "mosaicIndex":  4},
+      {"title": "video.pp-rov-2",                               "url": "na", "janusStreamIndex": "706", "mosaic": "mosaic7.jpg", "mosaicIndex":  5},
+      {"title": "video.pp-steel-deep-sea-cable",                "url": "na", "janusStreamIndex": "707", "mosaic": "mosaic7.jpg", "mosaicIndex":  6},
+
+      {"title": "video.rovhd",                                  "url": "na", "janusStreamIndex": "800", "mosaic": "mosaic_engins.jpg", "mosaicIndex": 1 }   ]
+  },
+  "defaultDashboard": [
+    {"id": 1, "sizeX": 6, "sizeY": 9, "row": 0, "col": 0, "type": "Navigation", "config": {"deviceId": "PP_SHIPNAV", "frameId": "shipnav"}},
+    {
+      "id": 2, "sizeX": 6, "sizeY": 9, "row": 0, "col": 6, "type": "Map", "config": {
+      "mode": "navigation", "deviceId": "PP_SHIPNAV", "frameId": "shipnav","mobileDeviceId":"PP_AIS","frameMobileId":"ais",
+      "weatherId": "PP_WEATHER", "multibeamId": "PP_EM2040",
+      "ship": {"length": 107.6, "beam": 20, "xOffset": 10, "yOffset": 50, "lengthVector": 15}
+    }
+    },
+    {
+      "id": 4, "sizeX": 6, "sizeY": 9, "row": 9, "col": 0, "type": "Weather",
+      "config": {"deviceId": "PP_WEATHER", "frameId": "weather", "navId": "PP_SHIPNAV"}
+    },
+    {
+      "id": 3, "sizeX": 6, "sizeY": 9, "row": 9, "col": 6, "type": "Thermosal",
+      "config": {"deviceId": "PP_SBE21", "frameId": "hydrology", "flowDeviceId": "PP_DEBITTHERMO"}
+    }
+  ],
+  "defaultStaticGrid": [
+    [
+      {
+        "id": "1", "type": "Navigation", "config": {"deviceId": "PP_SHIPNAV", "frameId": "shipnav"}
+      },
+      {
+        "id": "2", "type": "Map", "config": {
+        "mode": "navigation", "deviceId": "PP_SHIPNAV", "frameId": "shipnav","mobileDeviceId":"PP_AIS", "frameMobileId":"ais",
+        "weatherId": "PP_WEATHER", "multibeamId": "PP_EM2040",
+        "ship": {"length": 107.6, "beam": 20, "xOffset": 10, "yOffset": 50, "lengthVector": 15}
+      }
+      },
+      {"id": "3", "type": "Devices"}
+    ], [
+      {"id": "4", "type": "Weather", "config": {"deviceId": "PP_WEATHER", "frameId": "weather", "navId": "PP_SHIPNAV"}},
+      {
+        "id": "5", "type": "Thermosal",
+        "config": {"deviceId": "PP_SBE", "frameId": "hydrology", "flowDeviceId": "PP_DEBITTHERMO"}
+      },
+      {"id": "6"}
+    ]
+  ],
+  "dataAccessLists": {
+    "navigation": [
+      {"deviceId": "PP_SHIPNAV", "frameId": "shipnav", "id": "lat", "colname": "Lat"},
+      {"deviceId": "PP_SHIPNAV", "frameId": "shipnav", "id": "long", "colname": "Long"},
+      {"deviceId": "PP_SHIPNAV", "frameId": "shipnav", "id": "heading", "colname": "Heading"},
+      {"deviceId": "PP_SHIPNAV", "frameId": "shipnav", "id": "depth", "colname": "Sounder"},
+      {"deviceId": "PP_SHIPNAV", "frameId": "shipnav", "id": "gndspeed", "colname": "Ground speed"},
+      {"deviceId": "PP_SHIPNAV", "frameId": "shipnav", "id": "gndcourse", "colname": "Ground course"}
+    ],
+    "weather": [
+      {"deviceId": "PP_WEATHER", "frameId": "weather", "id": "trueairspeed", "colname": "Air speed"},
+      {"deviceId": "PP_WEATHER", "frameId": "weather", "id": "trueairheading", "colname": "Air heading"},
+      {"deviceId": "PP_WEATHER", "frameId": "weather", "id": "relairspeed", "colname": "Rel air speed"},
+      {"deviceId": "PP_WEATHER", "frameId": "weather", "id": "relairheading", "colname": "Rel air heading"}
+    ],
+    "thermosal": []
+  }
+}

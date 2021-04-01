@@ -1,0 +1,13 @@
+2021-03-30 18:22:41 - INFO  - Starting TechsasLauncher on odn-tv with PID 8463 (/home/thomas/dev/ears3-server/Acquisition_System/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by thomas in /home/thomas/dev/ears3-server/Acquisition_System/techsas-run)
+2021-03-30 18:22:41 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2021-03-30 18:22:41 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
+2021-03-30 18:25:05 - INFO  - Starting TechsasLauncher on odn-tv with PID 8536 (/home/thomas/dev/ears3-server/Acquisition_System/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by thomas in /home/thomas/dev/ears3-server/Acquisition_System/techsas-run)
+2021-03-30 18:25:05 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2021-03-30 18:25:05 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
+2021-03-30 18:25:17 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (FATAL: database "cruises" does not exist)
+2021-03-30 18:25:19 - INFO  - Web application fully configured
+2021-03-30 18:25:24 - INFO  - Started TechsasLauncher in 20.23 seconds (JVM running for 21.291)
+2021-03-30 18:44:58 - INFO  - Starting TechsasLauncher on odn-tv with PID 4775 (/home/thomas/dev/ears3-server/Acquisition_System/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by thomas in /home/thomas/dev/ears3-server/Acquisition_System/techsas-run)
+2021-03-30 18:44:58 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2021-03-30 18:44:58 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
+2021-03-30 18:45:11 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (FATAL: database "cruises" does not exist)

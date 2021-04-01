@@ -1,0 +1,26 @@
+## ===================================================================
+## h2h2 profile
+## ===================================================================
+
+spring:
+  profiles: h2h2
+
+  db:
+    datasource:
+#      jdbc-url: "jdbc:h2:mem:extraction" # for "database" profile
+      jdbc-url: "jdbc:h2:file:./cruises/test/archive;MV_STORE=FALSE;DB_CLOSE_ON_EXIT=FALSE"
+      driver-class-name: "org.h2.Driver"
+      username: "sa"
+      password: "sa"
+
+## H2 database options:
+##      MVCC: Multi-Version Concurrency Control
+##      MV_STORE: For H2 version 1.4 and newer, the MVStore is the default storage engine (store in .mv.db-files)
+##      DB_CLOSE_ON_EXIT=FALSE: Don't Close a Database when the VM Exits => prevent "SQL Error: 90121, SQLState: 90121 ERROR - Database is already closed"
+
+  extdb:
+    datasource:
+      jdbc-url: "jdbc:h2:file:./cruises/test/data;MV_STORE=FALSE;DB_CLOSE_ON_EXIT=FALSE;FILE_LOCK=NO"
+      driver-class-name: "org.h2.Driver"
+      username: "sa"
+      password: "sa"

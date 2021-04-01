@@ -1,0 +1,30 @@
+## ===================================================================
+## Acquisition profile
+## ===================================================================
+
+spring:
+    profiles: acquisition, eurofleets
+acquisition:
+    broker:
+        enabled: true
+        url: "failover:(tcp://localhost:61616)"
+        listenURIs:
+            - "tcp://0.0.0.0:61616"
+            - "ws://0.0.0.0:61614"
+            - "mqtt://0.0.0.0:61222"
+## .. archiving service (@ConfigurationProperties)
+    archiving:
+        cruise:
+            name: "test"
+            archivingPath: "./log"
+            archivingRotationMode: HOURLY
+        subServices:
+          - db
+          - netcdf
+        raw:
+            filePathPattern: "{cruiseName}/raw/{sensor}/{sensor}-{date}.log"
+            frameHeader: "{date,yyyy-MM-dd'T'HH:mm:ss.SSS'Z'},"
+            frameSeparator: "\n"
+            blacklistChannels:
+        netcdf:
+            filePathPattern: "{cruiseName}/netcdf/{sensor}/{sensor}-{frame}-{date}.nc"

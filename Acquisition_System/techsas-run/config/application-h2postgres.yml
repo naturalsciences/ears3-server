@@ -1,0 +1,14 @@
+## ===================================================================
+## h2postgres profile
+## ===================================================================
+
+spring:
+  profiles: h2postgres
+
+  db:
+    datasource:   # (@ConfigurationProperties)
+#      jdbc-url: "jdbc:h2:mem:extraction" # for "database" profile
+      jdbc-url: "jdbc:h2:file:./log/test/archive;MV_STORE=FALSE;DB_CLOSE_ON_EXIT=FALSE" # for "acquisition" profile
+      driver-class-name: "org.h2.Driver"
+      username: "sa"
+      password: "sa"

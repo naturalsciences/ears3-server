@@ -1,0 +1,19 @@
+## ===================================================================
+## Database profile
+## ===================================================================
+
+spring:
+    profiles: database
+acquisition:
+    broker:
+        enabled: false
+        url: "vm://broker?create=false"
+        listenURIs:
+## .. archiving service (@ConfigurationProperties)
+    archiving:
+        initialCruiseName: "test"
+        subServices:
+            - db
+        blacklist:
+            - TL_EM302
+            - TL_EK80_70k

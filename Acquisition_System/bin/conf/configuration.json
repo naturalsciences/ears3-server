@@ -1,0 +1,149 @@
+{
+    "channels": [
+        {
+            "name": "PSDGPOS01",
+            "url": "udp://localhost:3101"
+        },
+        {
+            "name": "PSDGMET01",
+            "url": "udp://localhost:3102"
+        },
+        {
+            "name": "PSDGTSS01",
+            "url": "udp://localhost:3103"
+        }
+    ],
+    "devices": [
+        {
+            "configuration": {
+                "id": "PSDGPOS01",
+                "name": "PSDGPOS",
+                "period": 1000,
+                "metadata": {},
+                "frameNames": {
+                    "psdgpos": [
+                        "measureTS",
+                        "lat",
+                        "long",
+                        "head",
+                        "speed",
+                        "depth",
+                        "cog",
+                        "sog"
+                    ]
+                }
+            },
+            "channels": {
+                "PSDGPOS01": [
+                    {
+                        "id": "PSDGPOS01",
+                        "converterClassName": "fr.ifremer.acquisition.driver.converter.impl.nmea.PSDGPOSConverter",
+                        "header": "$PSDGPOS",
+                        "fields": {
+                            "psdgpos:long": 3,
+                            "psdgpos:lat": 4,
+                            "psdgpos:head": 5,
+                            "psdgpos:speed": 6
+                            "psdgpos:depth": 7,
+                            "psdgpos:cog": 8,
+                            "psdgpos:sog": 9,
+                        },
+                        "parameters": {
+                            "separator": ","
+                        }
+                    }
+                ]
+            },
+            "triggerMode": "frame",
+            "triggerInterval": 1000,
+            "triggerFrameName": "$PSDGPOS"
+        },
+        {
+            "configuration": {
+                "id": "PSDGMET01",
+                "name": "PSDGMET",
+                "period": 1000,
+                "metadata": {},
+                "frameNames": {
+                    "psdgmet": [
+                        "measureTS",
+                        "velocity",
+                        "gust",
+                        "direction",
+                        "airtemp",
+                        "humidity",
+                        "radiation",
+                        "pressure",
+                        "watertemp"
+                    ]
+                }
+            },
+            "channels": {
+                "PSDGMET01": [
+                    {
+                        "id": "PSDGMET01",
+                        "converterClassName": "fr.ifremer.acquisition.driver.converter.impl.nmea.PSDGMETConverter",
+                        "header": "$PSDGMET",
+                        "fields": {
+                            "psdgmet:velocity": 3,
+                            "psdgmet:gust": 4,
+                            "psdgmet:direction": 5,
+                            "psdgmet:airtemp": 6,
+                            "psdgmet:humidity": 7,
+                            "psdgmet:radiation": 8,
+                            "psdgmet:pressure": 9,
+                            "psdgmet:watertemp": 10
+                        },
+                        "parameters": {
+                            "separator": ","
+                        }
+                    }
+                ]
+            },
+            "triggerMode": "frame",
+            "triggerInterval": 1000,
+            "triggerFrameName": "$PSDGMET"
+        },
+        {
+            "configuration": {
+                "id": "PSDGTSS01",
+                "name": "PSDGTSS",
+                "period": 1000,
+                "metadata": {},
+                "frameNames": {
+                    "psdgtss": [
+                        "measureTS",
+                        "salinity",
+                        "watertemp",
+                        "fluo",
+                        "conduct",
+                        "sigmat"
+                    ]
+                }
+            },
+            "channels": {
+                "PSDGTSS01": [
+                    {
+                        "id": "PSDGTSS01",
+                        "converterClassName": "fr.ifremer.acquisition.driver.converter.impl.nmea.PSDGTSSConverter",
+                        "header": "$PSDGTSS",
+                        "fields": {
+                            "psdgtss:salinity": 3,
+                            "psdgtss:watertemp": 4,
+                            "psdgtss:fluo": 5,
+                            "psdgtss:conduct": 6,
+                            "psdgtss:sigmat": 7
+                        },
+                        "parameters": {
+                            "separator": ","
+                        }
+                    }
+                ]
+            },
+            "triggerMode": "frame",
+            "triggerInterval": 1000,
+            "triggerFrameName": "$PSDGTSS"
+        }
+        
+    ]
+}
