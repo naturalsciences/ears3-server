@@ -149,57 +149,57 @@ The -d flag starts the container based on the image in a detached mode, meaning 
 When you run the image, the different components are started in certain order. The web server (tomcat) is the latest as it has to wait for the database to be completed. Wait at least a minute, then visit the following addresses in your web browser:
 
 ```
-http://localhost:8181/ears3/html/event
-http://localhost:8181/ears3/events
-http://localhost:8181/ears3Nav/tss/getLast/xml
-http://localhost:8181/ears3Nav/tss/getLast/datagram
-http://localhost:8181/ears3Nav/tss/getLast/json
-http://localhost:8181/ears3Nav/met/getLast/xml
-http://localhost:8181/ears3Nav/met/getLast/json
-http://localhost:8181/ears3Nav/met/getLast/datagram
-http://localhost:8181/ears3Nav/nav/getLast/xml
-http://localhost:8181/ears3Nav/nav/getLast/json
-http://localhost:8181/ears3Nav/nav/getLast/datagram
+http://localhost/ears3/html/event
+http://localhost/ears3/events
+http://localhost/ears3Nav/tss/getLast/xml
+http://localhost/ears3Nav/tss/getLast/datagram
+http://localhost/ears3Nav/tss/getLast/json
+http://localhost/ears3Nav/met/getLast/xml
+http://localhost/ears3Nav/met/getLast/json
+http://localhost/ears3Nav/met/getLast/datagram
+http://localhost/ears3Nav/nav/getLast/xml
+http://localhost/ears3Nav/nav/getLast/json
+http://localhost/ears3Nav/nav/getLast/datagram
 
-http://localhost:8181/ears3Nav/tss/getNearest/xml?date=2021-06-25T08:39:00
-http://localhost:8181/ears3Nav/tss/getNearest/json?date=2021-06-25T08:39:00
-http://localhost:8181/ears3Nav/tss/getNearest/datagram?date=2021-06-25T08:39:00
-http://localhost:8181/ears3Nav/met/getNearest/xml?date=2021-06-25T08:39:00
-http://localhost:8181/ears3Nav/met/getNearest/json?date=2021-06-25T08:39:00
-http://localhost:8181/ears3Nav/met/getNearest/datagram?date=2021-06-25T08:39:00
-http://localhost:8181/ears3Nav/nav/getNearest/xml?date=2021-06-25T08:39:00
-http://localhost:8181/ears3Nav/nav/getNearest/json?date=2021-06-25T08:39:00
-http://localhost:8181/ears3Nav/nav/getNearest/datagram?date=2021-06-25T08:39:00
+http://localhost/ears3Nav/tss/getNearest/xml?date=2021-06-25T08:39:00
+http://localhost/ears3Nav/tss/getNearest/json?date=2021-06-25T08:39:00
+http://localhost/ears3Nav/tss/getNearest/datagram?date=2021-06-25T08:39:00
+http://localhost/ears3Nav/met/getNearest/xml?date=2021-06-25T08:39:00
+http://localhost/ears3Nav/met/getNearest/json?date=2021-06-25T08:39:00
+http://localhost/ears3Nav/met/getNearest/datagram?date=2021-06-25T08:39:00
+http://localhost/ears3Nav/nav/getNearest/xml?date=2021-06-25T08:39:00
+http://localhost/ears3Nav/nav/getNearest/json?date=2021-06-25T08:39:00
+http://localhost/ears3Nav/nav/getNearest/datagram?date=2021-06-25T08:39:00
 
-http://localhost:8181/ears3Nav/tss/getBetween/xml?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-http://localhost:8181/ears3Nav/tss/getBetween/json?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-http://localhost:8181/ears3Nav/tss/getBetween/datagram?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-http://localhost:8181/ears3Nav/met/getBetween/xml?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-http://localhost:8181/ears3Nav/met/getBetween/json?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-http://localhost:8181/ears3Nav/met/getBetween/datagram?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-http://localhost:8181/ears3Nav/nav/getBetween/xml?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-http://localhost:8181/ears3Nav/nav/getBetween/json?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-http://localhost:8181/ears3Nav/nav/getBetween/datagram?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
+http://localhost/ears3Nav/tss/getBetween/xml?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
+http://localhost/ears3Nav/tss/getBetween/json?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
+http://localhost/ears3Nav/tss/getBetween/datagram?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
+http://localhost/ears3Nav/met/getBetween/xml?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
+http://localhost/ears3Nav/met/getBetween/json?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
+http://localhost/ears3Nav/met/getBetween/datagram?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
+http://localhost/ears3Nav/nav/getBetween/xml?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
+http://localhost/ears3Nav/nav/getBetween/json?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
+http://localhost/ears3Nav/nav/getBetween/datagram?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
 
 http://localhost:8080
 ```
-Replace localhost:8080 localhost:8181 with the server&#39;s IP adress and the actual port you have configured (see lower).
+Replace localhost with the server&#39;s IP adress and the actual port you have configured (see lower).
 
 Make sure that the server is accessible from the network.
 
 ## Adresses, ports and environment variables
 
-The EARS webservices are reachable on [http://localhost:8181](http://localhost:8181) and the acquisition server on [http://localhost:8080](http://localhost:8080), by default. You can modify these ports in the .env file but this is not recommended. If a port is already taken, you either change the port in the .env file, or preferrably kill the application that takes the port. In order to find applications using a port, use eg. `sudo netstat -tulpn | grep 8080`, note the pid in the last column and then `sudo kill <pid>`
+The EARS webservices are reachable on [http://localhost](http://localhost) and the acquisition server on [http://localhost:8080](http://localhost:8080), by default. You can modify these ports in the .env file but this is not recommended. If a port is already taken, you either change the port in the .env file, or preferrably kill the application that takes the port. In order to find applications using a port, use eg. `sudo netstat -tulpn | grep 8080`, note the pid in the last column and then `sudo kill <pid>`
 
 You have to change the RV identifier in the .env file. Please change EARS_PLATFORM=SDN:C17::11BE to the C17 (ICES) code of the RV this software will be run on. The C17 codes are here: http://vocab.nerc.ac.uk/collection/C17/current/
 
 ## Usage
 
-Go to `http://localhost:8181/ears3/html/event` or simply `http://localhost:8181/ears3` to manage the programs and cruises and to create new events. You are first prompted to provide your name and email address. Please note that for the time being the event fields are populated with the ontology from the RV Belgica. This will be changed in the near future. A new vessel ontology file can be saved in the ontologies directory and the changes will be immediately visible in the event creation interface.
+Go to `http://localhost/ears3/html/event` or simply `http://localhost/ears3` to manage the programs and cruises and to create new events. You are first prompted to provide your name and email address. Please note that for the time being the event fields are populated with the ontology from the RV Belgica. This will be changed in the near future. A new vessel ontology file can be saved in the ontologies directory and the changes will be immediately visible in the event creation interface.
 
-Go to `http://localhost:8181/ears3/sml?platformUrn=SDN:C17::XYZA` to see the Sensor ML description for the whole ship. Follow the links for the events of specific devices.
+Go to `http://localhost/ears3/sml?platformUrn=SDN:C17::XYZA` to see the Sensor ML description for the whole ship. Follow the links for the events of specific devices.
 
-Go to `http://localhost:8181/ears3/cruise/csr?identifier=cruise_identifier` to see the a full SDN Cruise Summary Report. It is not yet possible to create Cruises via the interface. 
+Go to `http://localhost/ears3/cruise/csr?identifier=cruise_identifier` to see the a full SDN Cruise Summary Report. Cruises are created with the java client. 
 
 Go to `http://localhost:8080` for the acquisition.
 
