@@ -130,10 +130,12 @@ Go to where you want to install the docker container. The location has no specia
 
 ```
 cd <installation directory>
-git clone https://github.com/tvandenberghe/ears3-server.git
+git clone https://github.com/naturalsciences/ears3-server.git
 cd ears3-server
 ```
-The address will change to `https://github.com/naturalsciences/ears3-server.git`
+You also need to download the acquisition launcher from https://share.naturalsciences.be/f/18ddde1d5eb14981b8ee/?dl=1 and put it in ears3-server/Acquisition_System/techsas-run.
+
+Recent builds became too large for github (100MB).
 
 ## Create the docker container and run the image
 
@@ -148,6 +150,7 @@ The -d flag starts the container based on the image in a detached mode, meaning 
 
 When you run the image, the different components are started in certain order. The web server (tomcat) is the latest as it has to wait for the database to be completed. Wait at least a minute, then visit the following addresses in your web browser:
 
+The date ranges are just examples and no data can be returned if the acquisition did not yet run.
 ```
 http://localhost/ears3/html/event
 http://localhost/ears3/events
