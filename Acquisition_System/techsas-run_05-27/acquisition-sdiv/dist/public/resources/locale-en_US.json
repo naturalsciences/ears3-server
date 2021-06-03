@@ -1,0 +1,791 @@
+{
+    "directives.language-select.Language": "en_US",
+    "Data": "Data",
+    "Frame": "Frame",
+    "Device": "Capteur",
+    "Add data": "Add data",
+    "archive-loading": "Archived data loading...",
+    "air pressure": "Air Pressure",
+    "air temperature": "Air Temperature",
+    "Graphic scale": "Graphic scale",
+    "dew point": "Dew Point",
+    "Relative": "Relative",
+    "relative moisture": "Relative Moisture",
+    "Scale": "Scale",
+    "Settings": "Settings",
+    "solar radiation": "Solar Radiation",
+    "water temperature": "Water Temperature",
+    "yes": "yes",
+    "cancel": "cancel",
+    "components.code-name-fields": {
+    "device": {
+        "code": "Device code",
+        "name": "Device name"
+    },
+    "action": {
+        "code": "Action Code",
+        "name": "Action Name"
+    }
+    },
+    "components.navbar": {
+        "select-dashboard": "Select dashboard",
+        "day-night-mode": "Day/night mode",
+        "server-time": "Server time (UTC: Universal Time Coordinated)",
+        "select-language": "Select language",
+        "online-help": "Online help page",
+        "message": "Not for navigational use",
+        "connection-error": "No Connection",
+        "messaging": "New message"
+    },
+    "components.settings-button": {
+        "change-view": "Change view",
+        "close": "Close"
+    },
+    "components.sidenav": {
+        "not-connected": "Not connected",
+        "log-in": "Log in",
+        "log-out": "Log out",
+        "login": "Log in",
+        "password": "Password",
+        "connection-error": "Connection error",
+        "dashboard.title": "DASHBOARD",
+        "tracking.title": "CARTOGRAPHIC TRACKING",
+        "data-access.title": "DATA ACCESS",
+        "acquisition.title": "ACQUISITION",
+        "static-grid.title": "STATIC GRID"
+    },
+    "date.day": {
+        "Monday": "Monday",
+        "Tuesday": "Tuesday",
+        "Wednesday": "Wednesday",
+        "Thursday": "Thursday",
+        "Friday": "Friday",
+        "Saturday": "Saturday",
+        "Sunday": "Sunday"
+    },
+    "date.month": {
+        "January": "January",
+        "February": "February",
+        "March": "March",
+        "April": "April",
+        "May": "May",
+        "June": "June",
+        "July": "July",
+        "August": "August",
+        "September": "September",
+        "October": "October",
+        "November": "November",
+        "December": "December"
+    },
+    "dialog.data-selection": {
+        "title": "Add data",
+        "data-selected": "data selected",
+        "add": "Add"
+    },
+    "dialog.date-range-selection": {
+        "title": "Date range selection",
+        "time": "Time",
+        "start-date": "Start date",
+        "end-date": "End date"
+    },
+    "dialog.messaging": {
+        "title": "Messaging",
+        "submit": "Send",
+        "label": "Type your message",
+        "user": "Unknown user"
+    },
+    "dialog.messagingAccess": {
+        "title": "Password requested",
+        "submit": "submit",
+        "label": "Type the password",
+        "passwordError": "Wrong password",
+        "CapsLockError": "Caps lock is on"
+    },
+    "dialog.save-dashboard": {
+        "title": "Save dashboard",
+        "title-label": "Title",
+        "save": "Save"
+    },
+    "dialog.view-selection": {
+        "title": "Select a view",
+        "tabs": {
+            "miscellaneous": "General",
+            "navigation": "Navigation",
+            "scientific": "Scientific",
+            "technic": "Technic",
+            "video": "Video",
+            "debug": "Debug"
+        }
+    },
+    "pages.acquisition": {
+        "new-device": "New device"
+    },
+    "pages.dashboard": {
+        "select-dashboard": "Select dashboard",
+        "new-dashboard": "New dashboard",
+        "save-dashboard": "'Save as' current dashboard",
+        "delete-dashboard": "Delete current dashboard",
+        "new-card": "Add new card",
+        "connection-needed-title": "Connection needed",
+        "connection-needed-msg": "You must be connected to save a dashboard!",
+        "dashboard-saved": "Dashboard saved",
+        "dashboard-exists": "this dashboard already exists. Are you sure you want to overwrite it?",
+        "dashboard-saving-fail": "Dashboard saving has failed",
+        "dashboard-removed": "Dashboard removed",
+        "dashboard-removed-fail": "Dashboard removing has failed",
+        "save-dashboard-title": "Save dashboard",
+        "delete": "delete",
+        "remove-dashboard-title": "Remove dashboard",
+        "remove-dashboard-msg": "Are you sure to remove the current dashboard?"
+    },
+    "pages.data-access": {
+        "simple": "Simple",
+        "advanced": "Advanced",
+        "search": "Search",
+        "sampling-interval": "Sampling interval",
+        "max-values": "Max number of values",
+        "time-stamping-strat": "Time stamping strategy",
+        "interval": "Interval",
+        "stamp-fraction-int": "Stamp fraction interval",
+        "reference": "Reference",
+        "resampling": "Resampling",
+        "period": "Period",
+        "edit-period": "Edit the period",
+        "navigation": "Navigation",
+        "weather": "Weather",
+        "custom-data": "Custom selection",
+        "others": "Custom selection",
+        "add-navigation": "Add navigation data",
+        "add-weather": "Add weather data",
+        "add-thermosal": "Add thermosalinometer data",
+        "add-custom-data": "Add custom data",
+        "column-name": "Column name",
+        "aggregate": "Aggregate",
+        "units": "Units",
+        "default": "Default",
+        "data-selected": "data selected",
+        "data-selection": "Data selection",
+        "data-already-in-table": "Some of the selected data were already in the table!",
+        "error": "Error",
+        "error-request-msg": "Archive data are unavailable.",
+        "device-list-unavailable": "Device list not available!",
+        "show-chart": "show chart",
+        "show-table": "show table",
+        "show-map": "show map",
+        "frames-received": "frames received",
+        "research-msg": "Research in progress...",
+        "remove-all": "Remove all",
+        "warning": "Warning",
+        "warning-msg": "Considering the period and the sampling interval, the amount of data requested could be too large...",
+        "continue": "continue",
+        "cancel": "cancel",
+        "last-hour": "last hour",
+        "last-6-hours": "last 6 hours",
+        "last-24-hours": "last 24 hours",
+        "custom-range": "custom range"
+    },
+    "pages.login": {
+        "authentication": "Authentication needed",
+        "authentication-msg": "You must be logged in to a profil which has permission to access this page."
+    },
+    "pages.static-grid": {
+        "switch-to-1": "Switch to 1 view",
+        "switch-to-4": "Switch to 4 views",
+        "switch-to-6": "Switch to 6 views",
+        "connection-needed-title": "Connection needed",
+        "connection-needed-msg": "You must be connected to save the current configuration!"
+    },
+    "pages.welcome": {
+        "info": "This is a new version of TECHSAS / SDIV, if you have any suggestions or remarks, please contact us : ",
+        "techsas.subtitle": "TEChnical and Scientific sensors Acquisition System",
+        "dashboard.title": "DASHBOARD",
+        "dashboard.subtitle": "Make your own dashboard for real time data visualization",
+        "data-access.title": "DATA ACCESS",
+        "data-access.subtitle": "Extract data from the acquisition server",
+        "acquisition.title": "ACQUISITION",
+        "acquisition.subtitle": "Manage the acquisition server and the devices connected to the network"
+    },
+    "video": {
+        "port-quarterdeck": "Port Quarterdeck",
+        "general-surveillance": "General Surveillance",
+        "after-gantry-ROV": "ROV After Gantry",
+        "starboard-trawl-door": "Stbd Trawl Door",
+        "port-trawl-door": "Port Trawl Door",
+        "CTD-passageway": "CTD Passageway",
+        "port-gangway": "Port Gangway",
+        "CTD-winch": "CTD Winch",
+        "hydrology-winch": "Hydro. Winch",
+        "bridle-winch": "Bridle Winch",
+        "drum": "Drum",
+        "after-fish-sorting-room": "After Fish Sort. Room",
+        "forward-fish-sorting-room": "For. Fish Sort. Room",
+        "machine": "Machine",
+        "port-U-passageway": "Port U Passageway",
+        "starboard-U-passageway": "Stbd U Passageway",
+        "shaft-line": "Shaft Line",
+        "starboard-quarterdeck": "Stbd Quarterdeck",
+        "crows-nest": "Crow's Nest",
+        "vehicle-1": "Engin 1",
+        "vehicle-2": "Engin 2",
+        "quarterdeck": "Quarterdeck",
+        "after-gantry": "After Gantry",
+        "starboard-hangar": "Stbd Hangar",
+        "oceano-winch": "Oceano Winch",
+        "capstan": "Capstan",
+        "hangar-axial-winch": "Hangar axial Winch",
+        "quadrivision": "Quadrivision",
+        "after-machine": "After Machine",
+        "forward-machine": "For. Machine",
+        "central-machine": " Centr. Machine",
+        "bow-thruster": "Bow Thruster",
+        "rov": "ROV",
+        "rovhd": "ROV HD",
+        "scampi": "Scampi",
+        "port-warp": "Port Warp",
+        "starboard-warp": "Stbd Warp",
+        "ariane": "Ariane",
+        "pp-assembly-area": "Assembly Area Deck C",
+        "pp-port-gangway": "Port Gangway Deck A",
+        "pp-hydro-winch-starboard-gangway": "Hydro. Winch / Starboard Gangway",
+        "pp-ctd-winch": "CTD Winch",
+        "pp-foredeck": "Foredeck",
+        "pp-emergency-unit-room": "Emergency Unit Room",
+        "pp-central-hangar": "Central Hangar",
+        "pp-port-hangar": "Port Hangar",
+        "pp-general-quarterdeck": "General Quarterdeck",
+        "pp-port-quarterdeck": "Port Quarterdeck",
+        "pp-starboard-quarterdeck": "Starboard Quarterdeck",
+        "pp-port-swing-beam": "Port Swing Beam",
+        "pp-starboard-swing-beam": "¨Port Swing Beam",
+        "pp-bow-thrusters-room": "Bow Thrusters Room",
+        "pp-after-hydro-room": "After Hydro Room",
+        "pp-port-eg-room": "Port Generator Room",
+        "pp-starboard-eg-room": "Starboard Generator Room",
+        "pp-boiler-eg-room": "Boiler Room",
+        "pp-schiller-compressor-room": "Schiller Compressor Room",
+        "pp-port-engine-room": "Port Engine Room",
+        "pp-starboard-engine-room": "Starboard Engine Room",
+        "pp-after-engine-room": "After Engine Room",
+        "pp-after-water-level-room": "After Water Level Room",
+        "pp-starboard-water-level-room": "Starboard Water Level Room",
+        "pp-CTD-passageway": "CTD Passageway",
+        "pp-sensor-room": "Sensor Room",
+        "pp-mission-cargo-hold": "Mission Cargo Hold",
+        "pp-port-deep-sea-winch-capstan": "Port Deep Sea Capstan",
+        "pp-starboard-deep-sea-winch-capstan": "Starboard Deep See Capstan",
+        "pp-winch-room": "Winch Room",
+        "pp-synthetic-deep-sea-cable": "Synthetic Deep Sea Cable)",
+        "pp-deep-sea-rov-cable": "ROV Deep Sea Cable",
+        "pp-starboard-after-gantry": "Starboard After Gantry",
+        "pp-machine-multi": "Machine videos",
+        "pp-conference-room-1": "Conference Room 1",
+        "pp-conférence-room-2": "Conference Room 2",
+        "pp-rov-1": "ROV 1",
+        "pp-rov-2": "ROV 2",
+        "pp-nautile": "Nautile",
+        "pp-steel-deep-sea-cable": "Deep Sea Steel Cable",
+        "pp-no-video": "No video",
+        "bbp-starboard-skeg": "Starboard Skeg",
+        "bbp-forward-wheelhouse": "Forward Wheelhouse",
+        "bbp-port-skeg": "Port Skeg",
+        "bbp-after-wheelhouse": "After Wheelhouse",
+        "bbp-after-mission-center": "Aft Mission Center",
+        "bbp-forward-starboard-gangway": "For Stbd Gangway",
+        "bbp-after-starboard-gangway": "Aft Stbd Gangway",
+        "bbp-ctd-winch": "CTD Winch",
+        "bbp-crane": "Crane",
+        "bbp-gangway-entry": "Gangway Entry",
+        "bbp-winch-room": "Winch Room",
+        "bbp-gravimeter": "Gravimeter",
+        "bbp-starboard-DG-room": "Stbd DG Room",
+        "bbp-port-DG-room": "Port DG Room",
+        "bbp-starboard-aux-room": "Stbd Aux Room",
+        "bbp-port-aux-room": "Port Aux Room",
+        "bbp-prop-engine-room": "Prop. Eng. Room",
+        "bbp-engine-room": "Engine Room",
+        "bbp-rapidcast-1": "Rapidcast 1",
+        "bbp-rapidcast-2": "Rapidcast 2",
+        "md-quarterdeck": "Quarterdeck",
+        "md-quarterdeck2": "Quarterdeck 2",
+        "md-ilotext": "Ilot Ext.",
+        "md-camtribord": "Starboard Cam.",
+        "md-siamenr": "Enr. Siamois"
+      },
+    "views.video-call": {
+        "title": "Video Call",
+        "icon": "videocam",
+        "hangup": "Hangup",
+        "call": "Call",
+        "disableVideo": "Activate/Desactivate video",
+        "disableAudio": "Activate/Desactivate audio",
+        "incomingCall.title": "Incoming call",
+        "incomingCall.message": "Incoming call from ",
+        "incomingCall.accept": "Accept",
+        "incomingCall.decline": "Decline",
+        "duplicate.message": "Only one video call view"
+    },
+    "views.adcp": {
+        "title": "ADCP",
+        "icon": "waves",
+        "north-south.title": "North / South (m/s)",
+        "east-west.title": "East / West (m/s)"
+    },
+    "views.anemometer": {
+        "title": "Anenometer",
+        "icon": "google-photos"
+    },
+    "views.attitude": {
+        "title": "Attitude",
+        "icon": "arrow-all",
+        "roll": "Roll",
+        "pitch": "Pitch",
+        "heave": "Heave",
+        "heading": "Heading",
+        "list": "List",
+        "trim": "Trim"
+    },
+    "views.debug": {
+        "title": "Debug"
+    },
+    "views.ephemeride": {
+        "title": "Ephemeride",
+        "icon": "theme-light-dark",
+        "sun": "Sun",
+        "moon": "Moon",
+        "sunset": "Sunset",
+        "sunrise": "Sunrise"
+    },
+    "views.remote": {
+        "title": "Remote Desktop",
+        "icon": "remote-desktop"
+    },
+    "views.pefpos": {
+        "title": "EF Position",
+        "icon": "rss",
+        "latitude": "Latitude",
+        "longitude": "Longigude",
+        "heading": "Head.",
+        "speed": "Speed",
+        "depth": "Depth",
+        "cog": "COG",
+        "sog": "SOG"
+    },
+    "views.pefmet": {
+        "title": "EF Weather",
+        "icon": "weather-partlycloudy",
+        "velocity": "Speed",
+        "gust": "Gust",
+        "direction": "Direction",
+        "airtemp": "Air Temp.",
+        "humidity": "Humidity",
+        "radiation": "Radiation",
+        "pressure": "Pressure",
+        "watertemp": "Water Temp."
+    },
+    "views.peftss": {
+        "title": "EF Thermosalinomètre",
+        "icon": "oil-temperature",
+        "watertemp": "Water Temp.",
+        "salinity": "Salinity",
+        "sigmat": "SigmaT",
+        "conduct": "Conduct.",
+        "fluo": "Fluo"
+    },
+    "views.pefaum": {
+        "title": "EF AUM",
+        "icon": "test-tube",
+        "turbidityL": "TurbidityL",
+        "turbidityH": "TurbidityH",
+        "obsL": "ObsL",
+        "obsH": "ObsH",
+        "chlorophyll": "Chlorophyll",
+        "bluealgae": "Blue Algae",
+        "cdom": "CDOM",
+        "ph": "Ph",
+        "fluorescence": "Fluorescence",
+        "pco2": "pCO2",
+        "par": "PAR"
+
+    },
+    "views.depth": {
+        "title": "Depth",
+        "icon": "chart-areaspline"
+    },
+    "views.devices": {
+        "title": "Devices",
+        "icon": "sitemap"
+    },
+    "views.empty": {
+        "title": "Empty",
+        "icon": "application",
+        "select": "Select view"
+    },
+    "views.ferrybox-fluo": {
+        "title": "Ferrybox fluorimeter",
+        "icon": "test-tube"
+    },
+    "views.ferrybox-science": {
+        "title": "Ferrybox science",
+        "icon": "water-percent"
+    },
+    "views.ferrybox-technic": {
+        "title": "Ferrybox technic",
+        "icon": "wrench"
+    },
+    "views.flow": {
+        "data": "Flow",
+        "title": "Flow",
+        "icon": "cup-water"
+    },
+    "views.funes-winch": {
+        "title": "Funes winch",
+        "icon": "backup-restore",
+        "starboard": "Starboard",
+        "port": "Port",
+        "length": "Length",
+        "speed": "Speed",
+        "tension": "Tension"
+    },
+    "views.generic": {
+        "title": "Generic"
+    },
+    "views.gps": {
+        "title": "GPS",
+        "icon": "rss",
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "ground-speed": "Ground speed",
+        "ground-course": "Ground course",
+        "satellite-number": "Satellite number",
+        "hdop": "HDOP"
+    },
+    "views.graphics": {
+        "icon": "chart-line",
+        "2-y-axes": "2 Y axes",
+        "center": "Center",
+        "fill": "Fill",
+        "title": "Graphics",
+        "y-axes-manual": "Y axes (manual)",
+        "zero-on": "Zero on",
+        "auto": "auto",
+        "manual": "manual"
+    },
+    "views.gravimeter": {
+        "title": "Gravimeter",
+        "icon": "scale",
+        "acc-X": "Acc. X",
+        "acc-Y": "Acc. Y",
+        "gravity": "Relative gravity",
+        "scale": "Scale",
+        "filter-order": "Filter order",
+        "filter-tau": "Filter delay",
+        "gps": "GPS ON",
+        "status": "Status"
+    },
+    "views.kss31": {
+        "title": "Gravimeter",
+        "icon": "scale",
+        "acc-X": "Acc. X",
+        "acc-Y": "Acc. Y",
+        "gravity": "Relative gravity",
+        "datation": "Datation",
+        "seastate": "Seastate",
+        "eoetvoes": "Eoetvoes",
+        "bouguer": "Bouguer",
+        "freeair": "Free Air"
+    },
+    "views.haul-composition": {
+        "title": "Haul composition",
+        "icon": "hook",
+        "haul": "Haul",
+        "pocket": "Pocket",
+        "total-pocket": "Total pocket",
+        "estimation": "Estimation",
+        "species": "Species",
+        "sign": "Sign",
+        "weight": "Weight",
+        "total-sorted": "Total sorted",
+        "sorted-prc": "Sorted %"
+    },
+    "views.hullsoundspeed": {
+        "data": "Sound speed",
+        "title": "Sound speed",
+        "icon": "cup-water"
+    },
+    "views.magnetometer": {
+        "title": "Magnetometer",
+        "icon": "magnet-on",
+        "mag": "Mag",
+        "depth": "Depth"
+    },
+    "views.map": {
+        "icon": "map",
+        "clear-measure": "Clear measures",
+        "disabled": "Disabled",
+        "draw-mb": "Draw Swath",
+        "focus-on-boat": "Focus on boat",
+        "free": "Free",
+        "grid-on": "Show graticules",
+        "from-boat": "From boat",
+        "heading": "heading",
+        "measure-tool": "Measure tool",
+        "show-info": "Show info bar",
+        "show-route": "Show route",
+        "show-ais": "Show ais",
+        "show-trace": "Show trace",
+        "title": "Map"
+    },
+    "views.mobile": {
+        "icon": "alpha-m-box-outline",
+        "title": "Mobile",
+        "lat": "latitude",
+        "long": "longitude",
+        "alt": "altitude",
+        "imm": "immersion"
+    },
+    "views.navigation": {
+        "title": "Navigation",
+        "icon": "apple-safari",
+        "drift": "Drift",
+        "ground": "Ground",
+        "heading": "Heading",
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "currentWpt": "Wpt",
+        "profil": {
+            "title": "Profil",
+            "current": "End",
+            "previous": "Start",
+            "etaZ": "ETA (UTC)",
+            "eta": "ETA"
+        },
+        "sounder": "Sounder",
+        "station": {
+            "title": "Station",
+            "text": "Deviation"
+        },
+        "surface": "Surface",
+        "speed-vectors": "Speed vectors"
+    },
+    "views.numerical": {
+        "title": "Numerical view",
+        "icon": "format-list-bulleted",
+        "switch": "Switch to edition/display mode",
+        "close-edition": "Close edition mode"
+    },
+    "views.multibeam": {
+        "title": "Multibeam",
+        "icon": "satellite",
+        "number": "Number",
+        "depth": "Depth",
+        "swath": "Swath"
+    },
+    "views.species": {
+        "title": "Current species",
+        "icon": "fish",
+        "destination": "Destination",
+        "species-rubbin-code": "Species (rubbin code)",
+        "sign": "Specific sign",
+        "box-type": "Box type",
+        "total-species": "Total species",
+        "total-sorted": "Total sorted"
+    },
+    "views.station": {
+        "title": "Station",
+        "icon": "radar",
+        "unvailable": "Station mode unvailable."
+    },
+    "views.thermometer": {
+        "title": "Thermometer",
+        "icon": "oil-temperature",
+        "temperature": "Temperature"
+    },
+    "views.thermosal": {
+        "title": "Thermosalinometer",
+        "icon": "oil-temperature",
+        "tank-temp": "Tank temperature",
+        "temp": "Temperature",
+        "salinity": "Salinity",
+        "anomaly": "Anomaly",
+        "sound-speed": "Sound speed",
+        "conductivity": "Conductivity",
+        "flow": "Flow"
+    },
+    "views.trawl": {
+        "title": "Trawl geometry",
+        "icon": "border-outside",
+        "water-temp": "Water temp.",
+        "sounder": "Sounder"
+    },
+    "views.trawling": {
+        "title": "Trawling",
+        "icon": "fish"
+    },
+    "views.weather": {
+        "title": "Weather",
+        "icon": "weather-partlycloudy",
+        "air-temp": "Air temperature",
+        "air-pressure": "Air pressure",
+        "heatflux": "Heatflux",
+        "moisture": "Humidity",
+        "dew-point": "Dew point",
+        "water-temp": "Water temperature",
+        "true-wind": "True",
+        "rel-wind": "Relative"
+    },
+    "views.winch": {
+        "title": "Winch",
+        "icon": "backup-restore",
+        "length": "Length",
+        "spinning.positive": "Spinning",
+        "spinning.negative": "Spinning",
+        "spinning": "Spinning",
+        "sounding": "Sounding",
+        "tension": "Tension"
+    },
+    "views.winch-info": {
+        "title": "Winch Info"
+    },
+    "views.propulsion": {
+        "title": "Propulsion",
+        "icon": "ferry",
+        "heading": "Heading",
+        "surfspeed": "Loch speed",
+        "gndspeed": "GPS speed"
+    },
+    "views.landing": {
+        "title": "Landing",
+        "icon": "ferry"
+    },
+    "views.message": {
+        "title": "Message",
+        "icon": "message-text-outline",
+        "from": ", from: "
+    },
+    "views.casino": {
+        "title": "Casino",
+        "icon": "clipboard-text",
+        "connection": {
+            "error" : "Casino database connection error",
+            "loaderror" : "No current cruise",
+            "url": "Connection url",
+            "login": "Login",
+            "password": "Password",
+            "button": "Connect"
+        },
+        "refresh": {
+            "icon": "sync",
+            "label": "Refresh"
+        },
+        "cruises": {
+            "title": "Cruise",
+            "switch": {
+                "icon": "swap-horizontal",
+                "label": "Change cruise"
+            }
+        },
+        "add-event": {
+            "title": "Casino",
+            "subtitle": "New Event",
+            "follow-subtitle": "Follow Operation ",
+            "follow-exit": {
+                "title": "Follow-up discontinued",
+                "message": "The tracking data of the current operation will be lost"
+            },
+            "icon": "clipboard-plus",
+            "submit": "Submit",
+            "reset": {
+                "icon": "refresh",
+                "label": "reset form"
+            },
+            "operation": {
+                "prefix": "Prefix",
+                "custom": "Id supplement",
+                "number": "Operation number"
+            }
+        },
+        "period-list": {
+            "0": "last",
+            "6": "6 hours",
+            "24": "24 hours",
+            "168": "1 week"
+        },
+        "event-type": {
+            "PHA": "Phase",
+            "OPE": "Operation",
+            "OBS": "Observation"
+        },
+        "event-phase": {
+            "PROFIL": "Profile",
+            "STATION": "Station",
+            "TRANSIT": "Transit",
+            "GIRATION": "Turning",
+            "ESCALE": "Call"
+        },
+        "event": {
+            "Date": "Date",
+            "Latitude": "Lat.",
+            "Longitude": "Long",
+            "PhaseType": "Phase type",
+            "PhaseFullName": "Phase name",
+            "Type": "Type",
+            "OperationId": "Operation Id",
+            "Observation": "Observation",
+            "DeviceCode": "Device code",
+            "DeviceFullName": "Device name",
+            "ActionCode": "Action code",
+            "ActionFullName": "Action name",
+            "Field1": "Station number",
+            "Field2": "Strate"
+        }
+    },
+    "views.winchAlarmPp": {
+        "title": "Winch alarms",
+        "icon": "bell"
+    },
+    "views.kley-state": {
+        "title": "Kley state",
+        "icon": "backup-restore"
+    },
+    "views.menu": {
+        "title": "Menu",
+        "icon": "silverware"
+    },
+    "views.route": {
+        "title": "Routing",
+        "icon": "clipboard-text",
+        "name": "Name",
+        "type": "Type",
+        "stationduration": "Station dura.",
+        "eta": "ETA",
+        "etanextwpt": "Next Wpt ETA",
+        "distance": "Distance",
+        "time": "Time"
+    },
+    "toast": {
+        "user-disconnected": "User disconnected",
+        "user-disconnection": "User disconnection",
+        "frames-received": "frames received",
+        "successfull-connection": "Successful user connection: ",
+        "newMessage": "New message received"
+    },
+    "layers": {
+        "background": "Background",
+        "background.openseamap": "Open Sea map",
+        "background.geomod": "Geomod",
+        "commons": "QGIS layer",
+        "casino": "CASINO layer",
+        "mission": "Cruise",
+        "mission.ownShip": "Ship",
+        "mission.ownShipRoute": "Ship route",
+        "mission.ownShipTrace": "Ship trace",
+        "mission.measureTool": "Measure tool",
+        "mission.ownShipMeasure": "Ship measure tool",
+        "mission.mobile": "Mobile",
+        "mission.ais": "AIS",
+        "mission.multibeam": "Multibeam",
+        "custom": "Custom layer",
+        "custom.points": "Custom point",
+        "custom.routes": "Custom routes"
+    }
+}

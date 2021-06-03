@@ -1,0 +1,72 @@
+## ===================================================================
+## Spring Boot configuration.
+##
+## ===================================================================
+
+spring:
+  profiles:
+    active: acquisition, h2postgres, eurofleets
+  main:
+    banner-mode : "off"       # Mode used to display the banner when the application runs. (default=console)
+  mvc:
+    favicon:
+      enabled: false          # Whether to enable resolution of favicon.ico. (default=true)
+  h2:
+    console:
+      enabled: true           # Whether to enable the console. (default=false)
+management:
+  health:
+    ldap:
+      enabled: false          # Whether to enable LDAP health check. (default=true)
+  endpoints:
+    shutdown:
+      enabled: true           # Whether to enable the shutdown endpoint.
+    health:
+      show-details: ALWAYS    # When to show full health details. (default=never)
+    web:
+      exposure:
+        include: info,health,shutdown     # Endpoint IDs that should be included or '*' for all.
+server:
+  error:
+    whitelabel:
+      enabled: false          # Whether to enable the default error page displayed in browsers in case of a server error.
+
+  ntp:
+    interval: 30000
+    host: ${NTP_HOST}
+    offset: 1000
+    delay: 1000
+
+  sdiv:
+    parameter:
+      file: "parameter.json"
+  
+authentication:
+#authentication user list
+    users:
+        -   login: "admin"
+            password: "secret"
+            name: "Admin"
+            roles :
+            - "ROLE_ADMIN"
+            - "ROLE_USER"
+        -   login: "techsas"
+            password: "Techsas2020"
+            name: "Techsas"
+            roles : "ROLE_ADMIN"
+        -   login: "eurofleets"
+            password: "Eurofleets20!"
+            name: "Eurofleets"
+            roles : "ROLE_USER"
+
+# eurofleets db
+eurofleets:
+  db:
+    datasource:
+#      url: jdbc:postgresql://localhost:5432/ears3
+#      username: postgres
+#      password: postgres
+      url: jdbc:postgresql://${ACQUISITION_DB_SERVER}:${ACQUISITION_DB_PORT}/ears3
+      username: ${ACQUISITION_DB_USER}
+      password: ${ACQUISITION_DB_PASS}
+      driverClassName: "org.postgresql.Driver"

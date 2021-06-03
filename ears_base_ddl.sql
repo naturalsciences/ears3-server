@@ -90,10 +90,10 @@ CREATE TABLE public.cruise (
     data_url character varying(255),
     end_date timestamp without time zone,
     final_report_url character varying(255),
-    identifier character varying(100) NOT NULL,
+    identifier character varying(50) NOT NULL,
     is_cancelled boolean NOT NULL,
     name character varying(255),
-    objectives character varying(255),
+    objectives character varying(4000),
     planning_url character varying(255),
     purpose character varying(255),
     start_date timestamp without time zone,
@@ -206,6 +206,10 @@ CREATE TABLE public.event (
     tool_id bigint NOT NULL,
     tool_category_id bigint NOT NULL
 );
+
+
+CREATE INDEX event_idx ON public.event USING btree (time_stamp, identifier, actor_id);
+
 
 
 ALTER TABLE public.event OWNER TO ears;
@@ -409,8 +413,8 @@ ALTER SEQUENCE public.linked_data_term_id_seq OWNED BY public.linked_data_term.i
 
 CREATE TABLE public.navigation (
     id bigint NOT NULL,
-    instrument_time timestamp without time zone,
-    time_stamp timestamp without time zone,
+    instrument_time timestamp with time zone,
+    time_stamp timestamp with time zone,
     cog double precision,
     depth double precision,
     heading double precision,
@@ -419,6 +423,8 @@ CREATE TABLE public.navigation (
     sog double precision,
     sow double precision
 );
+
+CREATE INDEX navigation_idx ON public.navigation USING btree (time_stamp, instrument_time, id);
 
 
 ALTER TABLE public.navigation OWNER TO ears;
@@ -581,8 +587,8 @@ ALTER SEQUENCE public.platform_id_seq OWNED BY public.platform.id;
 CREATE TABLE public.program (
     id bigint NOT NULL,
     description character varying(4000),
-    identifier character varying(255) NOT NULL,
-    name character varying(255),
+    identifier character varying(50) NOT NULL,
+    name character varying(50),
     sampling character varying(2000)
 );
 
@@ -763,14 +769,16 @@ ALTER SEQUENCE public.sea_area_id_seq OWNED BY public.sea_area.id;
 
 CREATE TABLE public.thermosal (
     id bigint NOT NULL,
-    instrument_time timestamp without time zone,
-    time_stamp timestamp without time zone,
+    instrument_time timestamp with time zone,
+    time_stamp timestamp with time zone,
     conductivity double precision,
-    fluor double precision,
+    raw_fluorometry double precision,
     salinity double precision,
     sigmat double precision,
     temperature double precision
 );
+
+CREATE INDEX thermosal_idx ON public.thermosal USING btree (time_stamp, instrument_time, id);
 
 
 ALTER TABLE public.thermosal OWNER TO ears;
@@ -844,8 +852,8 @@ ALTER SEQUENCE public.tool_id_seq OWNED BY public.tool.id;
 
 CREATE TABLE public.weather (
     id bigint NOT NULL,
-    instrument_time timestamp without time zone,
-    time_stamp timestamp without time zone,
+    instrument_time timestamp with time zone,
+    time_stamp timestamp with time zone,
     atmospheric_pressure double precision,
     atmospheric_temperature double precision,
     humidity double precision,
@@ -855,6 +863,8 @@ CREATE TABLE public.weather (
     wind_speed_average double precision,
     wind_speed_instantaneous double precision
 );
+
+CREATE INDEX weather_idx ON public.weather USING btree (time_stamp, instrument_time, id);
 
 
 ALTER TABLE public.weather OWNER TO ears;

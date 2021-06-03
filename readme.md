@@ -19,7 +19,7 @@ If the data is sent out via a serial port, it needs to be put on Ethernet. This 
 
 The techniques needed to combine data into the datagrams are not part of these guidelines and are understood to be programmable by sysadmins.
 
-**Datagram description navigation data (POS):**
+**Datagram description navigation data (POS:3101):**
 
 Start identifier: always $PSDGPOS
 
@@ -45,7 +45,35 @@ _ **Example:** _
 
 $PSDGPOS,131017,132035,3.01803,51.44738,216.2,8.9,-27.7,215.4,8.7
 
-**Datagram description thermosalinograph data (TSS):**
+**Datagram description meteo data (MET:3102):**
+
+Start identifier: always $PSDGMET
+
+Date of position: ddmmyy
+
+UTC time of position: hh24mmss
+
+Mean wind speed in m/s
+
+Wind gust speed in m/s
+
+Wind direction in °
+
+Atmospheric temperature in °C
+
+Humidity in %
+
+Solar radiation in W/m²
+
+Atmospheric pressure in hPa
+
+Sea water temperature in °C
+
+_ **Example:** _
+
+$PSDGMET,131017,132035,2.81,2.81,150.4,11.05,,189.07,1018.12
+
+**Datagram description thermosalinograph data (TSS:3103):**
 
 Start identifier: always $PSDGTSS
 
@@ -66,34 +94,6 @@ Sigma theta in kg/m³
 _ **Example:** _
 
 $PSDGTSS,131017,132035,33.5449,14.7808,0.6275,41.1335,24.8983
-
-**Datagram description meteo data (MET):**
-
-Start identifier: always $PSDGMET
-
-Date of position: ddmmyy
-
-UTC time of position: hh24mmss
-
-Mean wind speed in m/s
-
-Wind gust speed in m/s
-
-Wind direction in °
-
-Air temperature in °C
-
-Humidity in %
-
-Solar radiation in W/m²
-
-Atmospheric pressure in hPa
-
-Sea water temperature in °C
-
-_ **Example:** _
-
-$PSDGMET,131017,132035,2.81,2.81,150.4,11.05,,189.07,1018.12
 
 ## Install docker (on physical or virtual machine)
 
@@ -223,7 +223,7 @@ sudo docker inspect ears-server_mysql
 Shorthand:
 
 ```
-sudo docker inspect ears-server_mysql | pcregrep -o1 &#39;&quot;IPAddress&quot;: &quot;([0-9\.]+)&quot;&#39;
+sudo docker inspect ears-server_postgres | pcregrep -o1 '"IPAddress": "([0-9\.]+)"'
 ```
 
 and note the value for the key &quot;IPAddress&quot;.
@@ -272,11 +272,19 @@ nohup java -jar FileToUDP/FileToUDP.jar FileToUDP/09022016.posicion.raw  3101 1 
 nohup java -jar FileToUDP/FileToUDP.jar FileToUDP/08052016.meteo.raw  3102 1 > ~/filetoudp.log 2>&1 &
 nohup java -jar FileToUDP/FileToUDP.jar FileToUDP/09052016.termosal.raw 3103 1 > ~/filetoudp.log 2>&1 &
 ```
-Inspect this actually is received by the acqusion module by reading the log output of docker for it:
+Inspect this actually is received by the acquisition module by visiting http://localhost:8080/#/dashboard. you can also check the log output of docker for acquisition:
 
 ```
 sudo docker logs ears-server_acquisition
 ```
+
+Also verify the urls from above: 
+```http://localhost/ears3Nav/nav/getLast/xml```
+```http://localhost/ears3Nav/met/getLast/xml```
+```http://localhost/ears3Nav/tss/getLast/xml```
+
+To see if the data is sent to EARS.
+
 The data is also saved as NetCDF files. These can be found in the netcdf/ directory for nav, met and tss. Please note that a full day of navigation from the above fake datagram would take about 2 GB of data. So in some scenarios you might want to disable the creation of these files. However, for the 2020 Eurofleets+ campaigns, the Principal Investigator must report these NetCDF files in the EMODnet Ingestion Portal together with his other campaign data. So please keep this enabled and send him these files, as he will need them for his data submission!
 
 To disable EARS from creating these NetCDF files, comment out the following lines in the file Acquisition\_System/bin/conf/application.properties:

@@ -18,8 +18,8 @@ services:
 #      - EARS_DB_CLASS=com.mysql.cj.jdbc.Driver
 #      - EARS_DB_USER=ears
 #      - EARS_DB_PASS=ears
-      - ACQUISITION_JDBC_URL=jdbc:mysql://mysql:3306/casino
-      - ACQUISITION_DB_CLASS=com.mysql.cj.jdbc.Driver
+      - ACQUISITION_JDBC_URL=jdbc:postgresql://postgres:5432/ears3
+      - ACQUISITION_DB_CLASS=org.postgresql.Driver
       - ACQUISITION_DB_USER=${ACQUISITION_DB_USER}
       - ACQUISITION_DB_PASS=${ACQUISITION_DB_PASS}
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/ears3
@@ -34,7 +34,6 @@ services:
     ports:
       - ${EARS_PORT}:8080
     depends_on:
-      - mysql
       - postgres
     command: ["./wait-for-mysql.sh", mysql, "3306", "root", "wzka684l7i", "casino", "catalina.sh", "run"]
     restart: always
@@ -57,22 +56,7 @@ services:
       - ./ears_base_ddl.sql:/docker-entrypoint-initdb.d/ears_base_ddl.sql
       - ./ears_postgres_data:/var/lib/postgresql
     restart: always
-  mysql:
-    image: mariadb:10.4.7-bionic
-    container_name: ears-server_mysql
-    ports:
-      - 3307:3306
-    environment:
-      - MYSQL_DATABASE=casino
-      - MYSQL_ROOT_PASSWORD=wzka684l7i
-      - MYSQL_ROOT_HOST=%
-      - MYSQL_PASSWORD=casino
-      - MYSQL_USER=casino
-    volumes:
-      - ./ears_acquisition_ddl.sql:/docker-entrypoint-initdb.d/ears_acquisition_ddl.sql
-      - ./ears_mysql_data:/var/lib/mysql
-#      - ./mariadb.cnf: /etc/mysql/mariadb.cnf
-    restart: always
+    command: ["postgres", "-c", "log_statement=all"]
   acquisition:
     build: ./Acquisition_System/techsas-run
     container_name: ears-server_acquisition
@@ -80,7 +64,7 @@ services:
     #integrate with host to receive udp
     environment:
       - ACQUISITION_DB_SERVER=127.0.0.1
-      - ACQUISITION_DB_PORT=3307
+      - ACQUISITION_DB_PORT=6543
       - ACQUISITION_DB_USER=${ACQUISITION_DB_USER}
       - ACQUISITION_DB_PASS=${ACQUISITION_DB_PASS}
       - ACQUISITION_PORT=${ACQUISITION_PORT}
@@ -88,6 +72,6 @@ services:
     volumes:
       - ./netcdf:/acquisition/log/test/netcdf
     depends_on:
-      - mysql
+      - postgres
     command: ./startup.sh
     restart: always
