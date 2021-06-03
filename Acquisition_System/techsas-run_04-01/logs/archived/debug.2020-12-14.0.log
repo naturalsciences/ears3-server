@@ -1,6 +1,0 @@
-2020-12-14 10:12:41 - INFO  - Starting TechsasLauncher on debian-dev-techsasNG with PID 2358 (/home/ifremer/Dev/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by ifremer in /home/ifremer/Dev/techsas-run)
-2020-12-14 10:12:41 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
-2020-12-14 10:12:41 - INFO  - The following profiles are active: acquisition,h2postgres
-2020-12-14 10:12:50 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.)
-2020-12-14 10:12:51 - INFO  - Web application fully configured
-2020-12-14 10:12:54 - INFO  - Started TechsasLauncher in 13.367 seconds (JVM running for 14.34)
