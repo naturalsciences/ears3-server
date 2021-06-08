@@ -124,7 +124,7 @@ sudo apt-get update
 sudo apt-get install git
 ```
 
-Or download the zip from https://github.com/naturalsciences/ears3-server/archive/refs/heads/master.zip, and unzip 
+Or download the zip from https://github.com/naturalsciences/ears3-server/archive/refs/heads/master.zip, and unzip.
 
 ## Get the required files for the EARS server, including the Dockerfile
 
@@ -211,7 +211,7 @@ Go to `http://localhost:8080` for the acquisition.
 
 ## View the database, e.g. with psql or DBeaver
 
-Install psql or DBeaver
+Install psql or DBeaver.
 
 ```
 sudo apt-get update
@@ -224,14 +224,12 @@ First retrieve the ip address of the PostgreSQL container:
 ```
 sudo docker inspect ears-server_postgres
 ```
+and note the value for the key &quot;IPAddress&quot;.
 
 Shorthand:
-
 ```
 sudo docker inspect ears-server_postgres | pcregrep -o1 '"IPAddress": "([0-9\.]+)"'
 ```
-
-and note the value for the key &quot;IPAddress&quot;.
 
 Create a new connection in DBeaver towards this IP address, using as database name &#39;ears3&#39;, user &#39;ears&#39; and password &#39;ears&#39;, and using the default port 5432. The database is also reachable via localhost:6543.
 
@@ -240,8 +238,6 @@ Create a new connection in DBeaver towards this IP address, using as database na
 With command line postgres, you can use:
 
 ```
-ip=$(sudo docker inspect ears-server_mysql | pcregrep -o1 '"IPAddress": "([0-9\.]+)"') \
-mysql -h $ip -u casino -p casino -e 'show tables;'
 psql -h localhost -p 6543 -U ears -d ears3 -c "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';"
 ```
 
