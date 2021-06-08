@@ -1,7 +1,6 @@
 FROM tomcat:9.0.22-jdk8-openjdk
 
-COPY wait-for-mysql.sh wait-for-mysql.sh
-COPY ears_acquisition_ddl.sql ears_acquisition_ddl.sql
+COPY wait.sh wait.sh
 COPY ears_base_ddl.sql ears_base_ddl.sql
 COPY tomcat-users.xml /usr/local/tomcat/conf/
 

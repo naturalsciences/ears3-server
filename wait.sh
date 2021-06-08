@@ -1,14 +1,14 @@
 #!/bin/bash
 # wait-for-mysql.sh
 
-set -e
+#set -e
 
-host="$1"
-port="$2"
-user="$3"
-password="$4"
-database="$5"
-shift 5
+#host="$1"
+#port="$2"
+#user="$3"
+#password="$4"
+#database="$5"
+#shift 5
 cmd="$@"
 
 #wait populate script

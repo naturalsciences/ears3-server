@@ -2,7 +2,7 @@
 # The computer they are run from is called the host.
 # The tomcat container depends on the mysql one (see the depends_on keyword). 
 # The tomcat main command (catalina.sh) is not run before the databases is populated; this is done via the wait_for_mysql.sh script. 
-# The SQL data is persisted outside of the containers in volume directories (ears_mysql_data and ears_postgres_data)
+# The SQL data is persisted outside of the containers in volume directories (ears_postgres_data)
 # The 'restart: always' keywords ensure that both services are restarted always after each crash or system reboot, as long as the docker daemon is running. sudo docker stop <id> will actually stop the application, and it will not be restarted automatically.
 # The container names are stored as ears-server_tomcat, ears-server_mysql and ears-server_acquisition. These can be used in your docker host to see the logs or get info: eg. sudo docker logs ears-server_acquisition or sudo docker inspect ears-server_mysql
 # The EARS webservices are reachable on http://localhost:8181 and the acquisition server on http://localhost:8080
@@ -35,7 +35,7 @@ services:
       - ${EARS_PORT}:8080
     depends_on:
       - postgres
-    command: ["./wait-for-mysql.sh", mysql, "3306", "root", "wzka684l7i", "casino", "catalina.sh", "run"]
+    command: ["./wait.sh","catalina.sh", "run"]
     restart: always
     volumes:
      - ./setenv.sh:/usr/local/tomcat/bin/setenv.sh

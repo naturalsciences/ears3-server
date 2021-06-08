@@ -19,7 +19,8 @@ acquisition:
             archivingPath: "./log"
             archivingRotationMode: HOURLY
         subServices:
-#          - netcdf
+          #- netcdf
+          #- db
         raw:
             filePathPattern: "{cruiseName}/raw/{sensor}/{sensor}-{date}.log"
             frameHeader: "{date,yyyy-MM-dd'T'HH:mm:ss.SSS'Z'},"

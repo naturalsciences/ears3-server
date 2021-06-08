@@ -115,7 +115,7 @@ Ubuntu: follow the guidelines on https://www.digitalocean.com/community/tutorial
 - Install it: ```sudo curl -L https://github.com/docker/compose/releases/download/<version>/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose```
 - And set the permissions: `sudo chmod +x /usr/local/bin/docker-compose`
 
-## Install git
+## Install git or download as zip from github
 
 Ubuntu:
 
@@ -124,18 +124,21 @@ sudo apt-get update
 sudo apt-get install git
 ```
 
+Or download the zip from https://github.com/naturalsciences/ears3-server/archive/refs/heads/master.zip, and unzip 
+
 ## Get the required files for the EARS server, including the Dockerfile
 
-Go to where you want to install the docker container. The location has no special need for permissions, as all docker operations require root rights anyway. `/home/general-user/` is a fine location, where general-user is the name of a general user.
+Go to where you want to install the docker container. The location has no special need for permissions, as all docker operations require root rights anyway. `/home/general-user/` is a fine location.
 
 ```
 cd <installation directory>
 git clone https://github.com/naturalsciences/ears3-server.git
 cd ears3-server
 ```
-You also need to download the acquisition launcher from https://share.naturalsciences.be/f/18ddde1d5eb14981b8ee/?dl=1 and put it in ears3-server/Acquisition_System/techsas-run.
 
-Recent builds became too large for github (100MB).
+Or unzip the zip into <installation directory>/ears3-server.
+
+You also need to download the acquisition launcher from https://share.naturalsciences.be/f/18ddde1d5eb14981b8ee/?dl=1 and put it in ears3-server/Acquisition_System/techsas-run. Recent builds became too large for github (100MB).
 
 ## Create the docker container and run the image
 
@@ -202,22 +205,24 @@ Go to `http://localhost/ears3/html/event` or simply `http://localhost/ears3` to 
 
 Go to `http://localhost/ears3/sml?platformUrn=SDN:C17::XYZA` to see the Sensor ML description for the whole ship. Follow the links for the events of specific devices.
 
-Go to `http://localhost/ears3/cruise/csr?identifier=cruise_identifier` to see the a full SDN Cruise Summary Report. Cruises are created with the java client. 
+Go to `http://localhost/ears3/cruise/csr?identifier=cruise_identifier` to see the a full SDN Cruise Summary Report. Cruises are created with the java client desktop application. 
 
 Go to `http://localhost:8080` for the acquisition.
 
-## View the database, e.g. with MySQL Workbench
+## View the database, e.g. with psql or DBeaver
 
-Install MySQL Workbench
-
-```
-sudo apt-get install mysql-workbench
-```
-
-First retrieve the ip address of the MySQL container:
+Install psql or DBeaver
 
 ```
-sudo docker inspect ears-server_mysql
+sudo apt-get update
+sudo apt-get install postgresql-client
+sudo apt-get install dbeaver-ce
+```
+
+First retrieve the ip address of the PostgreSQL container:
+
+```
+sudo docker inspect ears-server_postgres
 ```
 
 Shorthand:
@@ -228,36 +233,35 @@ sudo docker inspect ears-server_postgres | pcregrep -o1 '"IPAddress": "([0-9\.]+
 
 and note the value for the key &quot;IPAddress&quot;.
 
-Create a new connection in MySQL Workbench towards this IP address, using as database name &#39;casino&#39;, user &#39;casino&#39; and password &#39;casino&#39;, and using the default port 3306.
+Create a new connection in DBeaver towards this IP address, using as database name &#39;ears3&#39;, user &#39;ears&#39; and password &#39;ears&#39;, and using the default port 5432. The database is also reachable via localhost:6543.
 
 ## Or by command line
 
-With command line mysql, you can use:
+With command line postgres, you can use:
 
 ```
 ip=$(sudo docker inspect ears-server_mysql | pcregrep -o1 '"IPAddress": "([0-9\.]+)"') \
 mysql -h $ip -u casino -p casino -e 'show tables;'
+psql -h localhost -p 6543 -U ears -d ears3 -c "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';"
 ```
 
-Type the password (casino) and verify the tables have been created correctly. Later you can use this to verify data insertion, eg. by:
+Type the password (ears) and verify the tables have been created correctly (27 tables). Later you can use this to verify data insertion, eg. by:
 
 ```
-mysql -h $ip -u casino -p casino -e 'select * from Navigation limit 10;'
+psql -h localhost -p 6543 -U ears -d ears3 -c "select * from Navigation limit 10;"
 ```
 
 ## Verify the acquisition works
 
-The acquisition module stores the datagrams created above as NetCDF files and in the EARS database as above. For EARS to work, the navigation datagram must be sent to UDP port 3101 of the server EARS is running on, the meteorology datagram to UDP port 3102 and the Thermosalinometry datagram to UDP port 3103.
+The acquisition module stores the datagrams created above as NetCDF files and in the EARS database as above. For EARS to work, at least the navigation datagram must be sent to UDP port 3101 of the server EARS is running on, the meteorology datagram to UDP port 3102 and the Thermosalinometry datagram to UDP port 3103.
 
 This ideally only works on a research vessel. To test if the acquisition server has correctly run, we provide a small test program that can send fake information to these ports. This can be found in the FileToUDP/ directory.
 
-For this you need to install Java JDK 8 on the host running the docker. On Ubuntu:
+For this you need to install Java JDK 8 or higher on the host running the docker. On Ubuntu:
 
 ```
 sudo apt install openjdk-8-jdk openjdk-8-jre
 ```
-
-If you have a more recent version of java, enable java 8 temporarily (inside the docker java is run as well, but this is independent from what is run on the host).
 
 Then, to run the program, type:
 
@@ -293,18 +297,11 @@ To disable EARS from creating these NetCDF files, comment out the following line
 acquisition.archiving.netcdf.file=./log/netcdf/{sensor}/{sensor}-{frame}-{date,yyyy-Mmdd-HH}.nc
 ```
 
-After this, kill the four docker containers, rebuild and restart them:
-
-```
-sudo docker kill ears-server_acquisition ears-server_postgres ears-server_tomcat ears-server_mysql
-sudo docker-compose build
-sudo docker-compose up -d
-```
-or simply `./run.sh`
+After this, run `./run.sh`
 
 ## Data volumes
 
-In order to persist the information in the database and the ontology and to safeguard it for when the docker container would be restarted or even deleted, the data is persisted in a directory outside of the docker container. These are &#39;ears\_mysql\_data&#39; and &#39;ontologies&#39;. Do not delete these directories.
+In order to persist the information in the database and the ontology and to safeguard it for when the docker container would be restarted or even deleted, the data is persisted in a directory outside of the docker container. These are &#39;ears\_postgres\_data&#39; and &#39;ontologies&#39;. Do not delete these directories. The fastest way to save the vessel ontology is to put in in the 'ontologies' directory.
 
 ## Troubleshooting
 
@@ -312,13 +309,13 @@ If you for any reason would modify the Dockerfile (don't!), or any file except t
 
 You can read the logs of the individual modules like so:
 
-The databases: `sudo docker logs ears-server_mysql` and `sudo docker logs ears-server_postgres`
+The database: `sudo docker logs ears-server_postgres`
 
 The web applications: `sudo docker logs ears-server_tomcat`
 
 The acquisition module: `sudo docker logs ears-server_acquisition`
 
-If you need to kill the docker images, for instance if you make a change in the Dockerfile, enter `sudo docker kill ears-server_acquisition ears-server_postgres ears-server_tomcat ears-server_mysql`
+If you need to kill the docker images, for instance if you make a change in the Dockerfile, enter `sudo docker kill ears-server_acquisition ears-server_postgres`
 
 The Dockerfile should not be changed, only to change the access password for the vessel ontology, see higher.
 
@@ -328,12 +325,9 @@ If a new version of any web application (ears3.war, ears3Nav.war) would need a r
 
 - Ensure you have a stable and fast internet connection
 - ssh to the server
-- cd to the ears3-server directory, and
+- cd to the ears3-server directory, replace the files and
 ```
-sudo docker kill ears-server_acquisition ears-server_postgres ears-server_tomcat ears-server_mysql
-git pull origin master
-sudo docker-compose build
-sudo docker-compose up -d
+./run.sh
 ```
 
 The build command is smart enough to start rebuilding only the steps that are not affected by the file change (so this is faster than the original build).
