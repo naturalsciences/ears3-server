@@ -21,7 +21,7 @@ The techniques needed to combine data into the datagrams are not part of these g
 
 **Datagram description navigation data (POS:3101):**
 
-Start identifier: always $PSDGPOS
+Start identifier: always $EFPOS
 
 Date of position: ddmmyy
 
@@ -43,11 +43,11 @@ Speed over ground in kn
 
 _ **Example:** _
 
-$PSDGPOS,131017,132035,3.01803,51.44738,216.2,8.9,-27.7,215.4,8.7
+$EFPOS,131017,132035,3.01803,51.44738,216.2,8.9,-27.7,215.4,8.7
 
 **Datagram description meteo data (MET:3102):**
 
-Start identifier: always $PSDGMET
+Start identifier: always $EFMET
 
 Date of position: ddmmyy
 
@@ -71,11 +71,11 @@ Sea water temperature in °C
 
 _ **Example:** _
 
-$PSDGMET,131017,132035,2.81,2.81,150.4,11.05,,189.07,1018.12
+$EFMET,131017,132035,2.81,2.81,150.4,11.05,,189.07,1018.12
 
 **Datagram description thermosalinograph data (TSS:3103):**
 
-Start identifier: always $PSDGTSS
+Start identifier: always $EFTSS
 
 Date of position: ddmmyy
 
@@ -93,7 +93,7 @@ Sigma theta in kg/m³
 
 _ **Example:** _
 
-$PSDGTSS,131017,132035,33.5449,14.7808,0.6275,41.1335,24.8983
+$EFTSS,131017,132035,33.5449,14.7808,0.6275,41.1335,24.8983
 
 ## Install docker (on physical or virtual machine)
 
@@ -305,7 +305,24 @@ In order to persist the information in the database and the ontology and to safe
 
 ## Troubleshooting
 
-If you for any reason would modify the Dockerfile (don't!), or any file except the docker-compose.yml file for that matter, you will need to rebuild the image(``sudo docker-compose build``).
+If the application doesn't work, and the tomcat logs show `org.postgresql.util.PSQLException: The connection attempt failed.`, this most likely is a firewall issue. Read [https://forums.docker.com/t/no-route-to-host-network-request-from-container-to-host-ip-port-published-from-other-container/39063/11](this page). 
+
+Get the IP addresses of the docker containers: 
+
+```
+sudo docker inspect ears-server_postgres | pcregrep -o1 '"IPAddress": "([0-9\.]+)"' and
+sudo docker inspect ears-server_tomcat | pcregrep -o1 '"IPAddress": "([0-9\.]+)"'
+```
+
+Note the ip addresses, and replace the last digits with 0/16. Run
+
+```firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 source address=x.y.z.0/16 accept' && firewall-cmd --reload```
+
+for both IP addresses, or (unsecure):
+
+```Systemctl stop firewalld.service```
+
+Do not modify the Dockerfile or the docker-compose.yml files. If any other file (the wars or the .env file) is changed you will need to rebuild the image(`sudo docker-compose build`). The easiest is to run ``./run.sh``.
 
 You can read the logs of the individual modules like so:
 
