@@ -201,7 +201,7 @@ You have to change the RV identifier in the .env file. Please change EARS_PLATFO
 
 ## Usage
 
-Go to `http://localhost/ears3/html/event` or simply `http://localhost/ears3` to manage the programs and cruises and to create new events. You are first prompted to provide your name and email address. Please note that for the time being the event fields are populated with the ontology from the RV Belgica. This will be changed in the near future. A new vessel ontology file can be saved in the ontologies directory and the changes will be immediately visible in the event creation interface.
+Go to `http://localhost/ears3/html/event` or simply `http://localhost/ears3` to create new events. New programs and cruises are to be created with the desktop client application. In the web application you are first prompted to provide your name and email address. The manual for this web page can be found at the end of the client manual, here: https://github.com/naturalsciences/ears/releases/download/3.0.1beta/Eurofleets+_D3.9_manual_ears3_client_webapp.pdf
 
 Go to `http://localhost/ears3/sml?platformUrn=SDN:C17::XYZA` to see the Sensor ML description for the whole ship. Follow the links for the events of specific devices.
 
@@ -344,3 +344,7 @@ If a new version of any web application (ears3.war, ears3Nav.war) would need a r
 ```
 
 The build command is smart enough to start rebuilding only the steps that are not affected by the file change (so this is faster than the original build).
+
+## Installing the client
+
+The EARS client is a desktop application that interacts with this server. This is a java desktop installation, to be installed from [https://github.com/naturalsciences/ears/releases](here). The manual is [https://github.com/naturalsciences/ears/releases/download/3.0.1beta/Eurofleets+_D3.9_manual_ears3_client_webapp.pdf](here).
