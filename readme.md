@@ -5,7 +5,7 @@
 
 The main prerequisite is linux with the docker daemon installed. Installing docker,docker-compose, installing git, get the EARS server files and building an image from the Dockerfile all require a fast and stable internet connection (on-shore cable or 4G preferred over satellite). This is not always possible on board, so plan the installation ahead. The EARS web applications can be installed on an already present physical or virtual server, or can be installed on-shore inside a virtual machine, taken on-board and deployed there. The server must be accessible from the ship&#39;s LAN.
 
-To create a linux virtual machine, we refer to the many resources available on this topic, for instance: [https://linuxconfig.org/install-and-set-up-kvm-on-ubuntu-18-04-bionic-beaver-linux](https://linuxconfig.org/install-and-set-up-kvm-on-ubuntu-18-04-bionic-beaver-linux). The rest of these guidelines is written with Ubuntu in mind. If only windows servers are available on board, virtualisation is a must.
+To create a linux virtual machine, we refer to the many resources available on this topic, for instance [here](https://linuxconfig.org/install-and-set-up-kvm-on-ubuntu-18-04-bionic-beaver-linux). The rest of these guidelines is written with Ubuntu in mind. If only windows servers are available on board, virtualisation is a must.
 
 ## Physical requirements
 
@@ -201,7 +201,7 @@ You have to change the RV identifier in the .env file. Please change EARS_PLATFO
 
 ## Usage
 
-Go to `http://localhost/ears3/html/event` or simply `http://localhost/ears3` to create new events. New programs and cruises are to be created with the desktop client application. In the web application you are first prompted to provide your name and email address. The manual for this web page can be found at the end of the client manual, here: https://github.com/naturalsciences/ears/releases/download/3.0.1beta/Eurofleets+_D3.9_manual_ears3_client_webapp.pdf
+Go to `http://localhost/ears3/html/event` or simply `http://localhost/ears3` to create new events. New programs and cruises are to be created with the desktop client application. In the web application you are first prompted to provide your name and email address. The manual for this web page can be found at the end of the client manual, [here](https://github.com/naturalsciences/ears/releases/download/3.0.1beta/Eurofleets+_D3.9_manual_ears3_client_webapp.pdf)
 
 Go to `http://localhost/ears3/sml?platformUrn=SDN:C17::XYZA` to see the Sensor ML description for the whole ship. Follow the links for the events of specific devices.
 
@@ -301,7 +301,7 @@ In order to persist the information in the database and the ontology and to safe
 
 ## Troubleshooting
 
-If the application doesn't work, and the tomcat logs show `org.postgresql.util.PSQLException: The connection attempt failed.`, this most likely is a firewall issue. Read [https://forums.docker.com/t/no-route-to-host-network-request-from-container-to-host-ip-port-published-from-other-container/39063/11](this page). 
+If the application doesn't work, and the tomcat logs show `org.postgresql.util.PSQLException: The connection attempt failed.`, this most likely is a firewall issue. Read [this page](https://forums.docker.com/t/no-route-to-host-network-request-from-container-to-host-ip-port-published-from-other-container/39063/11). 
 
 Get the IP addresses of the docker containers: 
 
@@ -347,4 +347,4 @@ The build command is smart enough to start rebuilding only the steps that are no
 
 ## Installing the client
 
-The EARS client is a desktop application that interacts with this server. This is a java desktop installation, to be installed from [https://github.com/naturalsciences/ears/releases](here). The manual is [https://github.com/naturalsciences/ears/releases/download/3.0.1beta/Eurofleets+_D3.9_manual_ears3_client_webapp.pdf](here).
+The EARS client is a desktop application that interacts with this server. Cruises and programs should be created with the client, events can be created with both the web application on this server or the desktop client. This is a java desktop installation, to be installed from [here](https://github.com/naturalsciences/ears/releases). The manual is [here](https://github.com/naturalsciences/ears/releases/download/3.0.1beta/Eurofleets+_D3.9_manual_ears3_client_webapp.pdf).
