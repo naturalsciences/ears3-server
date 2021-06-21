@@ -281,9 +281,28 @@ Also verify the urls from above:
 ```http://localhost/ears3Nav/met/getLast/xml```
 ```http://localhost/ears3Nav/tss/getLast/xml```
 
-To see if the data is sent to EARS. The data should continously update upon refresh.
+To see if the data is sent to EARS. The data should continously update upon refresh. Without data, this is the response for navigation:
 
-The data is also saved as NetCDF files. These can be found in the netcdf/ directory for nav, met and tss. Please note that a full day of navigation from the above fake datagram would take about 2 GB of data. So in some scenarios you might want to disable the creation of these files. However, for the 2020 Eurofleets+ campaigns, the Principal Investigator must report these NetCDF files in the EMODnet Ingestion Portal together with his other campaign data. So please keep this enabled and send him these files, as he will need them for his data submission!
+```
+<ef:nav/>
+```
+
+With data:
+```
+<ef:nav xmlns:ef="http://www.eurofleets.eu/">
+  <ef:timestamp>2021-06-08T17:45:35Z</ef:timestamp>
+  <ef:instrument_time/>
+  <ef:longitude def="SDN:P02::DEGN">-60.3944252</ef:longitude>
+  <ef:latitude>-62.6580047</ef:latitude>
+  <ef:heading uom="°" def="SDN:P01::HDNGGP01">50.04</ef:heading>
+  <ef:sow uom="kn" def="SDN:P01::APSAWM01">0.02</ef:sow>
+  <ef:depth uom="m" def="SDN:P01::APSAGP01"/>
+  <ef:cog uom="°">237.6</ef:cog>
+  <ef:sog uom="kn">0.02</ef:sog>
+</ef:nav>
+```
+
+The data is also saved as NetCDF files by the acquisition module. These can be found in the netcdf/ directory for nav, met and tss. Please note that a full day of navigation from the above fake datagram would take about 2 GB of data. So in some scenarios you might want to disable the creation of these files. However, for the 2020 Eurofleets+ campaigns, the Principal Investigator must report these NetCDF files in the EMODnet Ingestion Portal together with his other campaign data. So please keep this enabled and send him these files, as he will need them for his data submission!
 
 To disable EARS from creating these NetCDF files, comment out the following lines in the file Acquisition\_System/bin/conf/application.properties:
 
