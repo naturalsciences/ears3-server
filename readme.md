@@ -151,9 +151,7 @@ For your convenience you can also just run `./run.sh`.
  
 The -d flag starts the container based on the image in a detached mode, meaning that you can continue the terminal session. If you shutdown and reboot the server that hosts the EARS server container, the container will always restart along with the whole server.
 
-When you run the image, the different components are started in certain order. The web server (tomcat) is the latest as it has to wait for the database to be completed. Wait at least a minute, then visit the following addresses in your web browser:
-
-The date ranges are just examples and no data can be returned if the acquisition did not yet run.
+When you run the image, the different components are started in certain order. The web server (tomcat) is the latest as it has to wait for the database to be completed. Wait at least a minute, then visit the following addresses in your web browser (the date ranges are just examples and no data can be returned if the acquisition did not yet run):
 ```
 http://localhost/ears3/html/event
 http://localhost/ears3/events
@@ -201,7 +199,7 @@ You have to change the RV identifier in the .env file. Please change EARS_PLATFO
 
 ## Usage
 
-Go to `http://localhost/ears3/html/event` or simply `http://localhost/ears3` to create new events. New programs and cruises are to be created with the desktop client application. In the web application you are first prompted to provide your name and email address. The manual for this web page can be found at the end of the client manual, [here](https://github.com/naturalsciences/ears/releases/download/3.0.1beta/Eurofleets+_D3.9_manual_ears3_client_webapp.pdf)
+Go to `http://localhost/ears3/html/event` or simply `http://localhost/ears3` to create new events. New programs and cruises are to be created with the desktop client application. In the web application you are first prompted to provide your name and email address. The manual for this web page can be found at the end of the client manual, [here](https://github.com/naturalsciences/ears/releases/download/3.0.1beta/Eurofleets+_D3.9_manual_ears3_client_webapp.pdf).
 
 Go to `http://localhost/ears3/sml?platformUrn=SDN:C17::XYZA` to see the Sensor ML description for the whole ship. Follow the links for the events of specific devices.
 
@@ -283,7 +281,7 @@ Also verify the urls from above:
 ```http://localhost/ears3Nav/met/getLast/xml```
 ```http://localhost/ears3Nav/tss/getLast/xml```
 
-To see if the data is sent to EARS.
+To see if the data is sent to EARS. The data should continously update upon refresh.
 
 The data is also saved as NetCDF files. These can be found in the netcdf/ directory for nav, met and tss. Please note that a full day of navigation from the above fake datagram would take about 2 GB of data. So in some scenarios you might want to disable the creation of these files. However, for the 2020 Eurofleets+ campaigns, the Principal Investigator must report these NetCDF files in the EMODnet Ingestion Portal together with his other campaign data. So please keep this enabled and send him these files, as he will need them for his data submission!
 
