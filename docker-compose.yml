@@ -18,8 +18,8 @@ services:
 #      - EARS_DB_CLASS=com.mysql.cj.jdbc.Driver
 #      - EARS_DB_USER=ears
 #      - EARS_DB_PASS=ears
-      - ACQUISITION_JDBC_URL=jdbc:postgresql://postgres:5432/ears3
-      - ACQUISITION_DB_CLASS=org.postgresql.Driver
+      - ACQUISITION_JDBC_URL=${ACQUISITION_JDBC_URL}
+      - ACQUISITION_DB_CLASS=${ACQUISITION_DB_CLASS}
       - ACQUISITION_DB_USER=${ACQUISITION_DB_USER}
       - ACQUISITION_DB_PASS=${ACQUISITION_DB_PASS}
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/ears3
@@ -73,5 +73,6 @@ services:
       - ./netcdf:/acquisition/log/test/netcdf
     depends_on:
       - postgres
-    command: ./startup.sh
+    #command: ./startup.sh
+    command: echo "docker acquisition module disabled"
     restart: always

@@ -1,0 +1,80 @@
+2021-06-09 08:32:46 - INFO  - Starting TechsasLauncher on debian-dev-techsasNG with PID 4047 (/home/ifremer/Dev/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by ifremer in /home/ifremer/Dev/techsas-run)
+2021-06-09 08:32:46 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2021-06-09 08:32:46 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
+2021-06-09 08:32:55 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (FATAL: database "cruises" does not exist)
+2021-06-09 08:32:57 - INFO  - Web application fully configured
+2021-06-09 08:33:00 - INFO  - Started TechsasLauncher in 15.418 seconds (JVM running for 16.192)
+2021-06-09 08:37:09 - INFO  - Starting TechsasLauncher on debian-dev-techsasNG with PID 4896 (/home/ifremer/Dev/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by ifremer in /home/ifremer/Dev/techsas-run)
+2021-06-09 08:37:09 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2021-06-09 08:37:10 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
+2021-06-09 08:37:17 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (FATAL: database "cruises" does not exist)
+2021-06-09 08:37:19 - INFO  - Web application fully configured
+2021-06-09 08:37:23 - INFO  - Started TechsasLauncher in 13.923 seconds (JVM running for 14.453)
+2021-06-09 08:47:07 - INFO  - Starting TechsasLauncher on debian-dev-techsasNG with PID 5896 (/home/ifremer/Dev/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by ifremer in /home/ifremer/Dev/techsas-run)
+2021-06-09 08:47:07 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2021-06-09 08:47:07 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
+2021-06-09 08:47:14 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (FATAL: database "cruises" does not exist)
+2021-06-09 08:47:16 - INFO  - Web application fully configured
+2021-06-09 08:47:20 - INFO  - Started TechsasLauncher in 14.082 seconds (JVM running for 14.607)
+2021-06-09 08:48:35 - INFO  - Starting TechsasLauncher on debian-dev-techsasNG with PID 6240 (/home/ifremer/Dev/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by ifremer in /home/ifremer/Dev/techsas-run)
+2021-06-09 08:48:35 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2021-06-09 08:48:35 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
+2021-06-09 08:48:43 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (FATAL: database "cruises" does not exist)
+2021-06-09 08:48:45 - INFO  - Web application fully configured
+2021-06-09 08:48:49 - INFO  - Started TechsasLauncher in 14.18 seconds (JVM running for 14.766)
+2021-06-09 08:59:31 - INFO  - Starting TechsasLauncher on debian-dev-techsasNG with PID 7091 (/home/ifremer/Dev/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by ifremer in /home/ifremer/Dev/techsas-run)
+2021-06-09 08:59:31 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2021-06-09 08:59:31 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
+2021-06-09 08:59:39 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (FATAL: database "cruises" does not exist)
+2021-06-09 08:59:41 - INFO  - Web application fully configured
+2021-06-09 08:59:44 - INFO  - Started TechsasLauncher in 13.818 seconds (JVM running for 14.305)
+2021-06-09 09:01:37 - INFO  - Starting TechsasLauncher on debian-dev-techsasNG with PID 7474 (/home/ifremer/Dev/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by ifremer in /home/ifremer/Dev/techsas-run)
+2021-06-09 09:01:37 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2021-06-09 09:01:37 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
+2021-06-09 09:01:45 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (FATAL: database "cruises" does not exist)
+2021-06-09 09:01:47 - INFO  - Web application fully configured
+2021-06-09 09:01:51 - INFO  - Started TechsasLauncher in 13.78 seconds (JVM running for 14.297)
+2021-06-09 09:03:03 - INFO  - Starting TechsasLauncher on debian-dev-techsasNG with PID 7819 (/home/ifremer/Dev/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by ifremer in /home/ifremer/Dev/techsas-run)
+2021-06-09 09:03:03 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2021-06-09 09:03:03 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
+2021-06-09 09:03:11 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (FATAL: database "cruises" does not exist)
+2021-06-09 09:03:13 - INFO  - Web application fully configured
+2021-06-09 09:03:16 - INFO  - Started TechsasLauncher in 13.535 seconds (JVM running for 14.098)
+2021-06-09 09:06:50 - INFO  - Starting TechsasLauncher on debian-dev-techsasNG with PID 8231 (/home/ifremer/Dev/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by ifremer in /home/ifremer/Dev/techsas-run)
+2021-06-09 09:06:50 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2021-06-09 09:06:50 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
+2021-06-09 09:06:58 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (FATAL: database "cruises" does not exist)
+2021-06-09 09:07:00 - INFO  - Web application fully configured
+2021-06-09 09:07:04 - INFO  - Started TechsasLauncher in 14.928 seconds (JVM running for 15.552)
+2021-06-09 09:25:35 - INFO  - Starting TechsasLauncher on debian-dev-techsasNG with PID 8734 (/home/ifremer/Dev/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by ifremer in /home/ifremer/Dev/techsas-run)
+2021-06-09 09:25:35 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2021-06-09 09:25:35 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
+2021-06-09 09:25:45 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (FATAL: database "cruises" does not exist)
+2021-06-09 09:25:48 - INFO  - Web application fully configured
+2021-06-09 09:25:53 - INFO  - Started TechsasLauncher in 19.445 seconds (JVM running for 20.033)
+2021-06-09 09:26:50 - INFO  - Starting TechsasLauncher on debian-dev-techsasNG with PID 9093 (/home/ifremer/Dev/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by ifremer in /home/ifremer/Dev/techsas-run)
+2021-06-09 09:26:50 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2021-06-09 09:26:50 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
+2021-06-09 09:26:58 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (FATAL: database "cruises" does not exist)
+2021-06-09 09:26:59 - INFO  - Web application fully configured
+2021-06-09 09:27:03 - INFO  - Started TechsasLauncher in 13.281 seconds (JVM running for 13.792)
+2021-06-09 09:41:26 - INFO  - Starting TechsasLauncher on debian-dev-techsasNG with PID 9716 (/home/ifremer/Dev/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by ifremer in /home/ifremer/Dev/techsas-run)
+2021-06-09 09:41:26 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2021-06-09 09:41:26 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
+2021-06-09 09:41:37 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (FATAL: database "cruises" does not exist)
+2021-06-09 09:41:39 - INFO  - Web application fully configured
+2021-06-09 09:41:42 - INFO  - Started TechsasLauncher in 16.606 seconds (JVM running for 17.085)
+2021-06-09 09:42:43 - INFO  - ==== Session is created ====
+2021-06-09 09:43:17 - INFO  - Starting TechsasLauncher on debian-dev-techsasNG with PID 10058 (/home/ifremer/Dev/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by ifremer in /home/ifremer/Dev/techsas-run)
+2021-06-09 09:43:17 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2021-06-09 09:43:17 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
+2021-06-09 09:43:25 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (FATAL: database "cruises" does not exist)
+2021-06-09 09:43:26 - INFO  - Web application fully configured
+2021-06-09 09:43:30 - INFO  - Started TechsasLauncher in 13.891 seconds (JVM running for 14.438)
+2021-06-09 09:43:47 - INFO  - ==== Session is created ====
+2021-06-09 09:54:07 - INFO  - Starting TechsasLauncher on debian-dev-techsasNG with PID 10565 (/home/ifremer/Dev/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by ifremer in /home/ifremer/Dev/techsas-run)
+2021-06-09 09:54:07 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2021-06-09 09:54:07 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
+2021-06-09 09:54:15 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (FATAL: database "cruises" does not exist)
+2021-06-09 09:54:17 - INFO  - Web application fully configured
+2021-06-09 09:54:20 - INFO  - Started TechsasLauncher in 13.352 seconds (JVM running for 13.858)

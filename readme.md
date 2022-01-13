@@ -147,7 +147,7 @@ sudo docker-compose build
 sudo docker-compose up -d
 ```
 
-For your convenience you can also just run `./run.sh`.
+For your convenience you can also just run `./run.sh` or `./run-freespace.sh` which frees unused images.
  
 The -d flag starts the container based on the image in a detached mode, meaning that you can continue the terminal session. If you shutdown and reboot the server that hosts the EARS server container, the container will always restart along with the whole server.
 
@@ -195,15 +195,15 @@ Make sure that the server is accessible from the network.
 
 The EARS webservices are reachable on [http://localhost](http://localhost) and the acquisition server on [http://localhost:8080](http://localhost:8080), by default. You can modify these ports in the .env file but this is not recommended. If a port is already taken, you either change the port in the .env file, or preferrably kill the application that takes the port. In order to find applications using a port, use eg. `sudo netstat -tulpn | grep 8080`, note the pid in the last column and then `sudo kill <pid>`
 
-You have to change the RV identifier in the .env file. Please change EARS_PLATFORM=SDN:C17::11BE to the C17 (ICES) code of the RV this software will be run on. The C17 codes are here: http://vocab.nerc.ac.uk/collection/C17/current/
+You have to change the RV identifier in the .env file. Please change EARS_PLATFORM=SDN:C17::11BU to the C17 (ICES) code of the RV this software will be run on. The C17 codes are here: http://vocab.nerc.ac.uk/collection/C17/current/
 
 ## Usage
 
-Go to `http://localhost/ears3/html/event` or simply `http://localhost/ears3` to create new events. New programs and cruises are to be created with the desktop client application. In the web application you are first prompted to provide your name and email address. The manual for this web page can be found at the end of the client manual, [here](https://github.com/naturalsciences/ears/releases/download/3.0.1beta/Eurofleets+_D3.9_manual_ears3_client_webapp.pdf).
+Go to `http://localhost/ears3/event` or simply `http://localhost/ears3` to create new events. New programs and cruises are to be created with the desktop client application. In the web application you are first prompted to provide your name and email address. The manual for this web page can be found at the end of the client manual, [here](https://github.com/naturalsciences/ears/releases/download/3.0.1beta/Eurofleets+_D3.9_manual_ears3_client_webapp.pdf).
 
 Go to `http://localhost/ears3/sml?platformUrn=SDN:C17::XYZA` to see the Sensor ML description for the whole ship. Follow the links for the events of specific devices.
 
-Go to `http://localhost/ears3/cruise/csr?identifier=cruise_identifier` to see the a full SDN Cruise Summary Report. Cruises are created with the java client desktop application. 
+Go to `http://localhost/ears3/api/cruise/csr?identifier=cruise_identifier` to see the a full SDN Cruise Summary Report. Cruises are created with the java client desktop application. 
 
 Go to `http://localhost:8080` for the acquisition.
 
@@ -310,7 +310,7 @@ To disable EARS from creating these NetCDF files, comment out the following line
 acquisition.archiving.netcdf.file=./log/netcdf/{sensor}/{sensor}-{frame}-{date,yyyy-Mmdd-HH}.nc
 ```
 
-After this, run `./run.sh`
+After this, run `./run.sh` or `./run-freespace.sh` which frees unused images.
 
 ## Data volumes
 
@@ -335,7 +335,7 @@ for both IP addresses, or (unsecure):
 
 ```Systemctl stop firewalld.service```
 
-Do not modify the Dockerfile or the docker-compose.yml files. If any other file (the wars or the .env file) is changed you will need to rebuild the image(`sudo docker-compose build`). The easiest is to run ``./run.sh``.
+Do not modify the Dockerfile or the docker-compose.yml files. If any other file (the wars or the .env file) is changed you will need to rebuild the image(`sudo docker-compose build`). The easiest is to run ``./run.sh`` or `./run-freespace.sh` which frees unused images.
 
 You can read the logs of the individual modules like so:
 
@@ -357,7 +357,7 @@ If a new version of any web application (ears3.war, ears3Nav.war) would need a r
 - ssh to the server
 - cd to the ears3-server directory, replace the files and
 ```
-./run.sh
+./run-freespace.sh
 ```
 
 The build command is smart enough to start rebuilding only the steps that are not affected by the file change (so this is faster than the original build).

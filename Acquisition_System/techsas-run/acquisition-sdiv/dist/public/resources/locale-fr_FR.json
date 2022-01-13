@@ -641,7 +641,7 @@
     "views.pefpos": {
         "title": "EF Position",
         "latitude": "Latitude",
-        "longitude": "Longigude",
+        "longitude": "Longitude",
         "heading": "Cap",
         "speed": "Vitesse",
         "depth": "Profondeur",

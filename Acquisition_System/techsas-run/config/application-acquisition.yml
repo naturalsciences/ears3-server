@@ -16,11 +16,11 @@ acquisition:
     archiving:
         cruise:
             name: "test"
-            archivingPath: "./log"
+            archivingPath: "./log1"
             archivingRotationMode: HOURLY
         subServices:
-          #- netcdf
-          #- db
+##            - netcdf
+##          - db
         raw:
             filePathPattern: "{cruiseName}/raw/{sensor}/{sensor}-{date}.log"
             frameHeader: "{date,yyyy-MM-dd'T'HH:mm:ss.SSS'Z'},"

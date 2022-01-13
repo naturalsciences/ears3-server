@@ -1,0 +1,138 @@
+{
+  "shipId": "AT",
+  "brokerIP": "localhost:61614",
+  "viewList": [
+    {"type": "Anemometer", "frameName": "weather", "navId": "AT_SHIPNAV", "devicePattern": "AT_ANEMOMETER"},
+    {"type": "Casino", "config": {"connectionParams": { "url": "192.168.32.2:3306", "login": "root", "password": "casino" }, "limit": 25, "eventsDisplayColumns": ["Date", "Latitude", "Longitude", "Type", "Observation", "DeviceFullName", "ActionFullName"]}},
+    {"type": "Casino - Add event", "config": {"connectionParams": { "url": "192.168.32.2:3306", "login": "root", "password": "casino" }, "deviceId": "views.casino.add-event.subtitle"}},
+    {"type": "Debug", "role": "ROLE_ADMIN"},
+    {"type": "Devices"},
+    {"type": "Ephemeride", "frameName": "shipnav", "devicePattern": "AT_SHIPNAV"},
+    {"type": "Empty"},
+    {"type": "Graphics"},
+    {"type": "ADCP", "frameName": "watercurrentvelocity"},
+    {"type": "Attitude", "frameName": "shipattitude"},
+    {"type": "Depth", "frameName": "shipnav", "devicePattern": "AT_SHIPNAV"},
+    {"type": "Depth", "frameName": "sb_depth"},
+    {"type": "Flow", "frameName": "flow"},
+    {"type": "Funes winch", "frameName": "funeswinch"},
+    {"type": "GPS", "frameName": "position"},
+    {"type": "Gravimeter", "frameName": "gravi"},
+    {"type": "Kss31", "frameName": "kss31"},
+    {"type": "Haul composition", "frameName": "blcar"},
+    {"type": "Hull sound speed", "frameName": "hullsoundspeed"},
+    {"type": "Magnetometer", "frameName": "scalar_mag"},
+    {
+      "type": "Map", "frameName": "shipnav", "devicePattern": "AT_SHIPNAV",
+      "weatherId": "AT_WEATHER", "multibeamId": "AT_EM2040", "mobileDeviceId":"VICT_NAV", "frameMobileId":"mobile",
+      "lestDeviceId":"LEST_NAV", "aisDeviceId": "AT_AIS", "frameAisId": "ais",
+      "config": {"ship": {"length": 84.6, "beam": 15.8, "xOffset": 8, "yOffset": 42.5, "lengthVector": 15}}
+    },
+    {"type": "Message"},
+    {"type": "Mobile", "frameName": "mobile", "devicePattern": "VICT_NAV"},
+    {"type": "Navigation", "frameName": "shipnav", "devicePattern": "AT_SHIPNAV"},
+    {"type": "Numerical"},
+    {"type": "Multibeam", "frameName": "bathymetry"},
+    {"type": "Species", "frameName": "blcar"},
+    {
+      "type": "Station", "frameName": "shipnav", "devicePattern": "AT_SHIPNAV", "weatherId": "AT_WEATHER",
+      "config": {"ship": {"length": 84.6, "beam": 15.8, "xOffset": 8, "yOffset": 42.5, "lengthVector": 15}}
+    },
+    {"type": "Thermometer", "frameName": "intaketemp"},
+    {"type": "Thermosal", "frameName": "hydrology", "config": {"flowDeviceId": "AT_FLOW_SBE"}},
+    {"type": "Trawl", "frameName": "trawl"},
+    {"type": "Weather", "frameName": "weather", "navId": "AT_SHIPNAV", "devicePattern": "AT_WEATHER"},
+    {"type": "Winch", "frameName": "winch", "config": {"sounder": {"deviceSoundingId": "AT_SHIPNAV", "frameSounding": "shipnav", "sounding": "depth"}}},
+    {"type": "Propulsion Tl", "frameName": "tlpropulsion"},
+    {"type": "Propulsion At", "frameName": "atpropulsion", "navId": "AT_SHIPNAV" },
+    {"type": "Landing At", "frameName": "atpropulsion", "navId": "AT_SHIPNAV", "weatherId": "AT_WEATHER"}
+  ],
+  "video": {
+    "baseUrl": "/janus/",
+    "list": [
+      {"title": "video.quarterdeck",        "url": "na",  "janusStreamIndex": "1",  "mosaic": "mosaic1.jpeg", "mosaicIndex": 0},
+      {"title": "video.after-gantry",       "url": "na",  "janusStreamIndex": "2",  "mosaic": "mosaic1.jpeg", "mosaicIndex": 1},
+      {"title": "video.port-gangway",       "url": "na",  "janusStreamIndex": "3",  "mosaic": "mosaic1.jpeg", "mosaicIndex": 2 },
+      {"title": "video.starboard-hangar",   "url": "na",  "janusStreamIndex": "4",  "mosaic": "mosaic1.jpeg", "mosaicIndex": 3 },
+      {"title": "video.CTD-passageway",     "url": "na",  "janusStreamIndex": "5",  "mosaic": "mosaic1.jpeg", "mosaicIndex": 4 },
+      {"title": "video.hydrology-winch",    "url": "na",  "janusStreamIndex": "6",  "mosaic": "mosaic1.jpeg", "mosaicIndex": 5 },
+      {"title": "video.CTD-winch",          "url": "na",  "janusStreamIndex": "7",  "mosaic": "mosaic1.jpeg", "mosaicIndex": 6 },
+      {"title": "video.oceano-winch",       "url": "na",  "janusStreamIndex": "8",  "mosaic": "mosaic1.jpeg", "mosaicIndex": 7 },
+      {"title": "video.capstan",            "url": "na",  "janusStreamIndex": "9",  "mosaic": "mosaic1.jpeg", "mosaicIndex": 8 },
+      {"title": "video.hangar-axial-winch", "url": "na",  "janusStreamIndex": "10", "mosaic": "mosaic1.jpeg", "mosaicIndex": 9 },
+      {"title": "video.quadrivisione",      "url": "na",  "janusStreamIndex": "11", "mosaic": "mosaic1.jpeg", "mosaicIndex": 10 },
+      {"title": "video.after-machine",      "url": "na",  "janusStreamIndex": "12", "mosaic": "mosaic1.jpeg", "mosaicIndex": 11 },
+      {"title": "video.forward-machine",    "url": "na",  "janusStreamIndex": "13", "mosaic": "mosaic1.jpeg", "mosaicIndex": 12 },
+      {"title": "video.central-machine",    "url": "na",  "janusStreamIndex": "14", "mosaic": "mosaic1.jpeg", "mosaicIndex": 13 },
+      {"title": "video.bow-thruster",       "url": "na",  "janusStreamIndex": "15", "mosaic": "mosaic1.jpeg", "mosaicIndex": 14 },
+      {"title": "video.rov",                "url": "na",  "janusStreamIndex": "16", "mosaic": "mosaic1.jpeg", "mosaicIndex": 15 },
+      {"title": "video.rovhd",              "url": "na",  "janusStreamIndex": "18", "mosaic": "mosaic2.jpeg", "mosaicIndex": 1 },
+      {"title": "video.scampi",             "url": "na",  "janusStreamIndex": "17", "mosaic": "mosaic2.jpeg", "mosaicIndex": 0 }
+    ]
+  },
+  "defaultDashboard": [
+    {"id": 1, "sizeX": 6, "sizeY": 9, "row": 0, "col": 0, "type": "Navigation", "config": {"deviceId": "AT_SHIPNAV", "frameId": "shipnav"}},
+    {
+      "id": 2, "sizeX": 6, "sizeY": 9, "row": 0, "col": 6, "type": "Map", "config": {
+      "mode": "navigation", "deviceId": "AT_SHIPNAV", "frameId": "shipnav", "weatherId": "AT_WEATHER",
+      "mobileDeviceId":"VICT_NAV", "frameMobileId":"mobile","lestDeviceId":"LEST_NAV", "aisDeviceId":"AT_AIS", "frameAisId":"ais",
+      "ship": {"length": 84.6, "beam": 15.8, "xOffset": 8, "yOffset": 42.5, "lengthVector": 15}
+    }
+    },
+    {
+      "id": 4, "sizeX": 6, "sizeY": 9, "row": 9, "col": 0, "type": "Weather",
+      "config": {"deviceId": "AT_WEATHER", "frameId": "weather", "navId": "AT_SHIPNAV"}
+    },
+    {
+      "id": 3, "sizeX": 6, "sizeY": 9, "row": 9, "col": 6, "type": "Thermosal",
+      "config": {"deviceId": "AT_SBE", "frameId": "hydrology", "flowDeviceId": "AT_FLOW_SBE"}
+    }
+  ],
+  "defaultStaticGrid": [
+    [
+      {
+        "id": "1", "type": "Navigation", "title": "views.navigation.title", "icon": "views.navigation.icon", "config": {"deviceId": "AT_SHIPNAV", "frameId": "shipnav"}
+      },
+      {
+        "id": "2", "type": "Map", "title": "views.map.title", "icon": "views.map.icon", "config": {
+        "mode": "navigation", "deviceId": "AT_SHIPNAV", "frameId": "shipnav", "weatherId": "AT_WEATHER",
+        "mobileDeviceId":"VICT_NAV", "frameMobileId":"mobile","lestDeviceId":"LEST_NAV","aisDeviceId":"AT_AIS", "frameAisId":"ais",
+       "ship": {"length": 84.6, "beam": 15.8, "xOffset": 8, "yOffset": 42.5, "lengthVector": 15}
+      }
+      },
+      {"id": "3", "type": "Devices","title": "views.devices.title", "icon": "views.devices.icon" }
+    ], [
+      {"id": "4", "type": "Weather", "title": "views.weather.title", "icon": "views.weather.icon", "config": {"deviceId": "AT_WEATHER", "frameId": "weather", "navId": "AT_SHIPNAV"}},
+      {
+        "id": "5", "type": "Thermosal","title": "views.thermosal.title", "icon": "views.thermosal.icon",
+        "config": {"deviceId": "AT_SBE", "frameId": "hydrology", "flowDeviceId": "AT_FLOW_SBE"}
+      },
+      {"id": "6", "type": "Empty", "title": "views.empty.title", "icon": "views.empty.icon"}
+    ]
+  ],
+  "dataAccessLists": {
+    "navigation": [
+      {"deviceId": "AT_SHIPNAV", "frameId": "shipnav", "id": "lat", "colname": "Lat"},
+      {"deviceId": "AT_SHIPNAV", "frameId": "shipnav", "id": "long", "colname": "Long"},
+      {"deviceId": "AT_SHIPNAV", "frameId": "shipnav", "id": "heading", "colname": "Heading"},
+      {"deviceId": "AT_SHIPNAV", "frameId": "shipnav", "id": "depth", "colname": "Sounder"},
+      {"deviceId": "AT_SHIPNAV", "frameId": "shipnav", "id": "gndspeed", "colname": "Ground speed"},
+      {"deviceId": "AT_SHIPNAV", "frameId": "shipnav", "id": "gndcourse", "colname": "Ground course"}
+    ],
+    "weather": [
+      {"deviceId": "AT_WEATHER", "frameId": "weather", "id": "trueairspeed", "colname": "Air speed"},
+      {"deviceId": "AT_WEATHER", "frameId": "weather", "id": "trueairheading", "colname": "Air heading"},
+      {"deviceId": "AT_WEATHER", "frameId": "weather", "id": "relairspeed", "colname": "Rel air speed"},
+      {"deviceId": "AT_WEATHER", "frameId": "weather", "id": "relairheading", "colname": "Rel air heading"}
+    ],
+    "thermosal": [
+      {"deviceId": "AT_SBE", "frameId": "hydrology", "id": "intaketemp", "colname": "Intake temp"},
+      {"deviceId": "AT_SBE", "frameId": "hydrology", "id": "salinity", "colname": "Salinity"},
+      {"deviceId": "AT_SBE", "frameId": "hydrology", "id": "conduct", "colname": "Conductivity"},
+      {"deviceId": "AT_SBE", "frameId": "hydrology", "id": "temp", "colname": "Temperature"},
+      {"deviceId": "AT_SBE", "frameId": "hydrology", "id": "sndspeed", "colname": "Sound speed"},
+      {"deviceId": "AT_SBE", "frameId": "hydrology", "id": "density", "colname": "Density"}
+    ]
+  }
+}
+
