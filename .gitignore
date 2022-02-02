@@ -8,3 +8,7 @@ acquisition-launcher-1.1.0-SNAPSHOT.jar
 .env.belgica
 ears3NavBelgica.war
 ears3NavBelgica.properties
+*.nc
+techsas-run-old
+nohup.out
+*.log

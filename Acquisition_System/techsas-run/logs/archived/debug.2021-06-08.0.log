@@ -1,6 +1,0 @@
-2021-06-08 12:53:27 - INFO  - Starting TechsasLauncher on debian-dev-techsasNG with PID 3039 (/home/ifremer/Dev/techsas-run/acquisition-launcher-1.1.0-SNAPSHOT.jar started by ifremer in /home/ifremer/Dev/techsas-run)
-2021-06-08 12:53:27 - DEBUG - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
-2021-06-08 12:53:27 - INFO  - The following profiles are active: acquisition,h2postgres,eurofleets
-2021-06-08 12:53:37 - WARN  - HHH000342: Could not obtain connection to query metadata : Cannot create PoolableConnectionFactory (FATAL: database "cruises" does not exist)
-2021-06-08 12:53:39 - INFO  - Web application fully configured
-2021-06-08 12:53:41 - INFO  - Started TechsasLauncher in 14.981 seconds (JVM running for 16.279)
