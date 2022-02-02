@@ -140,6 +140,9 @@ Or unzip the zip into <installation directory>/ears3-server.
 
 You also need to download the acquisition launcher from https://share.naturalsciences.be/f/18ddde1d5eb14981b8ee/?dl=1 and put it in ears3-server/Acquisition_System/techsas-run. Recent builds became too large for github (100MB).
 
+```
+wget https://share.naturalsciences.be/f/18ddde1d5eb14981b8ee/?dl=1 -O acquisition-launcher-1.1.0-SNAPSHOT.jar
+```
 ## Create the docker container and run the image
 
 ```
