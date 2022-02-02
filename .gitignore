@@ -6,3 +6,5 @@ Acquisition_System/bin/log
 deploy.sh
 acquisition-launcher-1.1.0-SNAPSHOT.jar
 .env.belgica
+ears3NavBelgica.war
+ears3NavBelgica.properties
