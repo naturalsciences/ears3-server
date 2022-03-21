@@ -207,8 +207,8 @@ CREATE TABLE public.event (
     subject_id bigint NOT NULL,
     tool_id bigint NOT NULL,
     tool_category_id bigint NOT NULL,
-    label character varying(100)
-    description character varying(1000)
+    label character varying(100),
+    description character varying(1000),
     station character varying(100)
 );
 
