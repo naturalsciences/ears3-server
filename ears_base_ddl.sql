@@ -414,8 +414,8 @@ ALTER SEQUENCE public.linked_data_term_id_seq OWNED BY public.linked_data_term.i
 
 CREATE TABLE public.navigation (
     id bigint NOT NULL,
-    instrument_time timestamp without time zone,
-    time_stamp timestamp without time zone,
+    instrument_time timestamp with time zone,
+    time_stamp timestamp with time zone,
     cog double precision,
     depth double precision,
     heading double precision,
@@ -768,8 +768,8 @@ ALTER SEQUENCE public.sea_area_id_seq OWNED BY public.sea_area.id;
 
 CREATE TABLE public.thermosal (
     id bigint NOT NULL,
-    instrument_time timestamp without time zone,
-    time_stamp timestamp without time zone,
+    instrument_time timestamp with time zone,
+    time_stamp timestamp with time zone,
     conductivity double precision,
     raw_fluorometry double precision,
     salinity double precision,
@@ -849,8 +849,8 @@ ALTER SEQUENCE public.tool_id_seq OWNED BY public.tool.id;
 
 CREATE TABLE public.weather (
     id bigint NOT NULL,
-    instrument_time timestamp without time zone,
-    time_stamp timestamp without time zone,
+    instrument_time timestamp with time zone,
+    time_stamp timestamp with time zone,
     atmospheric_pressure double precision,
     atmospheric_temperature double precision,
     humidity double precision,
@@ -37225,8 +37225,8 @@ ALTER TABLE ONLY public.organisation
 -- Name: linked_data_term uk_dmwknwr93twkqilomdpqomh47; Type: CONSTRAINT; Schema: public; Owner: ears
 --
 
-ALTER TABLE ONLY public.linked_data_term
-    ADD CONSTRAINT uk_dmwknwr93twkqilomdpqomh47 UNIQUE (transitive_identifier);
+--ALTER TABLE ONLY public.linked_data_term
+--    ADD CONSTRAINT uk_dmwknwr93twkqilomdpqomh47 UNIQUE (transitive_identifier);
 
 
 --

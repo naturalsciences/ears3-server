@@ -1,6 +1,8 @@
 FROM tomcat:9.0.22-jdk8-openjdk
 
 COPY wait.sh wait.sh
+COPY ears3.war ears3.war
+COPY ears3Nav.war ears3Nav.war
 COPY ears_base_ddl.sql ears_base_ddl.sql
 COPY tomcat-users.xml /usr/local/tomcat/conf/
 

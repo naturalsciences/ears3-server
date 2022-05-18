@@ -363,7 +363,7 @@
         "title": "EF Position",
         "icon": "rss",
         "latitude": "Latitude",
-        "longitude": "Longigude",
+        "longitude": "Longitude",
         "heading": "Head.",
         "speed": "Speed",
         "depth": "Depth",
