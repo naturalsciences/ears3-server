@@ -1,5 +1,6 @@
 #!/bin/bash
 sudo docker kill ears-server_acquisition ears-server_tomcat ears-server_mysql ears-server_postgres
+sudo kill $(sudo netstat -tulpn | grep -w ':80' | awk '{print $7;}' | cut -f1 -d/)
 sudo docker-compose build &&
 sudo docker-compose up -d
 sleep 60
