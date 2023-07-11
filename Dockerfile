@@ -1,4 +1,5 @@
 FROM tomcat:9.0.76-jdk11
+# FROM tomcat:9.0.22-jdk8-openjdk
 
 COPY wait.sh wait.sh
 COPY ears3.war ears3.war

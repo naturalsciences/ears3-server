@@ -15,6 +15,4 @@ nohup java -Xms512m -Xmx2g -jar acquisition-launcher-1.1.0-SNAPSHOT.jar 2>&1 &
 sleep 40
 
 cd -
-./eurofleets.sh
-echo Finished! Go to http://localhost/ears3
 echo -ne '\007'
