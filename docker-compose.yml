@@ -53,27 +53,27 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
     volumes:
-      - ./ears_base_ddl.sql:/docker-entrypoint-initdb.d/ears_base_ddl.sql
-      - ./db_dump_20230707.sql:/docker-entrypoint-initdb.d/db_dump_20230707.sql
+      # - ./ears_base_ddl.sql:/docker-entrypoint-initdb.d/0_ears_base_ddl.sql
+      - ./db_ears3_20230706.sql:/docker-entrypoint-initdb.d/1_db_ears3_20230706.sql
       - ./ears_postgres_data:/var/lib/postgresql
     restart: always
 #    command: ["postgres", "-c", "log_statement=all"]
-  acquisition:
-    build: ./Acquisition_System/techsas-run
-    container_name: ears-server_acquisition
-    network_mode: "host" 
-    #integrate with host to receive udp
-    environment:
-      - ACQUISITION_DB_SERVER=127.0.0.1
-      - ACQUISITION_DB_PORT=6543
-      - ACQUISITION_DB_USER=${ACQUISITION_DB_USER}
-      - ACQUISITION_DB_PASS=${ACQUISITION_DB_PASS}
-      - ACQUISITION_PORT=${ACQUISITION_PORT}
-      - NTP_HOST=${NTP_HOST}
-    volumes:
-      - ./netcdf:/acquisition/log/test/netcdf
-    depends_on:
-      - postgres
-    #command: ./startup.sh
-    command: echo "docker acquisition module disabled"
-    restart: always
+#   acquisition:
+#     build: ./Acquisition_System/techsas-run
+#     container_name: ears-server_acquisition
+#     network_mode: "host" 
+#     #integrate with host to receive udp
+#     environment:
+#       - ACQUISITION_DB_SERVER=127.0.0.1
+#       - ACQUISITION_DB_PORT=6543
+#       - ACQUISITION_DB_USER=${ACQUISITION_DB_USER}
+#       - ACQUISITION_DB_PASS=${ACQUISITION_DB_PASS}
+#       - ACQUISITION_PORT=${ACQUISITION_PORT}
+#       - NTP_HOST=${NTP_HOST}
+#     volumes:
+#       - ./netcdf:/acquisition/log/test/netcdf
+#     depends_on:
+#       - postgres
+#     #command: ./startup.sh
+#     command: echo "docker acquisition module disabled"
+#     restart: always
