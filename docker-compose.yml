@@ -54,7 +54,6 @@ services:
       - POSTGRES_USER=postgres
     volumes:
       - ./ears_base_ddl.sql:/docker-entrypoint-initdb.d/ears_base_ddl.sql
-      - ./db_dump_20230707.sql:/docker-entrypoint-initdb.d/db_dump_20230707.sql
       - ./ears_postgres_data:/var/lib/postgresql
     restart: always
 #    command: ["postgres", "-c", "log_statement=all"]
