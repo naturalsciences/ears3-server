@@ -37,11 +37,15 @@ TRUNCATE TABLE public.cruise CONTINUE IDENTITY CASCADE;
 TRUNCATE TABLE public.program CONTINUE IDENTITY CASCADE;
 TRUNCATE TABLE public.person CONTINUE IDENTITY CASCADE;
 TRUNCATE TABLE public.event CONTINUE IDENTITY CASCADE;
+TRUNCATE TABLE public.property CONTINUE IDENTITY CASCADE;
+TRUNCATE TABLE public.thermosal  CONTINUE IDENTITY CASCADE;
+TRUNCATE TABLE public.weather CONTINUE IDENTITY CASCADE;
+TRUNCATE TABLE public.navigation CONTINUE IDENTITY CASCADE;
 	END;
 $$;
 
 
-ALTER FUNCTION public.refresh() OWNER TO postgres;
+ALTER FUNCTION public.refresh() OWNER TO ears;
 
 SET default_tablespace = '';
 
@@ -95,7 +99,7 @@ CREATE TABLE public.cruise (
     identifier character varying(100) NOT NULL,
     is_cancelled boolean NOT NULL,
     name character varying(255),
-    objectives character varying(5000),
+    objectives character varying(7500),
     planning_url character varying(255),
     purpose character varying(255),
     start_date timestamp without time zone,
@@ -37245,16 +37249,6 @@ ALTER TABLE ONLY public.project
 
 ALTER TABLE ONLY public.cruise
     ADD CONSTRAINT uk_fm2el3cesydw4smkckhbaspfx UNIQUE (identifier);
-
-
---
--- TOC entry 2219 (class 2606 OID 3088925)
--- Name: person uk_fwmwi44u55bo4rvwsv0cln012; Type: CONSTRAINT; Schema: public; Owner: ears
---
-
-ALTER TABLE ONLY public.person
-    ADD CONSTRAINT uk_fwmwi44u55bo4rvwsv0cln012 UNIQUE (email);
-
 
 --
 -- TOC entry 2208 (class 2606 OID 3088919)
