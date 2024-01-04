@@ -10,21 +10,17 @@ version: '3.5'
 services:
   tomcat:
     build: .
-    container_name: ears-server_tomcat
+    container_name: ears3-server_tomcat
     extra_hosts:
       - host.docker.internal:172.17.0.1
     environment:
-#      - EARS_JDBC_URL=jdbc:postgresql://postgres:5432/ears3
-#      - EARS_DB_CLASS=com.mysql.cj.jdbc.Driver
-#      - EARS_DB_USER=ears
-#      - EARS_DB_PASS=ears
       - ACQUISITION_JDBC_URL=${ACQUISITION_JDBC_URL}
       - ACQUISITION_DB_CLASS=${ACQUISITION_DB_CLASS}
       - ACQUISITION_DB_USER=${ACQUISITION_DB_USER}
       - ACQUISITION_DB_PASS=${ACQUISITION_DB_PASS}
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/ears3
-      - SPRING_DATASOURCE_USERNAME=ears
-      - SPRING_DATASOURCE_PASSWORD=ears
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
       - EARS_PLATFORM=${EARS_PLATFORM}
       - EARS_VESSEL_ADDRESS=${EARS_VESSEL_ADDRESS}
       - EARS_NAVIGATION_SERVER=http://host.docker.internal:${EARS_PORT} 
@@ -46,7 +42,8 @@ services:
      - ./ears3Nav.war:/usr/local/tomcat/webapps/ears3Nav.war
   postgres:
     image: postgres:12.5-alpine
-    container_name: ears-server_postgres
+    container_name: ears3-server_postgres
+    profiles: ["embedded_db"]
     ports:
       - 6543:5432
     environment:
@@ -60,7 +57,8 @@ services:
 #    command: ["postgres", "-c", "log_statement=all"]
   acquisition:
     build: ./Acquisition_System/techsas-run
-    container_name: ears-server_acquisition
+    container_name: ears3-server_acquisition
+    profiles: ["embedded_acquisition"]
     network_mode: "host" 
     #integrate with host to receive udp
     environment:
@@ -74,6 +72,5 @@ services:
       - ./netcdf:/acquisition/log/test/netcdf
     depends_on:
       - postgres
-    #command: ./startup.sh
-    command: echo "docker acquisition module disabled"
+    command: ./startup.sh
     restart: always
