@@ -10,7 +10,7 @@ version: '3.5'
 services:
   tomcat:
     build: .
-    container_name: ears3-server_tomcat
+    container_name: ears3-server-tomcat
     extra_hosts:
       - host.docker.internal:172.17.0.1
     environment:
@@ -42,7 +42,7 @@ services:
      - ./ears3Nav.war:/usr/local/tomcat/webapps/ears3Nav.war
   postgres:
     image: postgres:12.5-alpine
-    container_name: ears3-server_postgres
+    container_name: ears3-server-postgres
     profiles: ["embedded_db"]
     ports:
       - 6543:5432
@@ -57,7 +57,7 @@ services:
 #    command: ["postgres", "-c", "log_statement=all"]
   acquisition:
     build: ./Acquisition_System/techsas-run
-    container_name: ears3-server_acquisition
+    container_name: ears3-server-acquisition
     profiles: ["embedded_acquisition"]
     network_mode: "host" 
     #integrate with host to receive udp
