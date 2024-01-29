@@ -99,7 +99,7 @@ CREATE TABLE public.cruise (
     identifier character varying(100) NOT NULL,
     is_cancelled boolean NOT NULL,
     name character varying(255),
-    objectives character varying(7500),
+    objectives character varying(10000),
     planning_url character varying(255),
     purpose character varying(255),
     start_date timestamp without time zone,
