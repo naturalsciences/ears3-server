@@ -5,7 +5,7 @@ ontologies
 Acquisition_System/bin/log
 deploy.sh
 acquisition-launcher-1.1.0-SNAPSHOT.jar
-.env.local
+.env
 ears3NavBelgica.war
 ears3NavBelgica.properties
 *_old*
