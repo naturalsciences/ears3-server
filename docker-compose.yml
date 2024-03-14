@@ -1,26 +1,29 @@
-# This setup creates a Tomcat container for the EARS webservices, a Tomcat containber for the acquisition module, plus MySQL and Postgres containers. If this is the first run it populates the databases with the needed tables. 
-# The computer they are run from is called the host.
-# The tomcat container depends on the mysql one (see the depends_on keyword). 
+# This setup creates a Tomcat container for the EARS webservices, a optional Tomcat container for the acquisition module, plus an optional Postgres container. If this is the first run it populates the databases with the needed tables. 
+# it is run by 
+# The EARS database either runs on a remote database or in the Postgres container. To select which one, 
+# The computer the containers are run from is called the host.
+# The tomcat container depends on the postgres one (see the depends_on keyword). 
 # The tomcat main command (catalina.sh) is not run before the databases is populated; this is done via the wait_for_mysql.sh script. 
 # The SQL data is persisted outside of the containers in volume directories (ears_postgres_data)
 # The 'restart: always' keywords ensure that both services are restarted always after each crash or system reboot, as long as the docker daemon is running. sudo docker stop <id> will actually stop the application, and it will not be restarted automatically.
-# The container names are stored as ears-server_tomcat, ears-server_mysql and ears-server_acquisition. These can be used in your docker host to see the logs or get info: eg. sudo docker logs ears-server_acquisition or sudo docker inspect ears-server_mysql
+# The container names are stored as ears-server-tomcat, ears-server-mysql and ears-server-acquisition. These can be used in your docker host to see the logs or get info: eg. sudo docker logs ears-server_acquisition or sudo docker inspect ears-server_mysql
 # The EARS webservices are reachable on http://localhost:8181 and the acquisition server on http://localhost:8080
 version: '3.5'
 services:
   tomcat:
     build: .
     container_name: ears3-server-tomcat
+    profiles: ["embedded_db"]
     extra_hosts:
       - host.docker.internal:172.17.0.1
     environment:
-      - ACQUISITION_JDBC_URL=${ACQUISITION_JDBC_URL}
+      - ACQUISITION_JDBC_URL=${ACQUISITION_DB_URL}
       - ACQUISITION_DB_CLASS=${ACQUISITION_DB_CLASS}
       - ACQUISITION_DB_USER=${ACQUISITION_DB_USER}
       - ACQUISITION_DB_PASS=${ACQUISITION_DB_PASS}
-      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
-      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
-      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/ears3
+      - SPRING_DATASOURCE_USERNAME=ears
+      - SPRING_DATASOURCE_PASSWORD=ears
       - EARS_PLATFORM=${EARS_PLATFORM}
       - EARS_VESSEL_ADDRESS=${EARS_VESSEL_ADDRESS}
       - EARS_NAVIGATION_SERVER=http://host.docker.internal:${EARS_PORT} 
@@ -40,6 +43,37 @@ services:
      - ./context.xml:/usr/local/tomcat/conf/context.xml
      - ./ears3.war:/usr/local/tomcat/webapps/ears3.war
      - ./ears3Nav.war:/usr/local/tomcat/webapps/ears3Nav.war
+  tomcat-remote:
+    build: .
+    container_name: ears3-server-tomcat-remote
+    profiles: ["remote_db"]
+    extra_hosts:
+      - host.docker.internal:172.17.0.1
+    environment:
+      - ACQUISITION_JDBC_URL=${ACQUISITION_DB_URL}
+      - ACQUISITION_DB_CLASS=${ACQUISITION_DB_CLASS}
+      - ACQUISITION_DB_USER=${ACQUISITION_DB_USER}
+      - ACQUISITION_DB_PASS=${ACQUISITION_DB_PASS}
+      - SPRING_DATASOURCE_URL=${EARS_DB_URL}
+      - SPRING_DATASOURCE_USERNAME=${EARS_DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${EARS_DB_PASS}
+      - EARS_PLATFORM=${EARS_PLATFORM}
+      - EARS_VESSEL_ADDRESS=${EARS_VESSEL_ADDRESS}
+      - EARS_NAVIGATION_SERVER=http://host.docker.internal:${EARS_PORT} 
+      - EARS_CSR_LICENSE=${EARS_CSR_LICENSE}
+      - EARS_ONTOLOGY_USERNAME=${EARS_ONTOLOGY_USERNAME}
+      - EARS_ONTOLOGY_PASSWORD=${EARS_ONTOLOGY_PASSWORD}
+      - EARS_PROGRAM_REGEX=${EARS_PROGRAM_REGEX}
+      - CATALINA_OPTS=-DACQUISITION_JDBC_URL=$$ACQUISITION_JDBC_URL -DACQUISITION_DB_USER=$$ACQUISITION_DB_USER -DACQUISITION_DB_PASS=$$ACQUISITION_DB_PASS -DACQUISITION_DB_CLASS=$$ACQUISITION_DB_CLASS -DSPRING_DATASOURCE_URL=$$SPRING_DATASOURCE_URL -DSPRING_DATASOURCE_USERNAME=$$SPRING_DATASOURCE_USERNAME -DSPRING_DATASOURCE_PASSWORD=$$SPRING_DATASOURCE_PASSWORD
+    ports:
+      - ${EARS_PORT}:8080
+    command: ["./wait.sh","catalina.sh", "run"]
+    restart: always
+    volumes:
+     - ./ontologies:/var/www/ears2
+     - ./context.xml:/usr/local/tomcat/conf/context.xml
+     - ./ears3.war:/usr/local/tomcat/webapps/ears3.war
+     - ./ears3Nav.war:/usr/local/tomcat/webapps/ears3Nav.war
   postgres:
     image: postgres:12.5-alpine
     container_name: ears3-server-postgres
@@ -55,22 +89,3 @@ services:
       - ./ears_postgres_data:/var/lib/postgresql
     restart: always
 #    command: ["postgres", "-c", "log_statement=all"]
-  acquisition:
-    build: ./Acquisition_System/techsas-run
-    container_name: ears3-server-acquisition
-    profiles: ["embedded_acquisition"]
-    network_mode: "host" 
-    #integrate with host to receive udp
-    environment:
-      - ACQUISITION_DB_SERVER=127.0.0.1
-      - ACQUISITION_DB_PORT=6543
-      - ACQUISITION_DB_USER=${ACQUISITION_DB_USER}
-      - ACQUISITION_DB_PASS=${ACQUISITION_DB_PASS}
-      - ACQUISITION_PORT=${ACQUISITION_PORT}
-      - NTP_HOST=${NTP_HOST}
-    volumes:
-      - ./netcdf:/acquisition/log/test/netcdf
-    depends_on:
-      - postgres
-    command: ./startup.sh
-    restart: always
