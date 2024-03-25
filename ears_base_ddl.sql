@@ -213,7 +213,8 @@ CREATE TABLE public.event (
     tool_category_id bigint NOT NULL,
     label character varying(100),
     description character varying(1000),
-    station character varying(100)
+    station character varying(100),
+    remarks character varying(500)
 );
 
 
@@ -37293,6 +37294,11 @@ ALTER TABLE ONLY public.country
 
 ALTER TABLE ONLY public.person
     ADD CONSTRAINT ukh36v1mgchbyio7nbvp88efccd UNIQUE (first_name, last_name, organisation_id);
+
+
+
+ALTER TABLE ONLY public.event
+    ADD CONSTRAINT event_unique UNIQUE ("time_stamp", action_id, platform_id, process_id, program_id, tool_id, tool_category_id);
 
 
 --
