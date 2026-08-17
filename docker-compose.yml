@@ -8,7 +8,6 @@
 # The 'restart: always' keywords ensure that both services are restarted always after each crash or system reboot, as long as the docker daemon is running. sudo docker stop <id> will actually stop the application, and it will not be restarted automatically.
 # The container names are stored as ears-server-tomcat, ears-server-mysql and ears-server-acquisition. These can be used in your docker host to see the logs or get info: eg. sudo docker logs ears-server_acquisition or sudo docker inspect ears-server_mysql
 # The EARS webservices are reachable on http://localhost:8181 and the acquisition server on http://localhost:8080
-version: '3.5'
 services:
   tomcat:
     build: .
@@ -31,6 +30,7 @@ services:
       - EARS_ONTOLOGY_USERNAME=${EARS_ONTOLOGY_USERNAME}
       - EARS_ONTOLOGY_PASSWORD=${EARS_ONTOLOGY_PASSWORD}
       - EARS_PROGRAM_REGEX=${EARS_PROGRAM_REGEX}
+      - CATALINA_OPTS=-DACQUISITION_JDBC_URL=$$ACQUISITION_JDBC_URL -DACQUISITION_DB_USER=$$ACQUISITION_DB_USER -DACQUISITION_DB_PASS=$$ACQUISITION_DB_PASS -DACQUISITION_DB_CLASS=$$ACQUISITION_DB_CLASS -DSPRING_DATASOURCE_URL=$$SPRING_DATASOURCE_URL -DSPRING_DATASOURCE_USERNAME=$$SPRING_DATASOURCE_USERNAME -DSPRING_DATASOURCE_PASSWORD=$$SPRING_DATASOURCE_PASSWORD
     ports:
       - ${EARS_PORT}:8080
     depends_on:
