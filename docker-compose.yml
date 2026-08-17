@@ -31,6 +31,7 @@ services:
       - EARS_ONTOLOGY_PASSWORD=${EARS_ONTOLOGY_PASSWORD}
       - EARS_PROGRAM_REGEX=${EARS_PROGRAM_REGEX}
       - CATALINA_OPTS=-DACQUISITION_JDBC_URL=$$ACQUISITION_JDBC_URL -DACQUISITION_DB_USER=$$ACQUISITION_DB_USER -DACQUISITION_DB_PASS=$$ACQUISITION_DB_PASS -DACQUISITION_DB_CLASS=$$ACQUISITION_DB_CLASS -DSPRING_DATASOURCE_URL=$$SPRING_DATASOURCE_URL -DSPRING_DATASOURCE_USERNAME=$$SPRING_DATASOURCE_USERNAME -DSPRING_DATASOURCE_PASSWORD=$$SPRING_DATASOURCE_PASSWORD
+
     ports:
       - ${EARS_PORT}:8080
     depends_on:
@@ -38,7 +39,6 @@ services:
     command: ["./wait.sh","catalina.sh", "run"]
     restart: always
     volumes:
-     - ./setenv.sh:/usr/local/tomcat/bin/setenv.sh
      - ./ontologies:/var/www/ears2
      - ./context.xml:/usr/local/tomcat/conf/context.xml
      - ./ears3.war:/usr/local/tomcat/webapps/ears3.war
