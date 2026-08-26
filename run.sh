@@ -33,7 +33,7 @@ fi;
 #sleep 60
 #cd Acquisition_System/techsas-run/
 #nohup java -Xms512m -Xmx2g -jar acquisition-launcher-1.1.0-SNAPSHOT.jar 2>&1 &
-sleep 40
+#sleep 40
 sudo docker kill ears3-server-tomcat ears3-server-tomcat-remote ears3-server-postgres
 sudo docker compose --profile $selected_profile build &&
 sudo docker compose --profile $selected_profile  up -d
