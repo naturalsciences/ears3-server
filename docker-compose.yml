@@ -35,7 +35,7 @@ services:
       - ${EARS_PORT}:8080
     depends_on:
       - postgres
-    command: ["./wait.sh","catalina.sh", "run"]
+    command: ["catalina.sh", "run"]
     restart: always
     volumes:
      - ./ontologies:/var/www/ears2

@@ -1,370 +1,403 @@
+# Installation of the EARS server — RV Belgica
 
-# **Installation of the EARS server**
+This is the installation document for the EARS server on RV Belgica.
+
+## Deprecated / changed features
+
+- **PostgreSQL runs on the host**, not inside a Docker container. A
+  dedicated host-installed PostgreSQL 18 instance (Debian 13) is used, and
+  the docker-compose stack is started in **`remote_db`** mode so it
+  connects out to this host database instead of running its own.
+- **TechSAS is obsolete and no longer used.** The old acquisition chain
+  based on TechSAS UDP datagrams (POS/MET/TSS) has been retired.
+  `ears3Nav` now reads directly from **MDM**, the main acquisition system,
+  instead of ingesting TechSAS datagrams — there is no separate
+  "acquisition server" component on this deployment.
+- **The EARS desktop client is obsolete and no longer used.** Cruises and
+  programs are populated through the `campaign-to-ears` import tool
+  instead.
+
+The rest of this document describes the current setup accordingly.
+
+---
 
 ## Prerequisites
 
-The main prerequisite is linux with the docker daemon installed. Installing docker,docker-compose, installing git, get the EARS server files and building an image from the Dockerfile all require a fast and stable internet connection (on-shore cable or 4G preferred over satellite). This is not always possible on board, so plan the installation ahead. The EARS web applications can be installed on an already present physical or virtual server, or can be installed on-shore inside a virtual machine, taken on-board and deployed there. The server must be accessible from the ship&#39;s LAN.
-
-To create a linux virtual machine, we refer to the many resources available on this topic, for instance [here](https://linuxconfig.org/install-and-set-up-kvm-on-ubuntu-18-04-bionic-beaver-linux). The rest of these guidelines is written with Ubuntu in mind. If only windows servers are available on board, virtualisation is a must.
+The main prerequisite is Linux with the Docker daemon installed. Installing
+Docker, docker-compose, Git, fetching the EARS server files, and building an
+image from the Dockerfile all require a fast and stable internet connection
+(on-shore cable or 4G preferred over satellite). This is not always possible
+on board, so plan the installation ahead. The server is a physical/virtual
+Debian 13 host, accessible from the ship's LAN.
 
 ## Physical requirements
 
-All data is stored inside a docker container (see below). This will increase in size as the campaigns are going on. The data is available as a database as well as NetCDF files.
+The PostgreSQL database lives on the host filesystem (via the native
+`postgresql-18` package), separate from the Docker containers running the
+web applications.
 
-## Create EARS datagrams
-
-EARS needs three datagrams put on the network in a very specific format, each for navigation, thermosalinometry and meteorology (weather).
-
-If the data is sent out via a serial port, it needs to be put on Ethernet. This can be done by using a MOXA Nport 5410 Serial Device Server.
-
-The techniques needed to combine data into the datagrams are not part of these guidelines and are understood to be programmable by sysadmins.
-
-**Datagram description navigation data (POS:3101):**
-
-Start identifier: always $EFPOS
-
-Date of position: ddmmyy
-
-UTC time of position: hh24mmss
-
-Longitude in decimal degrees
-
-Latitude in decimal degrees
-
-Ship heading in °
-
-FO/AF speed in kn
-
-Water depth in m
-
-Course over ground in °
-
-Speed over ground in kn
-
-_ **Example:** _
-
-$EFPOS,131017,132035,3.01803,51.44738,216.2,8.9,-27.7,215.4,8.7
-
-**Datagram description meteo data (MET:3102):**
-
-Start identifier: always $EFMET
-
-Date of position: ddmmyy
-
-UTC time of position: hh24mmss
-
-Mean wind speed in m/s
-
-Wind gust speed in m/s
-
-Wind direction in °
-
-Atmospheric temperature in °C
-
-Humidity in %
-
-Solar radiation in W/m²
-
-Atmospheric pressure in hPa
-
-Sea water temperature in °C
-
-_ **Example:** _
-
-$EFMET,131017,132035,2.81,2.81,150.4,11.05,,189.07,1018.12
-
-**Datagram description thermosalinograph data (TSS:3103):**
-
-Start identifier: always $EFTSS
-
-Date of position: ddmmyy
-
-UTC time of position: hh24mmss
-
-Salinity in PSU
-
-Sea water temperature in °C
-
-Raw fluorometry in V
-
-Conductivity in S/m
-
-Sigma theta in kg/m³
-
-_ **Example:** _
-
-$EFTSS,131017,132035,33.5449,14.7808,0.6275,41.1335,24.8983
-
-## Install docker (on physical or virtual machine)
-
-Ubuntu: Follow the guidelines on [https://docs.docker.com/install/linux/docker-ce/ubuntu/](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
-
-Debian, CentOS, Fedora also available.
-
-After installation, ensure that the docker daemon will be started when the server or virtual machine reboots, and start it right now:
+## Install PostgreSQL on the host
 
 ```
-sudo systemctl enable docker && sudo systemctl start docker
+sudo apt update
+sudo apt install -y curl ca-certificates gnupg
+sudo apt install -y postgresql-common
+sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+sudo apt update
+sudo apt install -y postgresql-18
+psql --version
+sudo systemctl status postgresql
+sudo -u postgres psql -c "SELECT version();"
 ```
 
-## Install docker-compose
+### Create the EARS schema
 
-Ubuntu: follow the guidelines on https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04:
+With the ears3-server repo checked out (see below), load the base DDL
+directly against the host database as the `postgres` superuser:
 
-- Verify the current release of docker-compose on `https://github.com/docker/compose/releases`
-- Install it: ```sudo curl -L https://github.com/docker/compose/releases/download/<version>/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose```
-- And set the permissions: `sudo chmod +x /usr/local/bin/docker-compose`
+```
+sudo -u postgres psql -d ears3 -f ears_base_ddl.sql
+```
 
-## Install git or download as zip from github
+(You must create the `ears3` database and the `ears` role beforehand if
+they don't already exist — align the credentials with what's set in `.env`,
+i.e. database `ears3`, user `ears`.)
 
-Ubuntu:
+### Allow the Docker containers to reach the host database
+
+`pg_hba.conf` and `postgresql.conf` must be adjusted so the containers (on
+the Docker bridge network) are permitted to connect to the host's Postgres
+instance, and Postgres must be listening on an interface reachable from
+that bridge network (not just `localhost`):
+
+```
+sudo nano /etc/postgresql/18/main/postgresql.conf   # listen_addresses, etc.
+sudo nano /etc/postgresql/18/main/pg_hba.conf        # add docker bridge subnet
+sudo systemctl restart postgresql
+# or, for hba-only changes:
+sudo systemctl reload postgresql
+```
+
+Useful checks while debugging connectivity:
+
+```
+sudo -u postgres psql -d ears3 -c "SHOW hba_file;"
+sudo ss -tulpn | grep 5432
+sudo tail -n 50 /var/log/postgresql/postgresql-18-main.log
+```
+
+Once configured, the database should be reachable from the host itself as:
+
+```
+psql -h localhost -U ears -d ears3 -c "SELECT * from public.cruise;"
+```
+
+## Install Docker (on physical or virtual machine)
+
+Debian: follow the official Docker Engine install instructions
+(`https://docs.docker.com/engine/install/debian/`):
+
+```
+sudo apt update
+sudo apt install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/debian
+Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+Enable and start the daemon:
+
+```
+sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
+sudo systemctl start docker.service
+sudo systemctl status docker.service
+```
+
+Add the deployment user to the `docker` group (and, on this host, also to
+`sudo`) so it doesn't need `sudo` for every Docker command, then re-login:
+
+```
+sudo usermod -a -G docker belgica
+sudo usermod -a -G sudo belgica
+exit   # log back in for group membership to take effect
+```
+
+`docker-compose` is provided by the `docker-compose-plugin` package
+installed above (invoked as `docker compose`).
+
+## Install git
 
 ```
 sudo apt-get update
 sudo apt-get install git
 ```
 
-Or download the zip from https://github.com/naturalsciences/ears3-server/archive/refs/heads/master.zip, and unzip.
+## Get the required files for the EARS server
 
-## Get the required files for the EARS server, including the Dockerfile
-
-Go to where you want to install the docker container. The location has no special need for permissions, as all docker operations require root rights anyway. `/home/general-user/` is a fine location.
+The project lives under `/srv/docker`, owned by `belgica`:
 
 ```
-cd <installation directory>
+sudo mkdir /srv/docker
+sudo chown -R belgica:belgica /srv/docker
+cd /srv/docker
 git clone https://github.com/naturalsciences/ears3-server.git
 cd ears3-server
+git switch dev
 ```
 
-Or unzip the zip into <installation directory>/ears3-server.
+This host tracks the **`dev`** branch. To update later, simply `git pull`
+from within `ears3-server` — do not edit any tracked file other than
+`.env`, since `.env` is the only file kept outside source control
+(git-ignored) specifically so local configuration survives pulls.
 
-You also need to download the acquisition launcher from https://share.naturalsciences.be/f/18ddde1d5eb14981b8ee/?dl=1 and put it in ears3-server/Acquisition_System/techsas-run. Recent builds became too large for github (100MB).
+## Configure the environment
+
+`.env` is created once from the example file, then edited locally and left
+untouched by future `git pull`s:
 
 ```
-wget https://share.naturalsciences.be/f/18ddde1d5eb14981b8ee/?dl=1 -O acquisition-launcher-1.1.0-SNAPSHOT.jar
-```
-## Create the docker container and run the image
-
-```
-sudo docker-compose build
-sudo docker-compose up -d
+cp .env.example .env
+nano .env
 ```
 
-For your convenience you can also just run `./run.sh` or `./run-freespace.sh` which frees unused images.
- 
-The -d flag starts the container based on the image in a detached mode, meaning that you can continue the terminal session. If you shutdown and reboot the server that hosts the EARS server container, the container will always restart along with the whole server.
+In `.env`, in addition to the usual settings (ports, `EARS_PLATFORM` C17
+code for Belgica — see the NERC C17 vocabulary), make sure the database
+connection settings match the host PostgreSQL instance and credentials
+(database `ears3`, user `ears`), since the stack is started against a remote
+(host) database rather than a bundled one.
 
-When you run the image, the different components are started in certain order. The web server (tomcat) is the latest as it has to wait for the database to be completed. Wait at least a minute, then visit the following addresses in your web browser (the date ranges are just examples and no data can be returned if the acquisition did not yet run):
+## Create and run the docker containers — `remote_db` mode
+
 ```
-http://localhost/ears3/html/event
-http://localhost/ears3/events
-http://localhost/ears3Nav/tss/getLast/xml
-http://localhost/ears3Nav/tss/getLast/datagram
-http://localhost/ears3Nav/tss/getLast/json
-http://localhost/ears3Nav/met/getLast/xml
-http://localhost/ears3Nav/met/getLast/json
-http://localhost/ears3Nav/met/getLast/datagram
-http://localhost/ears3Nav/nav/getLast/xml
-http://localhost/ears3Nav/nav/getLast/json
-http://localhost/ears3Nav/nav/getLast/datagram
-
-http://localhost/ears3Nav/tss/getNearest/xml?date=2021-06-25T08:39:00
-http://localhost/ears3Nav/tss/getNearest/json?date=2021-06-25T08:39:00
-http://localhost/ears3Nav/tss/getNearest/datagram?date=2021-06-25T08:39:00
-http://localhost/ears3Nav/met/getNearest/xml?date=2021-06-25T08:39:00
-http://localhost/ears3Nav/met/getNearest/json?date=2021-06-25T08:39:00
-http://localhost/ears3Nav/met/getNearest/datagram?date=2021-06-25T08:39:00
-http://localhost/ears3Nav/nav/getNearest/xml?date=2021-06-25T08:39:00
-http://localhost/ears3Nav/nav/getNearest/json?date=2021-06-25T08:39:00
-http://localhost/ears3Nav/nav/getNearest/datagram?date=2021-06-25T08:39:00
-
-http://localhost/ears3Nav/tss/getBetween/xml?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-http://localhost/ears3Nav/tss/getBetween/json?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-http://localhost/ears3Nav/tss/getBetween/datagram?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-http://localhost/ears3Nav/met/getBetween/xml?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-http://localhost/ears3Nav/met/getBetween/json?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-http://localhost/ears3Nav/met/getBetween/datagram?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-http://localhost/ears3Nav/nav/getBetween/xml?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-http://localhost/ears3Nav/nav/getBetween/json?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-http://localhost/ears3Nav/nav/getBetween/datagram?startDate=2020-08-18T00:00:00Z&endDate=2021-06-25T08:39:00Z
-
-http://localhost:8080
+cd /srv/docker/ears3-server
+./run.sh remote_db
 ```
-Replace localhost with the server&#39;s IP adress and the actual port you have configured (see lower).
 
-Make sure that the server is accessible from the network.
+The compose file is configured with `restart: always`, so a reboot of the
+host brings the whole stack back up automatically — no manual restart of
+the containers is needed after a server restart.
 
-## Adresses, ports and environment variables
+Check container status and logs as usual:
 
-The EARS webservices are reachable on [http://localhost](http://localhost) and the acquisition server on [http://localhost:8080](http://localhost:8080), by default. You can modify these ports in the .env file but this is not recommended. If a port is already taken, you either change the port in the .env file, or preferrably kill the application that takes the port. In order to find applications using a port, use eg. `sudo netstat -tulpn | grep 8080`, note the pid in the last column and then `sudo kill <pid>`
+```
+sudo docker ps
+sudo docker logs ears3-server-tomcat-remote
+```
 
-You have to change the RV identifier in the .env file. Please change EARS_PLATFORM=SDN:C17::11BU to the C17 (ICES) code of the RV this software will be run on. The C17 codes are here: http://vocab.nerc.ac.uk/collection/C17/current/
+If you see a `org.postgresql.util.PSQLException: The connection attempt
+failed.` in the Tomcat logs, this is almost always the host-side
+`pg_hba.conf`/`postgresql.conf` configuration described above — revisit
+those settings, reload/restart PostgreSQL, then re-run `./run.sh remote_db`.
+
+Once running, wait at least a minute (the web server waits for the
+database), then visit `http://localhost/ears3` (replacing `localhost` with
+the server's actual IP where relevant) to confirm the application is up. A
+set of REST endpoints under `/ears3Nav` (for the latest, nearest, and
+between-dates navigation, meteorological, and thermosalinograph readings,
+in XML, JSON, or raw datagram form) is also available.
+
+## Addresses, ports and environment variables
+
+The EARS webservices are reachable on `http://localhost` by default. Ports
+can be changed in `.env`, though this is not recommended; prefer freeing
+the port on the host (`sudo ss -tulpn | grep <port>`, then `sudo kill <pid>`
+on the offending process) over remapping.
+
+`EARS_PLATFORM` in `.env` must be set to the C17 (ICES) code for RV
+Belgica — see `http://vocab.nerc.ac.uk/collection/C17/current/`.
 
 ## Usage
 
-Go to `http://localhost/ears3/event` or simply `http://localhost/ears3` to create new events. New programs and cruises are to be created with the desktop client application. In the web application you are first prompted to provide your name and email address. The manual for this web page can be found at the end of the client manual, [here](https://github.com/naturalsciences/ears/releases/download/3.0.1beta/Eurofleets+_D3.9_manual_ears3_client_webapp.pdf).
+Go to `http://localhost/ears3/event` or simply `http://localhost/ears3` to
+create new events. Programs and cruises are populated via the
+`campaign-to-ears` import described below. In the web application you are
+first prompted to provide your name and email address.
 
-Go to `http://localhost/ears3/sml?platformUrn=SDN:C17::XYZA` to see the Sensor ML description for the whole ship. Follow the links for the events of specific devices.
+Go to `http://localhost/ears3/sml?platformUrn=SDN:C17::XYZA` to see the
+Sensor ML description for the whole ship. Follow the links for the events
+of specific devices.
 
-Go to `http://localhost/ears3/api/cruise/csr?identifier=cruise_identifier` to see the a full SDN Cruise Summary Report. Cruises are created with the java client desktop application. 
+Go to `http://localhost/ears3/api/cruise/csr?identifier=cruise_identifier`
+to see the full SDN Cruise Summary Report.
 
-Go to `http://localhost:8080` for the acquisition.
+## campaign-to-ears
 
-## View the database, e.g. with psql or DBeaver
+`campaign-to-ears` imports programs and cruises from the SWAP ODNature
+Belgica campaign tables into EARS. It depends on PostgreSQL, Docker, and
+the main EARS application already being installed and running, since it
+submits directly to the running EARS web application.
 
-Install psql or DBeaver.
+A JDK is required on the host; OpenJDK 21 is installed:
 
 ```
-sudo apt-get update
+sudo apt update
+sudo apt install -y openjdk-21-jdk
+java --version
+```
+
+### Get the code / compile (optional — for building from source)
+
+```
+cd ~/dev
+git clone https://gitlab.naturalsciences.be/bmdc/campaign-to-ears
+mvn clean package
+```
+
+### Precompiled artifact
+
+The deployed instance uses the precompiled jar and its config, placed
+under `/opt/campaign-to-ears/`:
+
+```
+/opt/campaign-to-ears/
+├── campaigntoears.jar
+├── config.json
+└── model/
+    ├── xlm-roberta-base-ner-hrl.pt
+    ├── config.json
+    ├── serving.properties
+    ├── tokenizer.json
+    └── tokenizer_config.json
+```
+
+### Usage
+
+```
+java -jar campaigntoears.jar
+    -s --server
+    [-y --year]
+    [-c --curl]
+    [-j --json]
+```
+
+- `java -jar campaigntoears.jar --s http://<ears.address> --y current` —
+  import the programs and cruises from last year, the current year and
+  next year.
+- `java -jar campaigntoears.jar --server http://<ears.address> --year 2016`
+  — import the programs and cruises from 2016.
+- `java -jar campaigntoears.jar --server http://<ears.address>` — import
+  all programs and cruises.
+- `java -jar target/campaigntoears.jar --server http://<ears.address> --year 2024 --curl`
+  — dry run, output curl messages for quick submissions.
+- `java -jar target/campaigntoears.jar --server http://<ears.address> --year 2024 --json`
+  — dry run, output one big JSON object for all campaigns and programs.
+- `java -jar target/campaigntoears.jar --server http://localhost --year 2024 --curl | grep curl > ~/post_ears_2024.sh`
+  — dry run, output everything as a shell script.
+
+In production, the tool is invoked as:
+
+```
+cd /opt/campaign-to-ears
+java -jar campaigntoears.jar --s http://localhost --y current
+```
+
+### Configuration (config.json)
+
+`config.json` must sit alongside the jar (the working directory must be
+the jar's directory — no relative paths), and covers:
+
+- **`harbourReplacements`** — maps harbour names to the C38 vocabulary.
+- **`personReplacements`** — corrects personal names (e.g. `J.-M.` →
+  `Jean-Marc`).
+- **`persons2Edmo`** — maps persons to the EDMO code of the institute they
+  worked for at a given point in time.
+- **`emailPredictions`** — guesses EDMO codes from email addresses, and
+  corrects email domains based on EDMO code. This has limits: a domain
+  like `naturalsciences.be` can map to several EDMO codes. If exactly one
+  match is found it's used and logged (and should then be added to
+  `persons2Edmo`); if more than one match is found, no EDMO code is
+  assigned, the resulting JSON is invalid for EARS, and the matches are
+  logged so the correct one can be added to `persons2Edmo`.
+- **`NER_MODEL_PATH_PT`** — path to the TorchScript build of the
+  [XLM-RoBERTa NER model](https://huggingface.co/Davlan/xlm-roberta-base-ner-hrl/tree/main),
+  set to `/opt/campaign-to-ears/model` on this deployment. The model
+  directory must contain `config.json`, `serving.properties`,
+  `tokenizer_config.json`, `tokenizer.json`, and
+  `xlm-roberta-base-ner-hrl.pt`. It can be produced by running
+  `djl-convert -m Davlan/xlm-roberta-base-ner-hrl -o pytorch`, or
+  downloaded pre-built from the BMDC team SharePoint.
+
+If imports don't show up as expected, check the Tomcat container logs (see
+Troubleshooting) and re-check `config.json` before re-running the jar.
+
+## Viewing the database
+
+Connect directly to the host, rather than inspecting a container IP:
+
+```
+psql -h localhost -U ears -d ears3 -c "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';"
+```
+
+or, via a GUI:
+
+```
 sudo apt-get install postgresql-client
 sudo apt-get install dbeaver-ce
 ```
 
-First retrieve the ip address of the PostgreSQL container:
+Create a connection in DBeaver to `localhost`, port `5432` (or the port
+PostgreSQL is actually listening on), database `ears3`, user `ears`.
+
+Sample query once connected:
 
 ```
-sudo docker inspect ears-server_postgres
+psql -h localhost -U ears -d ears3 -c "select * from public.cruise;"
 ```
-and note the value for the key &quot;IPAddress&quot;.
-
-Shorthand:
-```
-sudo docker inspect ears-server_postgres | pcregrep -o1 '"IPAddress": "([0-9\.]+)"'
-```
-
-Create a new connection in DBeaver towards this IP address, using as database name &#39;ears3&#39;, user &#39;ears&#39; and password &#39;ears&#39;, and using the default port 5432. The database is also reachable via localhost:6543.
-
-## Or by command line
-
-With command line postgres, you can use:
-
-```
-psql -h localhost -p 6543 -U ears -d ears3 -c "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';"
-```
-
-Type the password (ears) and verify the tables have been created correctly (27 tables). Later you can use this to verify data insertion, eg. by:
-
-```
-psql -h localhost -p 6543 -U ears -d ears3 -c "select * from Navigation limit 10;"
-```
-
-## Verify the acquisition works
-
-The acquisition module stores the datagrams created above as NetCDF files and in the EARS database as above. For EARS to work, at least the navigation datagram must be sent to UDP port 3101 of the server EARS is running on, the meteorology datagram to UDP port 3102 and the Thermosalinometry datagram to UDP port 3103.
-
-This ideally only works on a research vessel. To test if the acquisition server has correctly run, we provide a small test program that can send fake information to these ports. This can be found in the FileToUDP/ directory.
-
-For this you need to install Java JDK 8 or higher on the host running the docker. On Ubuntu:
-
-```
-sudo apt install openjdk-8-jdk openjdk-8-jre
-```
-
-Then, to run the program, type:
-
-```
-java -jar FileToUDP/FileToUDP.jar FileToUDP/09022016.posicion.raw 3101 1
-```
-
-You immediately see the output being sent. In order to run this process in the background and log what it wrote to a log file, use the following three commands for resp. position, meteorology and thermosalinometry.
-
-```
-nohup java -jar FileToUDP/FileToUDP.jar FileToUDP/09022016.posicion.raw  3101 1 > ~/filetoudp.log 2>&1 &
-nohup java -jar FileToUDP/FileToUDP.jar FileToUDP/08052016.meteo.raw  3102 1 > ~/filetoudp.log 2>&1 &
-nohup java -jar FileToUDP/FileToUDP.jar FileToUDP/09052016.termosal.raw 3103 1 > ~/filetoudp.log 2>&1 &
-```
-Inspect this actually is received by the acquisition module by visiting http://localhost:8080/#/dashboard. you can also check the log output of docker for acquisition:
-
-```
-sudo docker logs ears-server_acquisition
-```
-
-Also verify the urls from above: 
-```http://localhost/ears3Nav/nav/getLast/xml```
-```http://localhost/ears3Nav/met/getLast/xml```
-```http://localhost/ears3Nav/tss/getLast/xml```
-
-To see if the data is sent to EARS. The data should continously update upon refresh. Without data, this is the response for navigation:
-
-```
-<ef:nav/>
-```
-
-With data:
-```
-<ef:nav xmlns:ef="http://www.eurofleets.eu/">
-  <ef:timestamp>2021-06-08T17:45:35Z</ef:timestamp>
-  <ef:instrument_time/>
-  <ef:longitude def="SDN:P02::DEGN">-60.3944252</ef:longitude>
-  <ef:latitude>-62.6580047</ef:latitude>
-  <ef:heading uom="°" def="SDN:P01::HDNGGP01">50.04</ef:heading>
-  <ef:sow uom="kn" def="SDN:P01::APSAWM01">0.02</ef:sow>
-  <ef:depth uom="m" def="SDN:P01::APSAGP01"/>
-  <ef:cog uom="°">237.6</ef:cog>
-  <ef:sog uom="kn">0.02</ef:sog>
-</ef:nav>
-```
-
-The data is also saved as NetCDF files by the acquisition module. These can be found in the netcdf/ directory for nav, met and tss. Please note that a full day of navigation from the above fake datagram would take about 2 GB of data. So in some scenarios you might want to disable the creation of these files. However, for the 2020 Eurofleets+ campaigns, the Principal Investigator must report these NetCDF files in the EMODnet Ingestion Portal together with his other campaign data. So please keep this enabled and send him these files, as he will need them for his data submission!
-
-To disable EARS from creating these NetCDF files, comment out the following lines in the file Acquisition\_System/bin/conf/application.properties:
-
-```
-acquisition.archiving.netcdf.file=./log/netcdf/{sensor}/{sensor}-{frame}-{date,yyyy-Mmdd-HH}.nc
-```
-
-After this, run `./run.sh` or `./run-freespace.sh` which frees unused images.
 
 ## Data volumes
 
-In order to persist the information in the database and the ontology and to safeguard it for when the docker container would be restarted or even deleted, the data is persisted in a directory outside of the docker container. These are &#39;ears\_postgres\_data&#39; and &#39;ontologies&#39;. Do not delete these directories. The fastest way to save the vessel ontology is to put in in the 'ontologies' directory.
+Do not delete the `ontologies` directory used by the containers. The
+fastest way to save the vessel ontology is to put it in the `ontologies`
+directory.
 
 ## Troubleshooting
 
-If the application doesn't work, and the tomcat logs show `org.postgresql.util.PSQLException: The connection attempt failed.`, this most likely is a firewall issue. Read [this page](https://forums.docker.com/t/no-route-to-host-network-request-from-container-to-host-ip-port-published-from-other-container/39063/11). 
+Do not modify the `Dockerfile` or `docker-compose.yml` files. If any other
+file (the WARs or `.env`) is changed, rebuild the image
+(`sudo docker-compose build` / `docker compose build`) — or simply run
+`./run.sh remote_db` again, which rebuilds only the affected layers.
 
-Get the IP addresses of the docker containers: 
+Read the logs of the individual modules:
 
 ```
-sudo docker inspect ears-server_postgres | pcregrep -o1 '"IPAddress": "([0-9\.]+)"' and
-sudo docker inspect ears-server_tomcat | pcregrep -o1 '"IPAddress": "([0-9\.]+)"'
+sudo docker logs ears3-server-tomcat-remote
 ```
 
-Note the ip addresses, and replace the last digits with 0/16. Run
+If Tomcat can't reach the database (`PSQLException: The connection attempt
+failed.`), this is a host-side firewall/`pg_hba.conf` issue — see "Allow
+the Docker containers to reach the host database" above. As a last resort,
+inspect the Docker bridge network configuration and confirm the container
+can route to the host's Postgres address and port.
 
-```firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 source address=x.y.z.0/16 accept' && firewall-cmd --reload```
+If you need to kill the Docker containers, e.g. after a Dockerfile change:
 
-for both IP addresses, or (unsecure):
-
-```Systemctl stop firewalld.service```
-
-Do not modify the Dockerfile or the docker-compose.yml files. If any other file (the wars or the .env file) is changed you will need to rebuild the image(`sudo docker-compose build`). The easiest is to run ``./run.sh`` or `./run-freespace.sh` which frees unused images.
-
-You can read the logs of the individual modules like so:
-
-The database: `sudo docker logs ears-server_postgres`
-
-The web applications: `sudo docker logs ears-server_tomcat`
-
-The acquisition module: `sudo docker logs ears-server_acquisition`
-
-If you need to kill the docker images, for instance if you make a change in the Dockerfile, enter `sudo docker kill ears-server_acquisition ears-server_postgres`
-
-The Dockerfile should not be changed, only to change the access password for the vessel ontology, see higher.
+```
+sudo docker kill ears3-server-tomcat-remote
+```
 
 ## Coping with updates
 
-If a new version of any web application (ears3.war, ears3Nav.war) would need a replacement (of which you will be informed by email) please follow this procedure:
+If a new version of any web application (`ears3.war`, `ears3Nav.war`)
+needs replacing:
 
-- Ensure you have a stable and fast internet connection
-- ssh to the server
-- cd to the ears3-server directory, replace the files and
-```
-./run-freespace.sh
-```
+- Ensure a stable and fast internet connection
+- SSH to the server as `belgica`
+- `cd /srv/docker/ears3-server`
+- `git pull` (on the `dev` branch)
+- `./run.sh remote_db`
 
-The build command is smart enough to start rebuilding only the steps that are not affected by the file change (so this is faster than the original build).
-
-## Installing the client
-
-The EARS client is a desktop application that interacts with this server. Cruises and programs should be created with the client, events can be created with both the web application on this server or the desktop client. This is a java desktop installation, to be installed from [here](https://github.com/naturalsciences/ears/releases). The manual is [here](https://github.com/naturalsciences/ears/releases/download/3.0.1beta/Eurofleets+_D3.9_manual_ears3_client_webapp.pdf).
+The build command only rebuilds the steps affected by the change, so this
+is faster than a full rebuild.

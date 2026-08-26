@@ -4,10 +4,10 @@ selected_profile=$1
 
 if [ -z "$selected_profile" ]
 then
-	echo "You didn't provide a profile (remote_db/embedded_db, embedded_acquisition)"
+	echo "You didn't provide a profile (remote_db/embedded_db)"
 	exit 1
 else
-	profiles=(remote_db embedded_db embedded_acquisition)
+	profiles=(remote_db embedded_db)
 	match=0
 	for profile in "${profiles[@]}"; do
     		if [[ $selected_profile = "$profile" ]]; then
@@ -16,7 +16,7 @@ else
     		fi
 	done
 	if [[ $match = 0 ]]; then
-    		echo "$selected_profile is not allowed as a profile (only remote_db/embedded_db, embedded_acquisition)"
+    		echo "$selected_profile is not allowed as a profile (only remote_db/embedded_db)"
 		exit 1
 	fi
 fi
@@ -38,12 +38,4 @@ sudo docker stop ears3-server-tomcat ears3-server-tomcat-remote ears3-server-pos
 sudo docker compose --profile $selected_profile build &&
 sudo docker compose --profile $selected_profile  up -d
 
-if [[ $selected_profile = "embedded_acquisition" ]]; then
-	echo "starting TechSAS in 60 seconds..."
-	sleep 60
-	cd Acquisition_System/techsas-run/
-	nohup java -Xms512m -Xmx2g -jar acquisition-launcher-1.1.0-SNAPSHOT.jar 2>&1 &
-	sleep 40
-fi
-cd -
 echo -ne '\007'
