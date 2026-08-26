@@ -1214,10 +1214,10 @@ CREATE TABLE public.ontology_specific_event_definition
 ALTER TABLE public.ontology_specific_event_definition OWNER TO ears;
 
 
-CREATE INDEX public.idx_ontology_event_definition_process ON public.ontology_event_definition (process_id);
-CREATE INDEX public.idx_ontology_event_definition_action ON public.ontology_event_definition (action_id);
-CREATE INDEX public.idx_ontology_specific_event_definition_tool ON public.ontology_specific_event_definition (tool_id);
-CREATE INDEX public.idx_ontology_generic_event_definition_toolcategory ON public.ontology_generic_event_definition (tool_category_id);
+CREATE INDEX idx_ontology_event_definition_process ON public.ontology_event_definition (process_id);
+CREATE INDEX idx_ontology_event_definition_action ON public.ontology_event_definition (action_id);
+CREATE INDEX idx_ontology_specific_event_definition_tool ON public.ontology_specific_event_definition (tool_id);
+CREATE INDEX idx_ontology_generic_event_definition_toolcategory ON public.ontology_generic_event_definition (tool_category_id);
 
 --
 -- TOC entry 2414 (class 0 OID 3088721)
