@@ -19,6 +19,6 @@ cmd="$@"
 #  sleep 10
 #done
 #>&2 echo "MySQL is populated - executing command"
-sleep 60
+sleep 10
 #a simplification so that mysql doesn't need to be installed
 exec $cmd
