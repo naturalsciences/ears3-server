@@ -1,16 +1,5 @@
-ears_mysql_data
 ears_postgres_data
-netcdf
-ontologies
-Acquisition_System/bin/log
-deploy.sh
-acquisition-launcher-1.1.0-SNAPSHOT.jar
 .env
-ears3NavBelgica.war
-ears3NavBelgica.properties
-*_old*
-*.nc
-techsas-run-old
 nohup.out
 *.log
 ears3-bup*.war

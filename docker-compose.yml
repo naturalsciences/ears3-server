@@ -87,4 +87,3 @@ services:
       - ./ears_base_ddl.sql:/docker-entrypoint-initdb.d/ears_base_ddl.sql
       - ./ears_postgres_data:/var/lib/postgresql
     restart: always
-#    command: ["postgres", "-c", "log_statement=all"]

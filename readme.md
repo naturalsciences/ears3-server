@@ -363,6 +363,27 @@ Do not delete the `ontologies` directory used by the containers. The
 fastest way to save the vessel ontology is to put it in the `ontologies`
 directory.
 
+`ontologies/` is a bind-mounted directory shared between the host and the
+Docker container, and the container writes to it as `root`. This can cause
+permission errors (e.g. on `git pull`, if files under `ontologies/` are
+tracked in git) when the host user tries to read, overwrite, or delete
+files the container created. Fix existing ownership and make future writes
+shared between the host user and the container by setting the group and
+the setgid bit:
+
+```
+sudo chgrp -R belgica ontologies/
+sudo chmod -R g+rwX ontologies/
+sudo chmod g+s ontologies/
+```
+
+The setgid bit (`g+s`) makes new files and subdirectories created inside
+`ontologies/` inherit the directory's group (`belgica`) instead of the
+creating process's own group, so files the container writes as `root`
+remain writable by the host user going forward. This does not retroactively
+fix files created before the `chgrp`/`chmod` above, and does not propagate
+to directories recreated from scratch by the container.
+
 ## Troubleshooting
 
 Do not modify the `Dockerfile` or `docker-compose.yml` files. If any other

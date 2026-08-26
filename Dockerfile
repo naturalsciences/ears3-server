@@ -1,4 +1,4 @@
-FROM tomcat:9.0.76-jdk11
+FROM tomcat:11.0-jdk17
 
 COPY ears3.war ears3.war
 COPY ears3Nav.war ears3Nav.war
