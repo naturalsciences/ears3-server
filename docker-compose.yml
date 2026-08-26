@@ -38,7 +38,7 @@ services:
     command: ["catalina.sh", "run"]
     restart: always
     volumes:
-     - ./ontologies:/var/www/ears2
+     - ./ontologies:/var/ears/ontology
      - ./context.xml:/usr/local/tomcat/conf/context.xml
      - ./ears3.war:/usr/local/tomcat/webapps/ears3.war
      - ./ears3Nav.war:/usr/local/tomcat/webapps/ears3Nav.war
@@ -69,7 +69,7 @@ services:
     command: ["catalina.sh", "run"]
     restart: always
     volumes:
-     - ./ontologies:/var/www/ears2
+     - ./ontologies:/var/ears/ontology
      - ./context.xml:/usr/local/tomcat/conf/context.xml
      - ./ears3.war:/usr/local/tomcat/webapps/ears3.war
      - ./ears3Nav.war:/usr/local/tomcat/webapps/ears3Nav.war
