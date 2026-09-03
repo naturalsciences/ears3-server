@@ -1219,6 +1219,51 @@ CREATE INDEX idx_ontology_event_definition_action ON public.ontology_event_defin
 CREATE INDEX idx_ontology_specific_event_definition_tool ON public.ontology_specific_event_definition (tool_id);
 CREATE INDEX idx_ontology_generic_event_definition_toolcategory ON public.ontology_generic_event_definition (tool_category_id);
 
+ALTER TABLE public.navigation
+  ADD COLUMN IF NOT EXISTS lon_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS lon_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS lat_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS lat_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS heading_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS heading_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS sow_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS sow_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS depth_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS depth_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS cog_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS cog_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS sog_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS sog_instr_id varchar(50) NULL;
+
+ALTER TABLE public.weather
+  ADD COLUMN IF NOT EXISTS wind_speed_average_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS wind_speed_average_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS wind_speed_instantaneous_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS wind_speed_instantaneous_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS wind_direction_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS wind_direction_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS atmospheric_temperature_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS atmospheric_temperature_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS humidity_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS humidity_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS solar_radiation_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS solar_radiation_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS atmospheric_pressure_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS atmospheric_pressure_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS water_temperature_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS water_temperature_instr_id varchar(50) NULL;
+
+ALTER TABLE public.thermosal
+  ADD COLUMN IF NOT EXISTS salinity_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS salinity_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS temperature_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS temperature_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS raw_fluorometry_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS raw_fluorometry_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS conductivity_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS conductivity_instr_id varchar(50) NULL,
+  ADD COLUMN IF NOT EXISTS sigmat_timestamp timestamptz NULL,
+  ADD COLUMN IF NOT EXISTS sigmat_instr_id varchar(50) NULL;
 --
 -- TOC entry 2414 (class 0 OID 3088721)
 -- Dependencies: 182
